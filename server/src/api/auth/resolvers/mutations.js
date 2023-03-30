@@ -41,6 +41,7 @@ const resolvers = {
           username: username,
           email: emailLC,
           password: passwordHash,
+          avatar: avatar,
           roles: ['user']
         })
 

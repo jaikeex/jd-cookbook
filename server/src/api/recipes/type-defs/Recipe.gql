@@ -41,7 +41,7 @@ type Query {
   getAllRecipes: [Recipe]!
   getRecipe(id: ID!): Recipe
   getRecipesByAuthor(userId: ID!): [Recipe]!
-  getRecipesByIngredients(ingedients: [String]): [Recipe]!
+  getRecipesByIngredients(ingredients: [String], matchAll: Boolean): [Recipe]!
 }
 
 type Mutation {

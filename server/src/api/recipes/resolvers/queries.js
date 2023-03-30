@@ -15,15 +15,20 @@ const resolvers = {
       }
     },
 
-    // getRecipesByIngredients: (root, args, req, info) => {
-    //   try {
-    //     const { ingredients } = args
+    getRecipesByIngredients: async (root, args, req, info) => {
+      try {
+        const { ingredients, matchAll } = args
 
-    //     return Recipe.find({ ingredients: {name: } })
-    //   } catch (error) {
-    //     throw new httpErrors.E500(err.message)
-    //   }
-    // },
+        const recipes = await Recipe.find({
+          'ingredients.name': matchAll
+            ? { $all: ingredients }
+            : { $in: ingredients }
+        })
+        return recipes
+      } catch (error) {
+        throw new httpErrors.E500(err.message)
+      }
+    },
 
     getRecipe: (root, args, req, info) => {
       try {

@@ -29,7 +29,7 @@ const resolvers = {
 
         req.session.user = user
 
-        return { token, userId: user._id.toString() }
+        return { token, user }
       } catch (error) {
         throw new httpErrors.E500(err.message)
       }

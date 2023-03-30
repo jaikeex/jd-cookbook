@@ -1,0 +1,24 @@
+import type { User } from './User';
+
+export interface Recipe {
+  user: User;
+  name: string;
+  ingredients: Ingredient[];
+  description: string;
+  instructions: string;
+  picturePath: string;
+  userAvatarPath: string;
+  likesCount: number;
+  likes: string[];
+  comments: Comment[];
+}
+
+export interface Ingredient {
+  name: string;
+  amount: string;
+}
+
+export interface Comment {
+  author: User;
+  text: string;
+}
