@@ -1,0 +1,52 @@
+type Recipe {
+  _id: ID!
+  userId: String!
+  name: String!
+  ingredients: [Ingredient]!
+  description: String
+  instructions: String
+  picturePath: String
+  userAvatarPath: String
+  likesCount: Int
+  likes: [String]
+  comments: [Comment]
+}
+
+type Ingredient {
+  name: String!
+  amount: String
+}
+
+type Comment {
+  userId: String
+  text: String
+}
+
+input RecipeInput {
+  userId: String!
+  name: String!
+  ingredients: [IngredientInput]!
+  description: String
+  instructions: String
+  picturePath: String
+  userAvatarPath: String
+}
+
+input IngredientInput {
+  name: String!
+  amount: String
+}
+
+type Query {
+  getAllRecipes: [Recipe]!
+  getRecipe(id: ID!): Recipe
+  getRecipesByAuthor(userId: ID!): [Recipe]!
+  getRecipesByIngredients(ingedients: [String]): [Recipe]!
+}
+
+type Mutation {
+  createRecipe(input: RecipeInput!): Recipe
+  updateRecipe(id: ID!, input: RecipeInput!): Recipe!
+  deleteRecipe(id: ID!): String
+  likeRecipe(id: ID!, userId: ID!): Recipe!
+}

@@ -1,0 +1,35 @@
+type User {
+  _id: String!
+  username: String!
+  email: String!
+  roles: [String]!
+  createdAt: String!
+  updatedAt: String!
+}
+
+input UserUpdateInputData {
+  username: String
+  email: String
+  roles: [String]
+  password: String
+}
+
+input UserFilter {
+  _id: String
+  username: String
+  email: String
+  roles: [String]
+}
+
+type Query {
+  getUserById(id: ID!): User!
+  getUserByEmail(email: String!): User!
+  getUserByUsername(username: String!): User!
+  getAllUsers: [User!]!
+  filterUsers(filter: UserFilter!): [User!]!
+}
+
+type Mutation {
+  deleteUser(id: ID!): String
+  updateUser(id: ID!, input: UserUpdateInputData): User!
+}

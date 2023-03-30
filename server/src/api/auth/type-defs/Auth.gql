@@ -1,0 +1,15 @@
+# import User from "../../users/type-defs/User.gql"
+
+type AuthData {
+  token: String!
+  userId: String!
+}
+
+type Query {
+  login(email: String!, password: String!): AuthData!
+  logout: String!
+}
+
+type Mutation {
+  register(email: String!, username: String!, password: String!): User
+}
