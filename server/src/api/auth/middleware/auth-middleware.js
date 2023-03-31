@@ -38,7 +38,8 @@ export const createSession = () => {
     saveUninitialized: false,
     store: createSessionStore(),
     cookie: {
-      maxAge: 86400000
+      maxAge: 2629800000,
+      secure: false
     }
   })
 }

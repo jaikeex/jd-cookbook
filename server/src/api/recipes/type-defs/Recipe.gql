@@ -1,15 +1,17 @@
+# import User from "../../users/type-defs/User.gql"
+
 type Recipe {
   _id: ID!
-  userId: String!
+  user: User!
   name: String!
   ingredients: [Ingredient]!
   description: String
   instructions: String
   picturePath: String
-  userAvatarPath: String
   likesCount: Int
   likes: [String]
   comments: [Comment]
+  createdAt: String!
 }
 
 type Ingredient {
@@ -18,7 +20,7 @@ type Ingredient {
 }
 
 type Comment {
-  userId: String
+  user: User!
   text: String
 }
 

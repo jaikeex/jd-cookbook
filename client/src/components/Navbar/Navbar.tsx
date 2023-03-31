@@ -35,13 +35,13 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
   const alt = theme.palette.secondary.dark;
 
   return (
-    <FlexBetween padding="1rem 6%" bgcolor={alt}>
+    <FlexBetween padding="1rem 6%" position="sticky" left="0" top="0" bgcolor={alt}>
       <FlexBetween gap="1.75rem">
         <Typography
           fontWeight="bold"
           fontSize="clamp(1rem, 2rem, 2.25rem)"
           color="primary"
-          onClick={() => navigate('/home')}
+          onClick={() => navigate('/')}
           sx={{
             '&:hover': {
               color: primaryLight,
@@ -76,7 +76,7 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
           <Help sx={{ fontSize: '25px' }} />
           <FormControl variant="standard">
             <Select
-              value={''}
+              value={user?.username}
               sx={{
                 backgroundColor: neutralLight,
                 width: '150px',
@@ -92,8 +92,8 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
               }}
               input={<InputBase />}
             >
-              <MenuItem value={''}>
-                <Typography>{''}</Typography>
+              <MenuItem value={user?.username}>
+                <Typography>My profile</Typography>
               </MenuItem>
               <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
             </Select>
@@ -129,7 +129,7 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
             <Help sx={{ fontSize: '25px' }} />
             <FormControl variant="standard">
               <Select
-                value={''}
+                value={user?.username}
                 sx={{
                   backgroundColor: neutralLight,
                   width: '150px',
@@ -145,8 +145,8 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
                 }}
                 input={<InputBase />}
               >
-                <MenuItem value={''}>
-                  <Typography>{''}</Typography>
+                <MenuItem value={user?.username}>
+                  <Typography>My profile</Typography>
                 </MenuItem>
                 <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
               </Select>

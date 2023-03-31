@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { Box, Button, TextField, Typography, useTheme } from '@mui/material';
 import type { FormikHelpers } from 'formik';
 import { gqlRequest } from 'utils/gqlRequest';
 import { setLogin } from 'store/authSlice';
+import { useLazyLoginQuery } from 'store/apiSlice';
 
 const loginSchema = yup.object().shape({
   email: yup.string().email('invalid email').required('required'),
@@ -31,26 +32,36 @@ const LoginForm: React.FC<LoginFormProps> = (props): JSX.Element => {
   const theme = useTheme();
   const navigate = useNavigate();
 
+  const [trigger, result, lastPromiseInfo] = useLazyLoginQuery();
+
   const login = async (values: LoginFormValues, onSubmitProps: FormikHelpers<LoginFormValues>) => {
-    const loggedIn = await gqlRequest(`
-    {
-      login(email: "${values.email}", password: "${values.password}") {
-        token,
-        user {
-          _id,
-          username,
-          avatar
-        }
-      }
-    }
-    `);
+    // const loggedIn = await gqlRequest(`
+    // {
+    //   login(email: "${values.email}", password: "${values.password}") {
+    //     token,
+    //     user {
+    //       _id,
+    //       username,
+    //       avatar
+    //     }
+    //   }
+    // }
+    // `);
+    trigger({ email: values.email, password: values.password });
 
     onSubmitProps.resetForm();
-    if (loggedIn) {
-      dispatch(setLogin({ token: loggedIn.token, user: loggedIn.user }));
+    // if (response) {
+    //   dispatch(setLogin({ user: response.user }));
+    //   navigate('/');
+    // }
+  };
+
+  useEffect(() => {
+    if (result.data) {
+      dispatch(setLogin({ user: result.data.user }));
       navigate('/');
     }
-  };
+  }, [result]);
 
   const formSubmitHandler = async (values: LoginFormValues, onSubmitProps: FormikHelpers<LoginFormValues>) => {
     login(values, onSubmitProps);

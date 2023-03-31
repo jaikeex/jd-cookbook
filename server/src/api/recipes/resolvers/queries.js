@@ -1,9 +1,13 @@
-import { Recipe } from '../../../models/index.js'
+import { Recipe, User } from '../../../models/index.js'
+import { isAuthenticated, hasRole } from '../../auth/resolvers/index.js'
+import { composeResolvers } from '@graphql-tools/resolvers-composition'
 
 const resolvers = {
   Query: {
-    getAllRecipes: (root, args, req, info) => {
-      return Recipe.find()
+    getAllRecipes: async (root, args, req, info) => {
+      console.log(req.session)
+
+      return await Recipe.find().populate('user', '-password', User).exec()
     },
 
     getRecipesByAuthor: (root, args, req, info) => {
@@ -41,4 +45,10 @@ const resolvers = {
   }
 }
 
-export default resolvers
+const resolversComposition = {
+  'Query.getAllRecipes': [isAuthenticated()]
+}
+
+const composedResolvers = composeResolvers(resolvers, resolversComposition)
+
+export default composedResolvers

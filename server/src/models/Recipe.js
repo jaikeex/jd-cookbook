@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const RecipeSchema = new mongoose.Schema(
   {
-    userId: {
+    user: {
       type: String,
       required: true
     },

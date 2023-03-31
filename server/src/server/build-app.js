@@ -22,7 +22,14 @@ export const initServer = () => {
   app.use(morgan('common'))
   app.use(bodyParser.json({ limit: '30mb', extended: true }))
   app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
-  app.use(cors())
+  app.use(
+    cors({
+      origin: 'http://localhost:3000',
+      allowedHeaders: ['Content-Type', 'Authorization'],
+      exposedHeaders: ['set-cookie'],
+      credentials: true
+    })
+  )
 
   //TODO: implement after frontend is ready
   //app.use(csrfProtection);

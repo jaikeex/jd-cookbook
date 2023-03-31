@@ -11,6 +11,7 @@ export interface Recipe {
   likesCount: number;
   likes: string[];
   comments: Comment[];
+  createdAt: string;
 }
 
 export interface Ingredient {

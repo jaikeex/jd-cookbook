@@ -8,6 +8,7 @@ export const gqlRequest = async (query) => {
       headers: {
         'Content-Type': 'application/json'
       }
+      // withCredentials: true
     });
     return res.data.data[queryName];
   } catch (err) {

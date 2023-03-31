@@ -72,7 +72,7 @@ export const themeSettings = (mode: 'dark' | 'light') => {
     },
     typography: {
       fontFamily: ['Open Sans', 'sans-serif'].join(','),
-      fontSize: 12,
+      fontSize: 16,
       h1: {
         fontFamily: ['Open Sans', 'sans-serif'].join(','),
         fontSize: 40

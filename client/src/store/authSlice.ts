@@ -1,16 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
+import type { User } from 'types';
 
 interface AuthState {
   mode: 'light' | 'dark';
-  user: string | null;
-  token: string | null;
+  user: User | null;
   recipes: string[];
 }
 
 const initialState: AuthState = {
   mode: 'light',
   user: null,
-  token: null,
   recipes: []
 };
 
@@ -19,6 +18,7 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setMode: (state) => {
+      console.log('SETTING MODE');
       state.mode = state.mode === 'light' ? 'dark' : 'light';
     },
     setLogin: (state, action) => {
