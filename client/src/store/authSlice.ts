@@ -8,7 +8,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  mode: 'light',
+  mode: 'dark',
   user: null,
   recipes: []
 };

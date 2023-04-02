@@ -5,18 +5,18 @@ import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import store from 'store';
-import { ApiProvider } from '@reduxjs/toolkit/dist/query/react';
-import { api } from 'store/apiSlice';
+import { ApolloProvider } from '@apollo/client';
+import { client } from 'graphql/client';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ApiProvider api={api}>
+      <ApolloProvider client={client}>
         <PersistGate persistor={persistStore(store)}>
           <App />
         </PersistGate>
-      </ApiProvider>
+      </ApolloProvider>
     </Provider>
   </React.StrictMode>
 );

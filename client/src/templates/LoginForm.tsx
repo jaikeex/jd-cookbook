@@ -9,6 +9,8 @@ import type { FormikHelpers } from 'formik';
 import { gqlRequest } from 'utils/gqlRequest';
 import { setLogin } from 'store/authSlice';
 import { useLazyLoginQuery } from 'store/apiSlice';
+import { useQuery, useLazyQuery, gql } from '@apollo/client';
+import { LOGIN_QUERY } from 'graphql/queries';
 
 const loginSchema = yup.object().shape({
   email: yup.string().email('invalid email').required('required'),
@@ -32,40 +34,23 @@ const LoginForm: React.FC<LoginFormProps> = (props): JSX.Element => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const [trigger, result, lastPromiseInfo] = useLazyLoginQuery();
+  const [triggerLogin, { called, data }] = useLazyQuery(LOGIN_QUERY);
 
   const login = async (values: LoginFormValues, onSubmitProps: FormikHelpers<LoginFormValues>) => {
-    // const loggedIn = await gqlRequest(`
-    // {
-    //   login(email: "${values.email}", password: "${values.password}") {
-    //     token,
-    //     user {
-    //       _id,
-    //       username,
-    //       avatar
-    //     }
-    //   }
-    // }
-    // `);
-    trigger({ email: values.email, password: values.password });
-
+    triggerLogin({ variables: values });
     onSubmitProps.resetForm();
-    // if (response) {
-    //   dispatch(setLogin({ user: response.user }));
-    //   navigate('/');
-    // }
   };
-
-  useEffect(() => {
-    if (result.data) {
-      dispatch(setLogin({ user: result.data.user }));
-      navigate('/');
-    }
-  }, [result]);
 
   const formSubmitHandler = async (values: LoginFormValues, onSubmitProps: FormikHelpers<LoginFormValues>) => {
     login(values, onSubmitProps);
   };
+
+  useEffect(() => {
+    if (called && data) {
+      dispatch(setLogin({ user: data.login.user }));
+      navigate('/');
+    }
+  }, [called, data]);
 
   return (
     <Formik onSubmit={formSubmitHandler} initialValues={initialLoginValues} validationSchema={loginSchema}>
@@ -116,7 +101,7 @@ const LoginForm: React.FC<LoginFormProps> = (props): JSX.Element => {
               >
                 <Typography>Login</Typography>
               </Button>
-              <Link to={'/login'}>
+              <Link to={'/register'}>
                 <Typography>Not registered yet? Create an account!</Typography>
               </Link>
             </Box>

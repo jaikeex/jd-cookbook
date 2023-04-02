@@ -1,6 +1,7 @@
 import type { User } from './User';
 
 export interface Recipe {
+  _id: string;
   user: User;
   name: string;
   ingredients: Ingredient[];

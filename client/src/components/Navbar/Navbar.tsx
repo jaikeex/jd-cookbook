@@ -18,6 +18,7 @@ import type { RootState } from 'store/index';
 import FlexBetween from 'components/FlexBetween/FlexBetween';
 import { Close, DarkMode, Help, LightMode, Message, Notifications, Search } from '@mui/icons-material';
 import { setMode, setLogout } from 'store/authSlice';
+import ProfileActions from 'components/ProfileActions/ProfileActions';
 
 export interface NavBarProps {}
 
@@ -27,7 +28,7 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
   const isNonMobileScreens = useMediaQuery('(min-width: 1000px)');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state: RootState) => state.user);
+  const user = useSelector((state: RootState) => state.auth.user);
   const neutralLight = theme.palette.primary.light;
   const dark = theme.palette.primary.dark;
   const background = theme.palette.background.default;
@@ -35,7 +36,7 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
   const alt = theme.palette.secondary.dark;
 
   return (
-    <FlexBetween padding="1rem 6%" position="sticky" left="0" top="0" bgcolor={alt}>
+    <FlexBetween padding="1rem 6%" position="sticky" left="0" top="0" bgcolor={alt} zIndex={100}>
       <FlexBetween gap="1.75rem">
         <Typography
           fontWeight="bold"
@@ -74,7 +75,9 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
           <Message sx={{ fontSize: '25px' }} />
           <Notifications sx={{ fontSize: '25px' }} />
           <Help sx={{ fontSize: '25px' }} />
-          <FormControl variant="standard">
+          <ProfileActions />
+
+          {/* <FormControl variant="standard">
             <Select
               value={user?.username}
               sx={{
@@ -97,7 +100,7 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
               </MenuItem>
               <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
             </Select>
-          </FormControl>
+          </FormControl> */}
         </FlexBetween>
       ) : (
         <IconButton onClick={() => setIsMobileMenuVisible(!isMobileMenuVisible)}>
@@ -118,7 +121,7 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
           {/* MENU ITEMS */}
           <FlexBetween display="flex" flexDirection="column" justifyContent="center" alignItems="center" gap="3rem">
             <IconButton onClick={() => dispatch(setMode())} sx={{ fontSize: '25px' }}>
-              {theme.palette.mode === 'dark' ? (
+              {theme.palette.mode === 'light' ? (
                 <DarkMode sx={{ fontSize: '25px' }} />
               ) : (
                 <LightMode sx={{ color: dark, fontSize: '25px' }} />
@@ -127,7 +130,8 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
             <Message sx={{ fontSize: '25px' }} />
             <Notifications sx={{ fontSize: '25px' }} />
             <Help sx={{ fontSize: '25px' }} />
-            <FormControl variant="standard">
+            <ProfileActions />
+            {/* <FormControl variant="standard">
               <Select
                 value={user?.username}
                 sx={{
@@ -150,7 +154,7 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
                 </MenuItem>
                 <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
               </Select>
-            </FormControl>
+            </FormControl> */}
           </FlexBetween>
         </Box>
       )}

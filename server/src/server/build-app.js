@@ -12,6 +12,7 @@ import { googleLogin } from '../api/auth/middleware/google-oauth-middleware.js'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import bodyParser from 'body-parser'
+import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.mjs'
 
 export const initServer = () => {
   const app = express()
@@ -40,6 +41,7 @@ export const initServer = () => {
 
   app.use(
     '/graphql',
+    graphqlUploadExpress({ maxFileSize: 500000000 }),
     graphqlHTTP({
       schema: schema,
       graphiql: true,

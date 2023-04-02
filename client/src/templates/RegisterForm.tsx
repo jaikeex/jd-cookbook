@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Formik } from 'formik';
 import type { FormikHelpers } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -10,12 +10,24 @@ import { EditOutlined } from '@mui/icons-material';
 import Dropzone from 'react-dropzone';
 import FlexBetween from 'components/FlexBetween/FlexBetween';
 import { gqlRequest } from 'utils/gqlRequest';
+import { api } from 'store/apiSlice';
+import { useQuery, useMutation, gql } from '@apollo/client';
+import { REGISTER_USER_MUTATION, UPLOAD_FILE_MUTATION } from 'graphql/mutations';
 
 const registerSchema = yup.object().shape({
   username: yup.string().required('required'),
   email: yup.string().email('invalid email').required('required'),
   password: yup.string().required('required'),
-  avatar: yup.string().optional()
+  avatar: yup.string().notRequired()
+  // avatar: yup
+  //   .mixed()
+  //   .notRequired()
+  //   .test('fileSize', 'File is too large', (value: any) => {
+  //     if (!value) {
+  //       return true;
+  //     }
+  //     return value.size <= 5 * 1024 * 1024;
+  //   })
 });
 
 const initialRegisterValues = {
@@ -38,30 +50,33 @@ const RegisterForm: React.FC<RegisterFormProps> = (props): JSX.Element => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const register = async (values: RegisterFormValues, onSubmitProps: FormikHelpers<RegisterFormValues>) => {
-    const savedUserResponse = await gqlRequest(`
-    mutation {
-      register(email: "${values.email}", 
-      username: "${values.username}", 
-      password: "${values.password}", 
-      avatar: "${values.avatar}") {
-        _id
-        }
-      }
-    `);
+  const [triggerRegister, { data, called }] = useMutation(REGISTER_USER_MUTATION);
+  const [triggerUpload, { data: uploadedFile }] = useMutation(UPLOAD_FILE_MUTATION, {
+    context: { useMultipart: true }
+  });
 
-    onSubmitProps.resetForm();
-    if (savedUserResponse) {
-      navigate('/login');
-    }
+  const register = async (values: RegisterFormValues, onSubmitProps: FormikHelpers<RegisterFormValues>) => {
+    triggerRegister({ variables: values });
+    // onSubmitProps.resetForm();
   };
 
   const formSubmitHandler = async (values: RegisterFormValues, onSubmitProps: FormikHelpers<RegisterFormValues>) => {
     register(values, onSubmitProps);
   };
 
+  useEffect(() => {
+    if (called && data) {
+      navigate('/login');
+    }
+  }, [data, called]);
+
   return (
-    <Formik onSubmit={formSubmitHandler} initialValues={initialRegisterValues} validationSchema={registerSchema}>
+    <Formik
+      onSubmit={formSubmitHandler}
+      /* @ts-ignore */
+      initialValues={initialRegisterValues}
+      validationSchema={registerSchema}
+    >
       {({ values, errors, touched, handleBlur, handleSubmit, handleChange, setFieldValue, resetForm }) => (
         <form onSubmit={handleSubmit}>
           <Box
@@ -109,7 +124,12 @@ const RegisterForm: React.FC<RegisterFormProps> = (props): JSX.Element => {
                   'image/png': ['.png', '.jpg', '.jpeg']
                 }}
                 multiple={false}
-                onDrop={(acceptedFiles) => setFieldValue('avatar', acceptedFiles[0].name)}
+                onDrop={async (acceptedFiles) => {
+                  console.log(acceptedFiles);
+                  const [file] = acceptedFiles;
+                  await triggerUpload({ variables: { file } });
+                  setFieldValue('avatar', acceptedFiles[0].name);
+                }}
               >
                 {({ getRootProps, getInputProps }) => (
                   <Box
@@ -127,8 +147,9 @@ const RegisterForm: React.FC<RegisterFormProps> = (props): JSX.Element => {
                       <p>Upload your profile picture (optional)</p>
                     ) : (
                       <FlexBetween>
-                        <Typography>{values.avatar}</Typography>
-                        <EditOutlined />
+                        <img src={uploadedFile.uploadFile} alt="" />
+                        {/* <Typography>{values.avatar}</Typography>
+                        <EditOutlined /> */}
                       </FlexBetween>
                     )}
                   </Box>

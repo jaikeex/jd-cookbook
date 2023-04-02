@@ -9,6 +9,7 @@ const resolvers = {
       try {
         const { email, password } = args
         const user = await User.findOne({ email })
+
         if (!user) {
           throw new httpErrors.E401('User not found.')
         }
@@ -28,10 +29,11 @@ const resolvers = {
         )
 
         req.session.user = user
+        console.log(user)
 
         return { token, user }
       } catch (error) {
-        throw new httpErrors.E500(err.message)
+        throw new httpErrors.E500(error.message)
       }
     },
 

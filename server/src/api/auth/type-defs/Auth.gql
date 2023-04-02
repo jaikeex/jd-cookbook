@@ -1,5 +1,7 @@
 # import User from "../../users/type-defs/User.gql"
 
+scalar Upload
+
 type AuthData {
   token: String!
   user: User!
@@ -10,11 +12,13 @@ type Query {
   logout: String!
 }
 
+input UserInput {
+  email: String!
+  username: String!
+  password: String!
+  avatar: String
+}
+
 type Mutation {
-  register(
-    email: String!
-    username: String!
-    password: String!
-    avatar: String
-  ): User
+  register(input: UserInput!): User!
 }

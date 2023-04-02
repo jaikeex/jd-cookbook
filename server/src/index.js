@@ -1,8 +1,7 @@
 import dotenv from 'dotenv'
 import { initServer } from './server/build-app.js'
 import mongoose from 'mongoose'
-import { join } from 'path'
-import { dirname } from 'path'
+import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -17,7 +16,7 @@ mongoose.connect(
     useNewUrlParser: true,
     dbName: 'cookbook'
   },
-  () => {
+  async () => {
     console.log('DATABASE CONNECTION SUCESSFULL')
     console.log('Starting server...')
     const server = initServer()

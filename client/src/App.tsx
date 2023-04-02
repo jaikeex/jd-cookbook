@@ -9,9 +9,10 @@ import type { RootState } from './store/index';
 import NavBar from 'components/Navbar/Navbar';
 import { themeSettings } from 'theme';
 import RegisterPage from 'pages/RegisterPage/RegisterPage';
+import RecipePage from 'pages/RecipePage/RecipePage';
 
 function App() {
-  const mode = useSelector((state: RootState) => state.mode);
+  const mode = useSelector((state: RootState) => state.auth.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
 
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/" element={<TitlePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/recipe/:_id" element={<RecipePage />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
