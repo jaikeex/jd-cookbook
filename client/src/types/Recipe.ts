@@ -4,6 +4,7 @@ export interface Recipe {
   _id: string;
   user: User;
   name: string;
+  likedByUser: boolean;
   ingredients: Ingredient[];
   description: string;
   instructions: string;
@@ -21,6 +22,7 @@ export interface Ingredient {
 }
 
 export interface Comment {
-  author: User;
+  user: User;
   text: string;
+  createdAt: string;
 }

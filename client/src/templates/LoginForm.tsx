@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Button, TextField, Typography, useTheme } from '@mui/material';
 import type { FormikHelpers } from 'formik';
-import { gqlRequest } from 'utils/gqlRequest';
 import { setLogin } from 'store/authSlice';
 import { useLazyLoginQuery } from 'store/apiSlice';
 import { useQuery, useLazyQuery, gql } from '@apollo/client';

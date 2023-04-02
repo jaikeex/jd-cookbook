@@ -10,7 +10,8 @@ import {
   CardActions,
   Collapse,
   Button,
-  Box
+  Box,
+  CardActionArea
 } from '@mui/material';
 import { red } from '@mui/material/colors';
 import FlexBetween from 'components/FlexBetween/FlexBetween';
@@ -26,8 +27,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }): JSX.Element => {
   return (
     <Card
       sx={{
-        maxWidth: '20rem',
-        minHeight: '20rem',
+        width: '20rem',
         display: 'flex',
         flexDirection: 'column',
         '& .MuiCardHeader-subheader': {
@@ -35,35 +35,27 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }): JSX.Element => {
         }
       }}
     >
-      <CardHeader
-        avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" src={recipe.user.avatar} />}
-        action={
-          <IconButton aria-label="settings">
-            <MoreVert />
-          </IconButton>
-        }
-        title={recipe.name}
-        subheader={new Date(+recipe.createdAt).toDateString()}
-      />
-      {recipe.picturePath && <CardMedia component="img" height="194" image={recipe.picturePath} alt={recipe.name} />}
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          {recipe.description}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing sx={{ justifyContent: 'space-between', marginTop: 'auto' }}>
-        <div>
-          <IconButton aria-label="add to favorites">
-            <Favorite />
-          </IconButton>
-          <IconButton aria-label="share">
-            <Share />
-          </IconButton>
-        </div>
-        <Link to={`/recipe/${recipe._id}`}>
-          <Button variant="outlined">View recipe</Button>
-        </Link>
-      </CardActions>
+      {/* @ts-ignore: material ui types do not know the "to" prop */}
+      <CardActionArea LinkComponent={Link} to={`/recipe/${recipe._id}`} disableRipple>
+        {recipe.picturePath ? (
+          <CardMedia
+            sx={{ objectFit: 'cover' }}
+            component="img"
+            height="200"
+            image={recipe.picturePath}
+            alt={recipe.name}
+          />
+        ) : (
+          <CardContent sx={{ height: '200px' }}>
+            <Typography variant="body2">{recipe.description}</Typography>
+          </CardContent>
+        )}
+        <CardContent sx={{ py: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Typography variant="button" textAlign="center">
+            {recipe.name}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
     </Card>
   );
 };

@@ -8,8 +8,10 @@ type Recipe {
   description: String
   instructions: String
   picturePath: String
+  cookingTime: Int!
+  difficulty: String!
   likesCount: Int
-  likes: [String]
+  likedByUser: Boolean
   comments: [Comment]
   createdAt: String!
 }
@@ -21,17 +23,23 @@ type Ingredient {
 
 type Comment {
   user: User!
-  text: String
+  text: String!
+  createdAt: String!
+}
+
+input CommentInput {
+  id: ID!
+  text: String!
 }
 
 input RecipeInput {
-  userId: String!
   name: String!
   ingredients: [IngredientInput]!
   description: String
   instructions: String
   picturePath: String
-  userAvatarPath: String
+  cookingTime: Int!
+  difficulty: String!
 }
 
 input IngredientInput {
@@ -44,11 +52,13 @@ type Query {
   getRecipe(id: ID!): Recipe
   getRecipesByAuthor(userId: ID!): [Recipe]!
   getRecipesByIngredients(ingredients: [String], matchAll: Boolean): [Recipe]!
+  getComments(id: ID!): [Comment]!
 }
 
 type Mutation {
   createRecipe(input: RecipeInput!): Recipe
   updateRecipe(id: ID!, input: RecipeInput!): Recipe!
   deleteRecipe(id: ID!): String
-  likeRecipe(id: ID!, userId: ID!): Recipe!
+  likeRecipe(id: ID!): Recipe!
+  commentRecipe(input: CommentInput!): [Comment]!
 }

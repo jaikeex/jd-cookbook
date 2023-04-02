@@ -16,7 +16,7 @@ const resolvers = {
   Mutation: {
     register: async (root, args, req, info) => {
       try {
-        const { username, email, password, avatar } = args.input
+        const { username, email, password } = args.input
 
         if (!validator.isEmail(email)) {
           throw new httpErrors.E400('Invalid email.')
@@ -50,7 +50,6 @@ const resolvers = {
           username: username,
           email: emailLC,
           password: passwordHash,
-          avatar: avatar,
           roles: ['user']
         })
 

@@ -2,7 +2,6 @@ import * as React from 'react';
 import titleImg from 'assets/title.jpg';
 import { useEffect, useState } from 'react';
 import type { Recipe } from 'types';
-import { gqlRequest } from 'utils/gqlRequest';
 import RecipeCard from 'components/RecipeCard/RecipeCard';
 import { useGetAllRecipesQuery } from 'store/apiSlice';
 import { Box } from '@mui/material';

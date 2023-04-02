@@ -1,13 +1,20 @@
-import { Recipe, User } from '../../../models/index.js'
+import { Recipe, User, RecipeComment } from '../../../models/index.js'
 import { isAuthenticated, hasRole } from '../../auth/resolvers/index.js'
 import { composeResolvers } from '@graphql-tools/resolvers-composition'
+import httpErrors from '../../errors/index.js'
 
 const resolvers = {
   Query: {
     getAllRecipes: async (root, args, req, info) => {
-      console.log(req.session)
-
       return await Recipe.find().populate('user', '-password', User).exec()
+    },
+
+    getComments: async (root, args, req, info) => {
+      const { id } = args
+
+      return await RecipeComment.find({ comment: id })
+        .populate('user', '-password', User)
+        .exec()
     },
 
     getRecipesByAuthor: (root, args, req, info) => {
@@ -34,12 +41,19 @@ const resolvers = {
       }
     },
 
-    getRecipe: (root, args, req, info) => {
+    getRecipe: async (root, args, req, info) => {
       try {
         const { id } = args
-        return Recipe.findById(id)
+        const { _id: userId } = req.session.user
+
+        const recipe = await Recipe.findById(id)
+          .populate('user', '-password', User)
+          .exec()
+
+        recipe.likedByUser = recipe.likes.includes(userId)
+        return recipe
       } catch (error) {
-        throw new httpErrors.E500(err.message)
+        throw new httpErrors.E500(error.message)
       }
     }
   }

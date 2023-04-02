@@ -18,11 +18,7 @@ const UserSchema = new mongoose.Schema(
       required: true,
       min: 6
     },
-    roles: [String],
-    avatar: {
-      type: String,
-      default: ''
-    }
+    roles: [String]
   },
   { timestamps: true }
 )

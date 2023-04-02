@@ -22,21 +22,13 @@ const RecipeSchema = new mongoose.Schema(
         amount: String
       }
     ],
+    cookingTime: Number,
+    difficulty: String,
     description: String,
     instructions: String,
     picturePath: String,
-    userAvatarPath: String,
     likesCount: Number,
-    likes: [String],
-    comments: [
-      {
-        userId: {
-          type: String,
-          required: true
-        },
-        text: String
-      }
-    ]
+    likes: [String]
   },
   { timestamps: true }
 )

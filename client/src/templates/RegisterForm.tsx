@@ -9,7 +9,6 @@ import { Box, Button, TextField, Typography, useTheme } from '@mui/material';
 import { EditOutlined } from '@mui/icons-material';
 import Dropzone from 'react-dropzone';
 import FlexBetween from 'components/FlexBetween/FlexBetween';
-import { gqlRequest } from 'utils/gqlRequest';
 import { api } from 'store/apiSlice';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import { REGISTER_USER_MUTATION, UPLOAD_FILE_MUTATION } from 'graphql/mutations';
@@ -18,30 +17,23 @@ const registerSchema = yup.object().shape({
   username: yup.string().required('required'),
   email: yup.string().email('invalid email').required('required'),
   password: yup.string().required('required'),
-  avatar: yup.string().notRequired()
-  // avatar: yup
-  //   .mixed()
-  //   .notRequired()
-  //   .test('fileSize', 'File is too large', (value: any) => {
-  //     if (!value) {
-  //       return true;
-  //     }
-  //     return value.size <= 5 * 1024 * 1024;
-  //   })
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password'), undefined], 'Passwords must match')
+    .required()
 });
 
 const initialRegisterValues = {
   username: '',
   email: '',
-  password: '',
-  avatar: ''
+  password: ''
 };
 
 interface RegisterFormValues {
   username: string;
   email: string;
   password: string;
-  avatar: string;
+  confirmPassword: string;
 }
 
 export interface RegisterFormProps {}
@@ -51,13 +43,11 @@ const RegisterForm: React.FC<RegisterFormProps> = (props): JSX.Element => {
   const navigate = useNavigate();
 
   const [triggerRegister, { data, called }] = useMutation(REGISTER_USER_MUTATION);
-  const [triggerUpload, { data: uploadedFile }] = useMutation(UPLOAD_FILE_MUTATION, {
-    context: { useMultipart: true }
-  });
 
   const register = async (values: RegisterFormValues, onSubmitProps: FormikHelpers<RegisterFormValues>) => {
-    triggerRegister({ variables: values });
-    // onSubmitProps.resetForm();
+    const { confirmPassword, ...rest } = values;
+    triggerRegister({ variables: rest });
+    onSubmitProps.resetForm();
   };
 
   const formSubmitHandler = async (values: RegisterFormValues, onSubmitProps: FormikHelpers<RegisterFormValues>) => {
@@ -117,45 +107,17 @@ const RegisterForm: React.FC<RegisterFormProps> = (props): JSX.Element => {
               error={Boolean(touched.password) && Boolean(errors.password)}
               helperText={touched.password && errors.password}
             />
+            <TextField
+              label="Confirm password"
+              type="password"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.confirmPassword}
+              name="confirmPassword"
+              error={Boolean(touched.confirmPassword) && Boolean(errors.confirmPassword)}
+              helperText={touched.confirmPassword && errors.confirmPassword}
+            />
 
-            <Box gridColumn="span 4" border={`1px solid ${theme.palette.primary.main}`} borderRadius="5px" p="1rem">
-              <Dropzone
-                accept={{
-                  'image/png': ['.png', '.jpg', '.jpeg']
-                }}
-                multiple={false}
-                onDrop={async (acceptedFiles) => {
-                  console.log(acceptedFiles);
-                  const [file] = acceptedFiles;
-                  await triggerUpload({ variables: { file } });
-                  setFieldValue('avatar', acceptedFiles[0].name);
-                }}
-              >
-                {({ getRootProps, getInputProps }) => (
-                  <Box
-                    {...getRootProps()}
-                    border={`2px dashed ${theme.palette.primary.main}`}
-                    p="1rem"
-                    sx={{
-                      '&:hover': {
-                        cursor: 'pointer'
-                      }
-                    }}
-                  >
-                    <input {...getInputProps()} />
-                    {!values.avatar ? (
-                      <p>Upload your profile picture (optional)</p>
-                    ) : (
-                      <FlexBetween>
-                        <img src={uploadedFile.uploadFile} alt="" />
-                        {/* <Typography>{values.avatar}</Typography>
-                        <EditOutlined /> */}
-                      </FlexBetween>
-                    )}
-                  </Box>
-                )}
-              </Dropzone>
-            </Box>
             <Box>
               <Button
                 fullWidth

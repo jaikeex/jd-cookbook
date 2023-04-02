@@ -1,10 +1,11 @@
 import { createUploadLink } from 'apollo-upload-client';
 import { ApolloClient, InMemoryCache, from } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
+import { setMessage } from 'utils';
 
 const errorLink = onError(({ networkError }) => {
   if (networkError) {
-    alert(networkError.message);
+    setMessage(networkError.message, 'error', 'GraphQL Client');
   }
 });
 

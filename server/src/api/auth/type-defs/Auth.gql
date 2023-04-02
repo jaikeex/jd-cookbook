@@ -16,7 +16,6 @@ input UserInput {
   email: String!
   username: String!
   password: String!
-  avatar: String
 }
 
 type Mutation {

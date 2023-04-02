@@ -1,4 +1,4 @@
-import { Recipe } from '../../../models/index.js'
+import { Recipe, RecipeComment, User } from '../../../models/index.js'
 import httpErrors from '../../errors/index.js'
 import { ObjectId } from 'mongodb'
 
@@ -7,23 +7,26 @@ const resolvers = {
     createRecipe: async (root, args, req, info) => {
       try {
         const {
-          userId,
           name,
           ingredients,
           description,
           instructions,
           picturePath,
-          userAvatarPath
+          cookingTime,
+          difficulty
         } = args.input
 
+        const user = req.session.user
+
         const recipe = new Recipe({
-          userId,
           name,
           ingredients,
+          difficulty,
+          cookingTime,
+          user: user._id,
           description: description || '',
           instructions: instructions || '',
           picturePath: picturePath || '',
-          userAvatarPath: userAvatarPath || '',
           likesCount: 0,
           likes: [],
           comments: []
@@ -32,7 +35,7 @@ const resolvers = {
         const createdRecipe = await recipe.save()
         return createdRecipe
       } catch (error) {
-        throw new httpErrors.E500(err.message)
+        throw new httpErrors.E500(error.message)
       }
     },
 
@@ -61,15 +64,39 @@ const resolvers = {
       }
     },
 
+    commentRecipe: async (root, args, req, info) => {
+      try {
+        const { id, text } = args.input
+        const { _id: userId } = req.session.user
+
+        const comment = new RecipeComment({
+          text,
+          recipe: id,
+          user: userId
+        })
+
+        await comment.save()
+
+        return await RecipeComment.find({ comment: id })
+          .populate('user', '-password', User)
+          .exec()
+      } catch (error) {
+        throw new httpErrors.E500(error.message)
+      }
+    },
+
     likeRecipe: async (root, args, req, info) => {
       try {
-        const { id, userId } = args
+        const { id } = args
+        const { _id: userId } = req.session.user
         const recipe = await Recipe.findById(id)
         const isLiked = recipe.likes.includes(userId)
 
         if (isLiked) {
           recipe.likesCount -= 1
-          recipe.likes = recipe.likes.filter(id => id !== userId)
+          recipe.likes = recipe.likes.filter(
+            id => id.toString() !== userId.toString()
+          )
         } else {
           recipe.likesCount += 1
           recipe.likes.push(userId)
