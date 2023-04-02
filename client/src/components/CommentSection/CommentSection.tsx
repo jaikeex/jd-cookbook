@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, List, ListItem, ListItemText } from '@mui/material';
 import { useMutation, useQuery } from '@apollo/client';
 import { COMMENT_RECIPE_MUTATION } from 'graphql/mutations';
-import type { User, Comment } from 'types';
+import type { Comment } from 'types';
 import { GET_COMMENTS_QUERY } from 'graphql/queries';
 
 interface Props {
@@ -12,16 +12,13 @@ interface Props {
 const CommentSection: React.FC<Props> = ({ recipeId }) => {
   const [commentText, setCommentText] = useState('');
 
-  console.log(recipeId);
-
+  const [commentRecipe] = useMutation(COMMENT_RECIPE_MUTATION);
   const { loading, error, data } = useQuery(GET_COMMENTS_QUERY, {
     variables: { id: recipeId }
   });
 
-  const [commentRecipe] = useMutation(COMMENT_RECIPE_MUTATION);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (commentText) {
       await commentRecipe({
         variables: { id: recipeId, text: commentText },

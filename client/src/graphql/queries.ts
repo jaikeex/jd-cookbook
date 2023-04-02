@@ -45,3 +45,14 @@ export const GET_COMMENTS_QUERY = gql`
     }
   }
 `;
+
+export const GET_NOTIFICATIONS_QUERY = gql`
+  query getNotifications {
+    getNotifications {
+      _id
+      recipe
+      seen
+      text
+    }
+  }
+`;

@@ -42,22 +42,31 @@ input RecipeInput {
   difficulty: String!
 }
 
+input UpdateRecipeInput {
+  name: String!
+  ingredients: [IngredientInput]!
+  description: String
+  instructions: String
+  picturePath: String
+  cookingTime: Int!
+  difficulty: String!
+}
+
 input IngredientInput {
   name: String!
   amount: String
 }
 
 type Query {
-  getAllRecipes: [Recipe]!
+  getAllRecipes(userId: ID): [Recipe]!
   getRecipe(id: ID!): Recipe
-  getRecipesByAuthor(userId: ID!): [Recipe]!
   getRecipesByIngredients(ingredients: [String], matchAll: Boolean): [Recipe]!
   getComments(id: ID!): [Comment]!
 }
 
 type Mutation {
   createRecipe(input: RecipeInput!): Recipe
-  updateRecipe(id: ID!, input: RecipeInput!): Recipe!
+  updateRecipe(id: ID!, input: UpdateRecipeInput!): Recipe!
   deleteRecipe(id: ID!): String
   likeRecipe(id: ID!): Recipe!
   commentRecipe(input: CommentInput!): [Comment]!

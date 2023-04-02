@@ -6,24 +6,27 @@ import httpErrors from '../../errors/index.js'
 const resolvers = {
   Query: {
     getAllRecipes: async (root, args, req, info) => {
-      return await Recipe.find().populate('user', '-password', User).exec()
+      const { userId } = args
+
+      if (userId) {
+        return await Recipe.find({ user: userId })
+          .populate('user', '-password', User)
+          .sort({ likesCount: -1, createdAt: -1 })
+          .exec()
+      }
+
+      return await Recipe.find()
+        .populate('user', '-password', User)
+        .sort({ likesCount: -1, createdAt: -1 })
+        .exec()
     },
 
     getComments: async (root, args, req, info) => {
       const { id } = args
 
-      return await RecipeComment.find({ comment: id })
+      return await RecipeComment.find({ recipe: id })
         .populate('user', '-password', User)
         .exec()
-    },
-
-    getRecipesByAuthor: (root, args, req, info) => {
-      try {
-        const { userId } = args
-        return Recipe.find({ userId: userId })
-      } catch (error) {
-        throw new httpErrors.E500(err.message)
-      }
     },
 
     getRecipesByIngredients: async (root, args, req, info) => {

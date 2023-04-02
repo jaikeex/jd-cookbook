@@ -90,7 +90,7 @@ export const api = createApi({
               _id
               createdAt
               user {
-                avatar
+                username
               }
               name
               description
@@ -109,7 +109,7 @@ export const api = createApi({
               _id
               createdAt
               user {
-                avatar
+                username
               }
               name
               likes
@@ -120,13 +120,6 @@ export const api = createApi({
               ingredients {
                 name
                 amount
-              }
-              comments {
-                user {
-                  username
-                  avatar
-                }
-                text
               }
             }
           }

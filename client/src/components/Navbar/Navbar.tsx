@@ -13,12 +13,13 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import type { RootState } from 'store/index';
 import FlexBetween from 'components/FlexBetween/FlexBetween';
-import { Close, DarkMode, Help, LightMode, Message, Notifications, Search } from '@mui/icons-material';
+import { Close, DarkMode, Help, LightMode, Message, Search } from '@mui/icons-material';
 import { setMode, setLogout } from 'store/authSlice';
 import ProfileActions from 'components/ProfileActions/ProfileActions';
+import { Notifications } from 'components/Notifications';
 
 export interface NavBarProps {}
 
@@ -38,20 +39,22 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
   return (
     <FlexBetween padding="1rem 6%" position="sticky" left="0" top="0" bgcolor={alt} zIndex={100}>
       <FlexBetween gap="1.75rem">
-        <Typography
-          fontWeight="bold"
-          fontSize="clamp(1rem, 2rem, 2.25rem)"
-          color="primary"
-          onClick={() => navigate('/')}
-          sx={{
-            '&:hover': {
-              color: primaryLight,
-              cursor: 'pointer'
-            }
-          }}
-        >
-          Cookbook
-        </Typography>
+        <Link to="/">
+          <Typography
+            fontWeight="bold"
+            fontSize="clamp(1rem, 2rem, 2.25rem)"
+            color="primary"
+            onClick={() => navigate('/')}
+            sx={{
+              '&:hover': {
+                color: primaryLight,
+                cursor: 'pointer'
+              }
+            }}
+          >
+            Cookbook
+          </Typography>
+        </Link>
         {isNonMobileScreens && (
           <FlexBetween borderRadius="9px" gap="3rem" padding="0.1rem 1.5rem">
             <InputBase placeholder="Search..." />
@@ -73,7 +76,7 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
             )}
           </IconButton>
           <Message sx={{ fontSize: '25px' }} />
-          <Notifications sx={{ fontSize: '25px' }} />
+          <Notifications />
           <Help sx={{ fontSize: '25px' }} />
           <ProfileActions />
 
@@ -128,7 +131,7 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
               )}
             </IconButton>
             <Message sx={{ fontSize: '25px' }} />
-            <Notifications sx={{ fontSize: '25px' }} />
+            <Notifications />
             <Help sx={{ fontSize: '25px' }} />
             <ProfileActions />
             {/* <FormControl variant="standard">

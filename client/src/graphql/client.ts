@@ -3,9 +3,13 @@ import { ApolloClient, InMemoryCache, from } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import { setMessage } from 'utils';
 
-const errorLink = onError(({ networkError }) => {
-  if (networkError) {
+const errorLink = onError(({ networkError, graphQLErrors }) => {
+  if (graphQLErrors) {
+    setMessage(graphQLErrors[0].message, 'error', 'GraphQL Client');
+    return;
+  } else if (networkError) {
     setMessage(networkError.message, 'error', 'GraphQL Client');
+    return;
   }
 });
 

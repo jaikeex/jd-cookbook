@@ -1,4 +1,9 @@
-import { Recipe, RecipeComment, User } from '../../../models/index.js'
+import {
+  Notification,
+  Recipe,
+  RecipeComment,
+  User
+} from '../../../models/index.js'
 import httpErrors from '../../errors/index.js'
 import { ObjectId } from 'mongodb'
 
@@ -60,22 +65,29 @@ const resolvers = {
         await Recipe.findByIdAndDelete(id)
         return `Sucessfully deleted recipe with id=${id}`
       } catch (error) {
-        throw new httpErrors.E500(err.message)
+        throw new httpErrors.E500(error.message)
       }
     },
 
     commentRecipe: async (root, args, req, info) => {
       try {
         const { id, text } = args.input
-        const { _id: userId } = req.session.user
+        const { _id: userId, username } = req.session.user
+        const commentedRecipe = await Recipe.findById(id)
 
         const comment = new RecipeComment({
           text,
           recipe: id,
           user: userId
         })
-
         await comment.save()
+
+        const notification = new Notification({
+          recipe: id,
+          user: commentedRecipe.user,
+          text: `${username} left a comment on your ${commentedRecipe.name} recipe!`
+        })
+        await notification.save()
 
         return await RecipeComment.find({ comment: id })
           .populate('user', '-password', User)

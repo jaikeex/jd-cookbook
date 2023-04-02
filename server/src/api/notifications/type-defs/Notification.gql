@@ -1,0 +1,14 @@
+type Notification {
+  _id: ID!
+  recipe: String!
+  seen: Boolean!
+  text: String!
+}
+
+type Query {
+  getNotifications: [Notification]!
+}
+
+type Mutation {
+  markNotificationAsSeen(id: ID!): Notification
+}
