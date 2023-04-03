@@ -14,13 +14,13 @@ import { useQuery, useMutation, gql } from '@apollo/client';
 import { REGISTER_USER_MUTATION, UPLOAD_FILE_MUTATION } from 'graphql/mutations';
 
 const registerSchema = yup.object().shape({
-  username: yup.string().required('required'),
-  email: yup.string().email('invalid email').required('required'),
-  password: yup.string().required('required'),
+  username: yup.string().required('Username is required'),
+  email: yup.string().email('invalid email').required('Email is required'),
+  password: yup.string().required('Password is required'),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref('password'), undefined], 'Passwords must match')
-    .required()
+    .required('You must confirm your password')
 });
 
 const initialRegisterValues = {
@@ -72,7 +72,7 @@ const RegisterForm: React.FC<RegisterFormProps> = (props): JSX.Element => {
           <Box
             display="flex"
             flexDirection="column"
-            gap="2rem"
+            gap="1rem"
             sx={{
               '& > div': {
                 gridColumn: undefined
@@ -86,7 +86,7 @@ const RegisterForm: React.FC<RegisterFormProps> = (props): JSX.Element => {
               value={values.username}
               name="username"
               error={Boolean(touched.username) && Boolean(errors.username)}
-              helperText={touched.username && errors.username}
+              helperText={(touched.username && errors.username) || ' '}
             />
             <TextField
               label="E-mail"
@@ -95,7 +95,7 @@ const RegisterForm: React.FC<RegisterFormProps> = (props): JSX.Element => {
               value={values.email}
               name="email"
               error={Boolean(touched.email) && Boolean(errors.email)}
-              helperText={touched.email && errors.email}
+              helperText={(touched.email && errors.email) || ' '}
             />
             <TextField
               label="Password"
@@ -105,7 +105,7 @@ const RegisterForm: React.FC<RegisterFormProps> = (props): JSX.Element => {
               value={values.password}
               name="password"
               error={Boolean(touched.password) && Boolean(errors.password)}
-              helperText={touched.password && errors.password}
+              helperText={(touched.password && errors.password) || ' '}
             />
             <TextField
               label="Confirm password"
@@ -115,7 +115,7 @@ const RegisterForm: React.FC<RegisterFormProps> = (props): JSX.Element => {
               value={values.confirmPassword}
               name="confirmPassword"
               error={Boolean(touched.confirmPassword) && Boolean(errors.confirmPassword)}
-              helperText={touched.confirmPassword && errors.confirmPassword}
+              helperText={(touched.confirmPassword && errors.confirmPassword) || ' '}
             />
 
             <Box>

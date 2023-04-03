@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const RecipeCommentSchema = new mongoose.Schema(
+const CommentSchema = new mongoose.Schema(
   {
     recipe: {
       type: String,
@@ -15,6 +15,6 @@ const RecipeCommentSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-const RecipeComment = mongoose.model('RecipeComment', RecipeCommentSchema)
+const Comment = mongoose.model('Comment', CommentSchema)
 
-export default RecipeComment
+export default Comment

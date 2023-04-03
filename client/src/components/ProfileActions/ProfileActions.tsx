@@ -1,7 +1,7 @@
 import { Button, Menu, MenuItem } from '@mui/material';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import type { RootState } from 'store';
 import { api } from 'store/apiSlice';
 import { setLogout } from 'store/authSlice';
@@ -50,10 +50,12 @@ const ProfileActions: React.FC<ProfileActionsProps> = (props): JSX.Element => {
         open={open}
         onClose={handleClose}
         MenuListProps={{
-          'aria-labelledby': 'basic-button'
+          disablePadding: true
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <Link to={`/profile/${user?._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <MenuItem onClick={handleClose}>Profile</MenuItem>
+        </Link>
         <MenuItem onClick={logoutClickHandler}>Logout</MenuItem>
       </Menu>
     </div>

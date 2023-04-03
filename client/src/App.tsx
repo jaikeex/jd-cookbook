@@ -13,6 +13,7 @@ import RecipePage from 'pages/RecipePage/RecipePage';
 import { CreateRecipePage } from 'pages/CreateRecipePage';
 import { useMessage } from 'hooks/useMessage';
 import { CSnackbar } from 'components/CSnackbar/CSnackbar';
+import ProfilePage from 'pages/ProfilePage/ProfilePage';
 
 function App() {
   const mode = useSelector((state: RootState) => state.auth.mode);
@@ -31,6 +32,7 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/recipe/:_id" element={<RecipePage />} />
             <Route path="/create" element={<CreateRecipePage />} />
+            <Route path="/profile/:_id" element={<ProfilePage />} />
           </Routes>
           {currentMessage.message && (
             <CSnackbar

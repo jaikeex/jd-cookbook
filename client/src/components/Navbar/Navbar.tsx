@@ -39,7 +39,7 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
   return (
     <FlexBetween padding="1rem 6%" position="sticky" left="0" top="0" bgcolor={alt} zIndex={100}>
       <FlexBetween gap="1.75rem">
-        <Link to="/">
+        <Link to="/" style={{ textDecoration: 'none' }}>
           <Typography
             fontWeight="bold"
             fontSize="clamp(1rem, 2rem, 2.25rem)"
@@ -75,9 +75,7 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
               <LightMode sx={{ color: dark, fontSize: '25px' }} />
             )}
           </IconButton>
-          <Message sx={{ fontSize: '25px' }} />
           <Notifications />
-          <Help sx={{ fontSize: '25px' }} />
           <ProfileActions />
 
           {/* <FormControl variant="standard">
@@ -130,9 +128,7 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
                 <LightMode sx={{ color: dark, fontSize: '25px' }} />
               )}
             </IconButton>
-            <Message sx={{ fontSize: '25px' }} />
             <Notifications />
-            <Help sx={{ fontSize: '25px' }} />
             <ProfileActions />
             {/* <FormControl variant="standard">
               <Select

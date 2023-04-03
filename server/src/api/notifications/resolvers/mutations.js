@@ -1,9 +1,4 @@
-import {
-  Notification,
-  Recipe,
-  RecipeComment,
-  User
-} from '../../../models/index.js'
+import { Notification, Recipe, Comment, User } from '../../../models/index.js'
 import httpErrors from '../../errors/index.js'
 import { ObjectId } from 'mongodb'
 

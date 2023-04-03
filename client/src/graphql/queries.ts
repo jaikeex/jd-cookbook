@@ -4,6 +4,7 @@ export const LOGIN_QUERY = gql`
   query login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       user {
+        _id
         username
       }
     }
@@ -53,6 +54,55 @@ export const GET_NOTIFICATIONS_QUERY = gql`
       recipe
       seen
       text
+    }
+  }
+`;
+
+export const GET_ALL_INGREDIENTS_QUERY = gql`
+  query getAllIngredients {
+    getAllIngredients {
+      name
+    }
+  }
+`;
+
+export const GET_RECIPES_QUERY = gql`
+  query getRecipes($userId: ID, $ingredients: [String], $matchAll: Boolean, $after: String, $first: Int) {
+    getRecipes(userId: $userId, ingredients: $ingredients, matchAll: $matchAll, after: $after, first: $first) {
+      edges {
+        node {
+          _id
+          name
+          picturePath
+          description
+          createdAt
+          likesCount
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+`;
+
+export const SEARCH_RECIPES_QUERY = gql`
+  query searchRecipes($userId: ID, $query: String!, $after: String, $first: Int) {
+    searchRecipes(query: $query, userId: $userId, after: $after, first: $first) {
+      edges {
+        node {
+          _id
+          name
+          createdAt
+          likesCount
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
   }
 `;

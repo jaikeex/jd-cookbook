@@ -14,6 +14,23 @@ type Recipe {
   likedByUser: Boolean
   comments: [Comment]
   createdAt: String!
+  cursor: String!
+}
+
+type RecipeConnection {
+  edges: [RecipeEdge!]!
+  totalResults: Int!
+  pageInfo: PageInfo!
+}
+
+type RecipeEdge {
+  node: Recipe!
+  cursor: String!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  endCursor: String
 }
 
 type Ingredient {
@@ -58,10 +75,22 @@ input IngredientInput {
 }
 
 type Query {
-  getAllRecipes(userId: ID): [Recipe]!
+  getRecipes(
+    userId: ID
+    ingredients: [String]
+    matchAll: Boolean
+    first: Int
+    after: String
+  ): RecipeConnection!
   getRecipe(id: ID!): Recipe
-  getRecipesByIngredients(ingredients: [String], matchAll: Boolean): [Recipe]!
   getComments(id: ID!): [Comment]!
+  getAllIngredients: [Ingredient]!
+  searchRecipes(
+    userId: ID
+    query: String!
+    first: Int
+    after: String
+  ): RecipeConnection!
 }
 
 type Mutation {

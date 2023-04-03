@@ -72,7 +72,7 @@ const LoginForm: React.FC<LoginFormProps> = (props): JSX.Element => {
               value={values.email}
               name="email"
               error={Boolean(touched.email) && Boolean(errors.email)}
-              helperText={touched.email && errors.email}
+              helperText={(touched.email && errors.email) || ' '}
             />
             <TextField
               label="Password"
@@ -82,7 +82,7 @@ const LoginForm: React.FC<LoginFormProps> = (props): JSX.Element => {
               value={values.password}
               name="password"
               error={Boolean(touched.password) && Boolean(errors.password)}
-              helperText={touched.password && errors.password}
+              helperText={(touched.password && errors.password) || ' '}
             />
             <Box>
               <Button

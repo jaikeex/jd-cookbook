@@ -1,9 +1,4 @@
-import {
-  Notification,
-  Recipe,
-  RecipeComment,
-  User
-} from '../../../models/index.js'
+import { Notification, Recipe, Comment, User } from '../../../models/index.js'
 import httpErrors from '../../errors/index.js'
 import { ObjectId } from 'mongodb'
 
@@ -75,21 +70,23 @@ const resolvers = {
         const { _id: userId, username } = req.session.user
         const commentedRecipe = await Recipe.findById(id)
 
-        const comment = new RecipeComment({
+        const comment = new Comment({
           text,
           recipe: id,
           user: userId
         })
         await comment.save()
 
-        const notification = new Notification({
-          recipe: id,
-          user: commentedRecipe.user,
-          text: `${username} left a comment on your ${commentedRecipe.name} recipe!`
-        })
-        await notification.save()
+        if (commentedRecipe.user !== userId) {
+          const notification = new Notification({
+            recipe: id,
+            user: commentedRecipe.user,
+            text: `${username} left a comment on your ${commentedRecipe.name} recipe!`
+          })
+          await notification.save()
+        }
 
-        return await RecipeComment.find({ comment: id })
+        return await Comment.find({ comment: id })
           .populate('user', '-password', User)
           .exec()
       } catch (error) {

@@ -19,6 +19,7 @@ import Dropzone from 'react-dropzone';
 import FlexBetween from 'components/FlexBetween/FlexBetween';
 import { useMutation } from '@apollo/client';
 import { CREATE_RECIPE_MUTATION, UPLOAD_FILE_MUTATION } from 'graphql/mutations';
+import { useNavigate } from 'react-router-dom';
 
 export interface CreateRecipePageProps {}
 
@@ -60,11 +61,16 @@ const initialValues: CreateRecipeFormValues = {
   picturePath: ''
 };
 
+interface UploadFileData {
+  uploadFile: string;
+}
+
 const CreateRecipePage: React.FC<CreateRecipePageProps> = (props): JSX.Element => {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const [triggerCreate, { data: createdRecipe }] = useMutation(CREATE_RECIPE_MUTATION);
-  const [triggerUpload, { data: uploadedFile, called }] = useMutation(UPLOAD_FILE_MUTATION, {
+  const [triggerUpload, { data: uploadedFile, called }] = useMutation<UploadFileData>(UPLOAD_FILE_MUTATION, {
     context: { useMultipart: true }
   });
 
@@ -74,8 +80,13 @@ const CreateRecipePage: React.FC<CreateRecipePageProps> = (props): JSX.Element =
   ) => {
     values.cookingTime = +values.cookingTime;
     console.log(values);
-    triggerCreate({ variables: values });
-    // onSubmitProps.resetForm();
+    await triggerCreate({
+      variables: values,
+      onCompleted(data) {
+        navigate(`/recipe/${data.createRecipe._id}`);
+      }
+    });
+    onSubmitProps.resetForm();
   };
 
   return (
@@ -101,7 +112,7 @@ const CreateRecipePage: React.FC<CreateRecipePageProps> = (props): JSX.Element =
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.name && Boolean(errors.name)}
-                helperText={touched.name && errors.name}
+                helperText={(touched.name && errors.name) || ' '}
                 sx={{ gridColumn: 'span 2' }}
               />
 
@@ -120,7 +131,7 @@ const CreateRecipePage: React.FC<CreateRecipePageProps> = (props): JSX.Element =
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.cookingTime && Boolean(errors.cookingTime)}
-                helperText={touched.cookingTime && errors.cookingTime}
+                helperText={(touched.cookingTime && errors.cookingTime) || ' '}
               />
               <TextField
                 select
@@ -154,7 +165,7 @@ const CreateRecipePage: React.FC<CreateRecipePageProps> = (props): JSX.Element =
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.description && Boolean(errors.description)}
-                helperText={touched.description && errors.description}
+                helperText={(touched.description && errors.description) || ' '}
                 sx={{ gridColumn: 'span 4' }}
               />
               <Box gridColumn="span 4" border={`1px solid ${theme.palette.primary.main}`} borderRadius="5px" p="1rem">
@@ -165,8 +176,8 @@ const CreateRecipePage: React.FC<CreateRecipePageProps> = (props): JSX.Element =
                   multiple={false}
                   onDrop={async (acceptedFiles) => {
                     const [file] = acceptedFiles;
-                    await triggerUpload({ variables: { file } });
-                    setFieldValue('picturePath', uploadedFile.uploadFile);
+                    const { data } = await triggerUpload({ variables: { file } });
+                    setFieldValue('picturePath', data?.uploadFile);
                   }}
                 >
                   {({ getRootProps, getInputProps }) => (
@@ -263,7 +274,7 @@ const CreateRecipePage: React.FC<CreateRecipePageProps> = (props): JSX.Element =
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.instructions && Boolean(errors.instructions)}
-                helperText={touched.instructions && errors.instructions}
+                helperText={(touched.instructions && errors.instructions) || ' '}
               />
               <Button
                 fullWidth

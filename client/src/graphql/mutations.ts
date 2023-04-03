@@ -67,3 +67,9 @@ export const MARK_NOTIFICATION_AS_SEEN_MUTATION = gql`
     }
   }
 `;
+
+export const DELETE_RECIPE = gql`
+  mutation deleteRecipe($id: ID!) {
+    deleteRecipe(id: $id)
+  }
+`;

@@ -13,6 +13,8 @@ export interface Recipe {
   likesCount: number;
   likes: string[];
   comments: Comment[];
+  cookingTime: number;
+  difficulty: 'easy' | 'medium' | 'hard';
   createdAt: string;
 }
 
