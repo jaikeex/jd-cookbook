@@ -1,9 +1,7 @@
 import { useLazyQuery } from '@apollo/client';
-import type { ApolloError } from '@apollo/client';
 import { LOGIN_QUERY } from 'core/graphql';
 import { useDispatch } from 'react-redux';
 import { setLogin } from 'store/authSlice';
-import { setMessage } from 'utils';
 
 interface IUseLogin {
   login: (email: string, password: string) => Promise<boolean>;
@@ -13,7 +11,7 @@ interface IUseLogin {
 export const useLogin = (): IUseLogin => {
   const dispatch = useDispatch();
 
-  const [loginQuery, { loading }] = useLazyQuery(LOGIN_QUERY, {
+  const [loginQuery, { loading, client }] = useLazyQuery(LOGIN_QUERY, {
     fetchPolicy: 'no-cache'
   });
 
@@ -23,6 +21,7 @@ export const useLogin = (): IUseLogin => {
     });
 
     if (response && response.data) {
+      await client.clearStore();
       dispatch(setLogin({ user: response.data.login.user }));
       return true;
     }

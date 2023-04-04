@@ -2,7 +2,7 @@ import { Formik } from 'formik';
 import * as React from 'react';
 import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
-import { Box, Button, CircularProgress, TextField, Typography, useTheme } from '@mui/material';
+import { Box, Button, CircularProgress, TextField, Typography, useMediaQuery, useTheme } from '@mui/material';
 import type { FormikHelpers } from 'formik';
 import { useLogin } from 'core';
 
@@ -24,7 +24,6 @@ interface LoginFormValues {
 const LoginForm: React.FC = (): JSX.Element => {
   const { login, loading } = useLogin();
   const navigate = useNavigate();
-
   const theme = useTheme();
 
   const handleFormSubmit = async (values: LoginFormValues, onSubmitProps: FormikHelpers<LoginFormValues>) => {
@@ -36,7 +35,7 @@ const LoginForm: React.FC = (): JSX.Element => {
 
   return (
     <Formik onSubmit={handleFormSubmit} initialValues={initialLoginValues} validationSchema={loginSchema}>
-      {({ values, errors, touched, handleBlur, handleSubmit, handleChange, setFieldValue, resetForm }) => (
+      {({ values, errors, touched, handleBlur, handleSubmit, handleChange }) => (
         <form onSubmit={handleSubmit}>
           <Box
             display="flex"
@@ -83,7 +82,7 @@ const LoginForm: React.FC = (): JSX.Element => {
               >
                 {loading ? <CircularProgress /> : 'Login'}
               </Button>
-              <Link to={'/register'}>
+              <Link to={'/auth/register'}>
                 <Typography>Not registered yet? Create an account!</Typography>
               </Link>
             </Box>

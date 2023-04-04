@@ -2,9 +2,6 @@ import * as React from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { AccessTimeRounded, OutdoorGrillRounded } from '@mui/icons-material';
 import { Box, Divider, List, Typography, useMediaQuery } from '@mui/material';
-import { IngredientLabel } from 'components/atoms/IngredientLabel';
-import CommentSection from 'components/templates/CommentSection/CommentSection';
-import { FlexBetween } from 'components';
 import { LIKE_RECIPE_MUTATION, GET_RECIPE_QUERY } from 'core/graphql';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -12,8 +9,7 @@ import type { Ingredient, Recipe } from 'core/types';
 import placeholder from 'assets/placeholder.png';
 import { useSelector } from 'react-redux';
 import type { RootState } from 'store';
-import { LikeButton } from 'components/molecules/LikeButton';
-import { RecipeInfoTag } from 'components/molecules/RecipeInfoTag';
+import { LikeButton, RecipeInfoTag, CommentSection, IngredientLabel, FlexBetween } from 'components';
 
 export interface RecipePageProps {}
 
@@ -29,7 +25,10 @@ const RecipePage: React.FC<RecipePageProps> = (): JSX.Element => {
 
   const handleLikeButtonClick = async () => {
     if (recipe) {
-      const { data: updatedRecipe } = await likeRecipe({ variables: { id: recipe._id } });
+      const { data: updatedRecipe } = await likeRecipe({
+        variables: { id: recipe._id },
+        refetchQueries: [{ query: GET_RECIPE_QUERY, variables: { id: params._id } }]
+      });
       setRecipe((prevState) => ({ ...prevState, ...updatedRecipe.likeRecipe }));
     }
   };
@@ -45,9 +44,6 @@ const RecipePage: React.FC<RecipePageProps> = (): JSX.Element => {
       {!!recipe && (
         <React.Fragment>
           <Box
-            width={md ? (sm ? '23rem' : '47rem') : '70rem'}
-            p="2rem"
-            m="2rem auto"
             display={sm ? 'flex' : 'grid'}
             flexDirection="column"
             gridTemplateColumns="repeat(4, 1fr)"

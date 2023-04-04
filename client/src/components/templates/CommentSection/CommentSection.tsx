@@ -1,17 +1,5 @@
 import React, { useState } from 'react';
-import {
-  TextField,
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-  Box,
-  Divider,
-  useTheme,
-  alpha,
-  Typography,
-  useMediaQuery
-} from '@mui/material';
+import { TextField, Button, List, Box, Divider, useTheme, alpha, Typography, useMediaQuery } from '@mui/material';
 import { useMutation, useQuery } from '@apollo/client';
 import { COMMENT_RECIPE_MUTATION } from 'core/graphql/mutations';
 import type { Comment } from 'core/types';
@@ -20,6 +8,7 @@ import FlexBetween from 'components/utils/FlexBetween/FlexBetween';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import type { RootState } from 'store';
+import { useComments } from 'core/hooks/useComments';
 
 interface Props {
   recipeId: string;
@@ -30,19 +19,12 @@ const CommentSection: React.FC<Props> = ({ recipeId }) => {
   const theme = useTheme();
   const sm = useMediaQuery('(max-width:740px)');
   const user = useSelector((state: RootState) => state.auth.user);
-
-  const [commentRecipe] = useMutation(COMMENT_RECIPE_MUTATION);
-  const { loading, error, data } = useQuery(GET_COMMENTS_QUERY, {
-    variables: { id: recipeId }
-  });
+  const { comments, postComment, loading } = useComments(recipeId);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (commentText) {
-      await commentRecipe({
-        variables: { id: recipeId, text: commentText },
-        refetchQueries: [{ query: GET_COMMENTS_QUERY, variables: { id: recipeId } }]
-      });
+      postComment(commentText);
       setCommentText('');
     }
   };
@@ -54,10 +36,9 @@ const CommentSection: React.FC<Props> = ({ recipeId }) => {
   return (
     <div>
       {loading && <p>Loading comments...</p>}
-      {error && <p>Error loading comments</p>}
-      {data && (
+      {comments && (
         <List>
-          {data.getComments.map((comment: Comment) => (
+          {comments.map((comment: Comment) => (
             <Box
               key={comment.createdAt}
               borderRadius={1}

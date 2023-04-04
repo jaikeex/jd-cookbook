@@ -57,16 +57,12 @@ const resolvers = {
         })
       }
 
-      console.log(pipeline)
-
       let sort = { createdAt: -1 }
 
       const recipes = await Recipe.aggregate(pipeline)
         .sort(sort)
         .limit(first)
         .exec()
-
-      console.log(recipes)
 
       const edges = recipes.map(recipe => ({
         node: recipe,

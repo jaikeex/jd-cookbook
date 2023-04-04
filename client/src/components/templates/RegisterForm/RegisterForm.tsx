@@ -19,7 +19,8 @@ const registerSchema = yup.object().shape({
 const initialRegisterValues = {
   username: '',
   email: '',
-  password: ''
+  password: '',
+  confirmPassword: ''
 };
 
 interface RegisterFormValues {
@@ -29,9 +30,7 @@ interface RegisterFormValues {
   confirmPassword: string;
 }
 
-export interface RegisterFormProps {}
-
-const RegisterForm: React.FC<RegisterFormProps> = (props): JSX.Element => {
+const RegisterForm: React.FC = (): JSX.Element => {
   const theme = useTheme();
   const navigate = useNavigate();
   const { register, loading } = useRegister();
@@ -44,13 +43,8 @@ const RegisterForm: React.FC<RegisterFormProps> = (props): JSX.Element => {
   };
 
   return (
-    <Formik
-      onSubmit={formSubmitHandler}
-      /* @ts-ignore */
-      initialValues={initialRegisterValues}
-      validationSchema={registerSchema}
-    >
-      {({ values, errors, touched, handleBlur, handleSubmit, handleChange, setFieldValue, resetForm }) => (
+    <Formik onSubmit={formSubmitHandler} initialValues={initialRegisterValues} validationSchema={registerSchema}>
+      {({ values, errors, touched, handleBlur, handleSubmit, handleChange }) => (
         <form onSubmit={handleSubmit}>
           <Box
             display="flex"
@@ -117,7 +111,7 @@ const RegisterForm: React.FC<RegisterFormProps> = (props): JSX.Element => {
               >
                 {loading ? <CircularProgress /> : 'Register'}
               </Button>
-              <Link to={'/login'}>
+              <Link to={'/auth/login'}>
                 <Typography>Already have an account? Log in!</Typography>
               </Link>
             </Box>

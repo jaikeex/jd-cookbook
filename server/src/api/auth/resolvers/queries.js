@@ -39,6 +39,7 @@ const resolvers = {
 
     logout: (root, args, req, info) => {
       req.session.destroy()
+
       return 'You have been logged out.'
     }
   }

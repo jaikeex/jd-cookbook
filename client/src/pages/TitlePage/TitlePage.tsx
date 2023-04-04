@@ -2,7 +2,7 @@ import * as React from 'react';
 import titleImg from 'assets/title.jpg';
 import { useEffect, useState } from 'react';
 import type { Recipe } from 'core/types';
-import RecipeCard from 'components/RecipeCard/RecipeCard';
+import RecipeCard from 'components/molecules/RecipeCard/RecipeCard';
 import { Box, Button, CircularProgress, useMediaQuery } from '@mui/material';
 import AsyncMultiSelect from 'components/AsyncMultiSelect/AsyncMultiSelect';
 import { useQuery, useLazyQuery } from '@apollo/client';
@@ -45,7 +45,7 @@ const TitlePage: React.FC<TitlePageProps> = (props): JSX.Element => {
   }, [data]);
 
   return (
-    <Box width={md ? (sm ? '23rem' : '47rem') : '70rem'} p="2rem" m="2rem auto">
+    <React.Fragment>
       <Box
         sx={{
           position: 'relative',
@@ -127,7 +127,7 @@ const TitlePage: React.FC<TitlePageProps> = (props): JSX.Element => {
         ))}
         {networkStatus === 3 && <CircularProgress />}
       </Box>
-    </Box>
+    </React.Fragment>
   );
 };
 

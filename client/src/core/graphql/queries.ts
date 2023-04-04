@@ -82,7 +82,7 @@ export const GET_RECIPES_QUERY = gql`
           picturePath
           description
           createdAt
-          likesCounts
+          likesCount
         }
         cursor
       }
