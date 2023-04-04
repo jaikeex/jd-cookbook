@@ -11,6 +11,7 @@ import { Waypoint } from 'react-waypoint';
 import { Link } from 'react-router-dom';
 import type { RootState } from 'store/index';
 import { useDispatch, useSelector } from 'react-redux';
+import { CButton } from 'components';
 
 export interface HomePageProps {}
 
@@ -73,19 +74,14 @@ const HomePage: React.FC<HomePageProps> = (props): JSX.Element => {
           }}
         >
           <AsyncMultiSelect onChange={(options) => setSelectedOptions(options)} />
-          <Button onClick={filterRecipesHandler} variant="contained" sx={{ mt: '1rem', width: '8rem' }}>
+          <CButton onClick={filterRecipesHandler} primary sx={{ mt: '1rem' }}>
             Filter
-          </Button>
+          </CButton>
           {user?.username && (
             <Link to="/create">
-              <Button
-                size="small"
-                color="success"
-                variant="contained"
-                sx={{ mt: '1rem', width: 'max-content', position: 'absolute', bottom: 10, right: 10 }}
-              >
+              <CButton primary color="success" sx={{ mt: '1rem', position: 'absolute', bottom: 10, right: 10 }}>
                 Create new recipe
-              </Button>
+              </CButton>
             </Link>
           )}
         </Box>

@@ -5,6 +5,8 @@ import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Button, CircularProgress, TextField, Typography, useTheme } from '@mui/material';
 import { useRegister } from 'core';
+import { CButton } from 'components';
+import { FormPasswordInput, FormTextInput } from 'features';
 
 const registerSchema = yup.object().shape({
   username: yup.string().required('Username is required'),
@@ -56,7 +58,7 @@ const RegisterForm: React.FC = (): JSX.Element => {
               }
             }}
           >
-            <TextField
+            <FormTextInput
               label="Username"
               onBlur={handleBlur}
               onChange={handleChange}
@@ -65,7 +67,7 @@ const RegisterForm: React.FC = (): JSX.Element => {
               error={Boolean(touched.username) && Boolean(errors.username)}
               helperText={(touched.username && errors.username) || ' '}
             />
-            <TextField
+            <FormTextInput
               label="E-mail"
               onBlur={handleBlur}
               onChange={handleChange}
@@ -74,9 +76,9 @@ const RegisterForm: React.FC = (): JSX.Element => {
               error={Boolean(touched.email) && Boolean(errors.email)}
               helperText={(touched.email && errors.email) || ' '}
             />
-            <TextField
+            <FormPasswordInput
               label="Password"
-              type="password"
+              id="register-password"
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.password}
@@ -84,9 +86,9 @@ const RegisterForm: React.FC = (): JSX.Element => {
               error={Boolean(touched.password) && Boolean(errors.password)}
               helperText={(touched.password && errors.password) || ' '}
             />
-            <TextField
+            <FormPasswordInput
               label="Confirm password"
-              type="password"
+              id="register-confirm-password"
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.confirmPassword}
@@ -96,21 +98,17 @@ const RegisterForm: React.FC = (): JSX.Element => {
             />
 
             <Box>
-              <Button
+              <CButton
                 fullWidth
+                primary
                 type="submit"
+                size="large"
                 sx={{
-                  m: '2rem 0',
-                  p: '1rem',
-                  backgroundColor: theme.palette.primary.main,
-                  color: theme.palette.text.primary,
-                  '&:hover': {
-                    backgroundColor: theme.palette.primary.dark
-                  }
+                  mb: 1
                 }}
               >
                 {loading ? <CircularProgress /> : 'Register'}
-              </Button>
+              </CButton>
               <Link to={'/auth/login'}>
                 <Typography>Already have an account? Log in!</Typography>
               </Link>

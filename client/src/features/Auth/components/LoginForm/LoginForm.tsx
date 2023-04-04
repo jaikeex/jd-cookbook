@@ -5,10 +5,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Box, Button, CircularProgress, TextField, Typography, useMediaQuery, useTheme } from '@mui/material';
 import type { FormikHelpers } from 'formik';
 import { useLogin } from 'core';
+import { CButton } from 'components';
+import { FormPasswordInput, FormTextInput } from 'features';
 
 const loginSchema = yup.object().shape({
-  email: yup.string().email('invalid email').required('required'),
-  password: yup.string().required('required')
+  email: yup.string().email('invalid email').required('E-mail is required'),
+  password: yup.string().required('Password is required')
 });
 
 const initialLoginValues = {
@@ -37,18 +39,10 @@ const LoginForm: React.FC = (): JSX.Element => {
     <Formik onSubmit={handleFormSubmit} initialValues={initialLoginValues} validationSchema={loginSchema}>
       {({ values, errors, touched, handleBlur, handleSubmit, handleChange }) => (
         <form onSubmit={handleSubmit}>
-          <Box
-            display="flex"
-            flexDirection="column"
-            gap="2rem"
-            sx={{
-              '& > div': {
-                gridColumn: undefined
-              }
-            }}
-          >
-            <TextField
+          <Box display="flex" flexDirection="column" gap="2rem">
+            <FormTextInput
               label="E-mail"
+              type="email"
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.email}
@@ -56,32 +50,27 @@ const LoginForm: React.FC = (): JSX.Element => {
               error={Boolean(touched.email) && Boolean(errors.email)}
               helperText={(touched.email && errors.email) || ' '}
             />
-            <TextField
+            <FormPasswordInput
               label="Password"
-              type="password"
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.password}
               name="password"
               error={Boolean(touched.password) && Boolean(errors.password)}
-              helperText={(touched.password && errors.password) || ' '}
+              helperText={touched.password && errors.password}
             />
             <Box>
-              <Button
+              <CButton
                 fullWidth
+                primary
                 type="submit"
+                size="large"
                 sx={{
-                  m: '2rem 0',
-                  p: '1rem',
-                  backgroundColor: theme.palette.primary.main,
-                  color: theme.palette.text.primary,
-                  '&:hover': {
-                    backgroundColor: theme.palette.primary.dark
-                  }
+                  mb: 1
                 }}
               >
                 {loading ? <CircularProgress /> : 'Login'}
-              </Button>
+              </CButton>
               <Link to={'/auth/register'}>
                 <Typography>Not registered yet? Create an account!</Typography>
               </Link>
