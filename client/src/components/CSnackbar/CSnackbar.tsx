@@ -15,7 +15,7 @@ export interface CSnackbarProps {
   testId?: string;
 }
 
-export const CSnackbar: React.FC<CSnackbarProps> = ({
+const CSnackbar: React.FC<CSnackbarProps> = ({
   message,
   severity,
   autoHideDuration = 6000,
@@ -49,3 +49,5 @@ export const CSnackbar: React.FC<CSnackbarProps> = ({
     </Snackbar>
   );
 };
+
+export default CSnackbar;
