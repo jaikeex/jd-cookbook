@@ -1,13 +1,12 @@
 import * as React from 'react';
 import titleImg from 'assets/title.jpg';
 import { useEffect, useState } from 'react';
-import type { Recipe } from 'types';
+import type { Recipe } from 'core/types';
 import RecipeCard from 'components/RecipeCard/RecipeCard';
-import { useGetAllRecipesQuery } from 'store/apiSlice';
 import { Box, Button, CircularProgress, useMediaQuery } from '@mui/material';
 import AsyncMultiSelect from 'components/AsyncMultiSelect/AsyncMultiSelect';
 import { useQuery, useLazyQuery } from '@apollo/client';
-import { GET_RECIPES_QUERY } from 'graphql/queries';
+import { GET_RECIPES_QUERY } from 'core/graphql/queries';
 import { Waypoint } from 'react-waypoint';
 import { Link } from 'react-router-dom';
 import type { RootState } from 'store/index';

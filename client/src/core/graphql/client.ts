@@ -1,14 +1,17 @@
 import { createUploadLink } from 'apollo-upload-client';
 import { ApolloClient, InMemoryCache, from } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
-import { setMessage } from 'utils';
+import { addMessage } from 'store/messageSlice';
+import store from 'store';
 
 const errorLink = onError(({ networkError, graphQLErrors }) => {
   if (graphQLErrors) {
-    setMessage(graphQLErrors[0].message, 'error', 'GraphQL Client');
+    graphQLErrors.map((error) => {
+      store.dispatch(addMessage({ message: error.message, severity: 'error', origin: 'GraphQL Client' }));
+    });
     return;
   } else if (networkError) {
-    setMessage(networkError.message, 'error', 'GraphQL Client');
+    store.dispatch(addMessage({ message: networkError.message, severity: 'error', origin: 'GraphQL Client' }));
     return;
   }
 });

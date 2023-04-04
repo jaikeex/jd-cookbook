@@ -11,6 +11,12 @@ export const LOGIN_QUERY = gql`
   }
 `;
 
+export const LOGOUT_QUERY = gql`
+  query logout {
+    logout
+  }
+`;
+
 export const GET_RECIPE_QUERY = gql`
   query getRecipe($id: ID!) {
     getRecipe(id: $id) {
@@ -76,7 +82,7 @@ export const GET_RECIPES_QUERY = gql`
           picturePath
           description
           createdAt
-          likesCount
+          likesCounts
         }
         cursor
       }

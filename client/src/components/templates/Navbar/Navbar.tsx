@@ -15,7 +15,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import type { RootState } from 'store/index';
-import FlexBetween from 'components/FlexBetween/FlexBetween';
+import FlexBetween from 'components/utils/FlexBetween/FlexBetween';
 import { Close, DarkMode, Help, LightMode, Message, Search } from '@mui/icons-material';
 import { setMode, setLogout } from 'store/authSlice';
 import ProfileActions from 'components/ProfileActions/ProfileActions';
@@ -75,7 +75,7 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
               <LightMode sx={{ color: dark, fontSize: '25px' }} />
             )}
           </IconButton>
-          <Notifications />
+          {user && <Notifications />}
           <ProfileActions />
 
           {/* <FormControl variant="standard">
@@ -128,7 +128,7 @@ const NavBar: React.FC<NavBarProps> = (props): JSX.Element => {
                 <LightMode sx={{ color: dark, fontSize: '25px' }} />
               )}
             </IconButton>
-            <Notifications />
+            {user && <Notifications />}
             <ProfileActions />
             {/* <FormControl variant="standard">
               <Select

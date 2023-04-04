@@ -13,12 +13,12 @@ import {
 } from '@mui/material';
 import { Formik, FieldArray, Form, type FormikHelpers } from 'formik';
 import * as React from 'react';
-import type { Ingredient } from 'types';
+import type { Ingredient } from 'core/types';
 import * as yup from 'yup';
 import Dropzone from 'react-dropzone';
-import FlexBetween from 'components/FlexBetween/FlexBetween';
+import FlexBetween from 'components/utils/FlexBetween/FlexBetween';
 import { useMutation } from '@apollo/client';
-import { CREATE_RECIPE_MUTATION, UPLOAD_FILE_MUTATION } from 'graphql/mutations';
+import { CREATE_RECIPE_MUTATION, UPLOAD_FILE_MUTATION } from 'core/graphql/mutations';
 import { useNavigate } from 'react-router-dom';
 
 export interface CreateRecipePageProps {}

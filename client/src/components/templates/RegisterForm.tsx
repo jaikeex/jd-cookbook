@@ -1,17 +1,10 @@
 import * as React from 'react';
 import { Formik } from 'formik';
 import type { FormikHelpers } from 'formik';
-import { useEffect, useState } from 'react';
 import * as yup from 'yup';
-import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { Box, Button, TextField, Typography, useTheme } from '@mui/material';
-import { EditOutlined } from '@mui/icons-material';
-import Dropzone from 'react-dropzone';
-import FlexBetween from 'components/FlexBetween/FlexBetween';
-import { api } from 'store/apiSlice';
-import { useQuery, useMutation, gql } from '@apollo/client';
-import { REGISTER_USER_MUTATION, UPLOAD_FILE_MUTATION } from 'graphql/mutations';
+import { Box, Button, CircularProgress, TextField, Typography, useTheme } from '@mui/material';
+import { useRegister } from 'core';
 
 const registerSchema = yup.object().shape({
   username: yup.string().required('Username is required'),
@@ -41,24 +34,14 @@ export interface RegisterFormProps {}
 const RegisterForm: React.FC<RegisterFormProps> = (props): JSX.Element => {
   const theme = useTheme();
   const navigate = useNavigate();
-
-  const [triggerRegister, { data, called }] = useMutation(REGISTER_USER_MUTATION);
-
-  const register = async (values: RegisterFormValues, onSubmitProps: FormikHelpers<RegisterFormValues>) => {
-    const { confirmPassword, ...rest } = values;
-    triggerRegister({ variables: rest });
-    onSubmitProps.resetForm();
-  };
+  const { register, loading } = useRegister();
 
   const formSubmitHandler = async (values: RegisterFormValues, onSubmitProps: FormikHelpers<RegisterFormValues>) => {
-    register(values, onSubmitProps);
-  };
-
-  useEffect(() => {
-    if (called && data) {
+    if (await register(values.username, values.email, values.password)) {
+      onSubmitProps.resetForm();
       navigate('/login');
     }
-  }, [data, called]);
+  };
 
   return (
     <Formik
@@ -132,7 +115,7 @@ const RegisterForm: React.FC<RegisterFormProps> = (props): JSX.Element => {
                   }
                 }}
               >
-                <Typography>Register</Typography>
+                {loading ? <CircularProgress /> : 'Register'}
               </Button>
               <Link to={'/login'}>
                 <Typography>Already have an account? Log in!</Typography>

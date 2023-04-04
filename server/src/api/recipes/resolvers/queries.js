@@ -110,13 +110,16 @@ const resolvers = {
     getRecipe: async (root, args, req, info) => {
       try {
         const { id } = args
-        const { _id: userId } = req.session.user
 
         const recipe = await Recipe.findById(id)
           .populate('user', '-password', User)
           .exec()
 
-        recipe.likedByUser = recipe.likes.includes(userId)
+        if (req.session.user) {
+          const { _id: userId } = req.session.user
+          recipe.likedByUser = recipe.likes.includes(userId)
+        }
+
         return recipe
       } catch (error) {
         throw new httpErrors.E500(error.message)

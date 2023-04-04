@@ -1,9 +1,9 @@
 import { makeVar } from '@apollo/client';
 import type { ReactNode } from 'react';
 import type { Color } from '@material-ui/lab';
-import type { IMessage } from 'types';
+import type { SnackMessage } from 'core/types';
 
-export const globalMessage = makeVar<IMessage>({
+export const globalMessage = makeVar<SnackMessage>({
   message: undefined,
   severity: 'info',
   origin: 'unknown',
@@ -18,7 +18,7 @@ export const globalMessage = makeVar<IMessage>({
  * @param origin Name of a caller function or function component
  */
 export const setMessage = (message: ReactNode, severity: Color, origin: string): void => {
-  const newMessage: IMessage = {
+  const newMessage: SnackMessage = {
     message,
     severity,
     origin,

@@ -13,11 +13,13 @@ import {
   useMediaQuery
 } from '@mui/material';
 import { useMutation, useQuery } from '@apollo/client';
-import { COMMENT_RECIPE_MUTATION } from 'graphql/mutations';
-import type { Comment } from 'types';
-import { GET_COMMENTS_QUERY } from 'graphql/queries';
-import FlexBetween from 'components/FlexBetween/FlexBetween';
+import { COMMENT_RECIPE_MUTATION } from 'core/graphql/mutations';
+import type { Comment } from 'core/types';
+import { GET_COMMENTS_QUERY } from 'core/graphql/queries';
+import FlexBetween from 'components/utils/FlexBetween/FlexBetween';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import type { RootState } from 'store';
 
 interface Props {
   recipeId: string;
@@ -27,6 +29,7 @@ const CommentSection: React.FC<Props> = ({ recipeId }) => {
   const [commentText, setCommentText] = useState('');
   const theme = useTheme();
   const sm = useMediaQuery('(max-width:740px)');
+  const user = useSelector((state: RootState) => state.auth.user);
 
   const [commentRecipe] = useMutation(COMMENT_RECIPE_MUTATION);
   const { loading, error, data } = useQuery(GET_COMMENTS_QUERY, {
@@ -78,7 +81,8 @@ const CommentSection: React.FC<Props> = ({ recipeId }) => {
       <form onSubmit={handleSubmit}>
         <Box display="flex" flexDirection={sm ? 'column' : 'row'} gap={2} mt={4}>
           <TextField
-            placeholder="Write a comment"
+            disabled={!user}
+            placeholder={user ? 'Write a comment' : 'Please login to comment'}
             variant="outlined"
             fullWidth
             value={commentText}

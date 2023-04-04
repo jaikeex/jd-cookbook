@@ -14,10 +14,10 @@ import {
   CardActionArea
 } from '@mui/material';
 import { red } from '@mui/material/colors';
-import FlexBetween from 'components/FlexBetween/FlexBetween';
+import FlexBetween from 'components/utils/FlexBetween/FlexBetween';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import type { Recipe } from 'types';
+import type { Recipe } from 'core/types';
 
 export interface RecipeCardProps {
   recipe: Recipe;

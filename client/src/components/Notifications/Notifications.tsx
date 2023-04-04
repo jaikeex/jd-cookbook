@@ -3,8 +3,8 @@ import { useQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { IconButton, Badge, Popover, List, ListItem, ListItemText, ListItemButton, useTheme } from '@mui/material';
 import { Notifications as NotificationsIcon } from '@mui/icons-material';
-import { GET_NOTIFICATIONS_QUERY } from 'graphql/queries';
-import { MARK_NOTIFICATION_AS_SEEN_MUTATION } from 'graphql/mutations';
+import { GET_NOTIFICATIONS_QUERY } from 'core/graphql/queries';
+import { MARK_NOTIFICATION_AS_SEEN_MUTATION } from 'core/graphql/mutations';
 
 interface Notification {
   _id: string;

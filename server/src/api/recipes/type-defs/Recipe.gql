@@ -82,15 +82,15 @@ type Query {
     first: Int
     after: String
   ): RecipeConnection!
-  getRecipe(id: ID!): Recipe
-  getComments(id: ID!): [Comment]!
-  getAllIngredients: [Ingredient]!
   searchRecipes(
     userId: ID
     query: String!
     first: Int
     after: String
   ): RecipeConnection!
+  getRecipe(id: ID!): Recipe
+  getComments(id: ID!): [Comment]!
+  getAllIngredients: [Ingredient]!
 }
 
 type Mutation {

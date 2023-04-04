@@ -1,16 +1,17 @@
+import { useLazyQuery } from '@apollo/client';
 import { Button, Menu, MenuItem } from '@mui/material';
+import { LOGOUT_QUERY } from 'core';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import type { RootState } from 'store';
-import { api } from 'store/apiSlice';
 import { setLogout } from 'store/authSlice';
 
 export interface ProfileActionsProps {}
 
 const ProfileActions: React.FC<ProfileActionsProps> = (props): JSX.Element => {
   const user = useSelector((state: RootState) => state.auth.user);
-  const [trigger] = api.useLazyLogoutQuery();
+  const [trigger] = useLazyQuery(LOGOUT_QUERY);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

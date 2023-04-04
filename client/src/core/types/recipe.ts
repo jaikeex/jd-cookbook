@@ -1,4 +1,4 @@
-import type { User } from './User';
+import type { User } from './user';
 
 export interface Recipe {
   _id: string;
@@ -9,7 +9,6 @@ export interface Recipe {
   description: string;
   instructions: string;
   picturePath: string;
-  userAvatarPath: string;
   likesCount: number;
   likes: string[];
   comments: Comment[];

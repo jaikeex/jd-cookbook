@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { alpha, Autocomplete, CircularProgress, TextField, useTheme } from '@mui/material';
-import { GET_ALL_INGREDIENTS_QUERY } from 'graphql/queries';
+import { GET_ALL_INGREDIENTS_QUERY } from 'core/graphql/queries';
 
 interface Ingredient {
   name: string;

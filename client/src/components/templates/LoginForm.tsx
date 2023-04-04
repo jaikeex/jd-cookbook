@@ -1,15 +1,10 @@
 import { Formik } from 'formik';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
 import * as yup from 'yup';
-import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { Box, Button, TextField, Typography, useTheme } from '@mui/material';
+import { Box, Button, CircularProgress, TextField, Typography, useTheme } from '@mui/material';
 import type { FormikHelpers } from 'formik';
-import { setLogin } from 'store/authSlice';
-import { useLazyLoginQuery } from 'store/apiSlice';
-import { useQuery, useLazyQuery, gql } from '@apollo/client';
-import { LOGIN_QUERY } from 'graphql/queries';
+import { useLogin } from 'core';
 
 const loginSchema = yup.object().shape({
   email: yup.string().email('invalid email').required('required'),
@@ -26,33 +21,21 @@ interface LoginFormValues {
   password: string;
 }
 
-export interface LoginFormProps {}
-
-const LoginForm: React.FC<LoginFormProps> = (props): JSX.Element => {
-  const dispatch = useDispatch();
-  const theme = useTheme();
+const LoginForm: React.FC = (): JSX.Element => {
+  const { login, loading } = useLogin();
   const navigate = useNavigate();
 
-  const [triggerLogin, { called, data }] = useLazyQuery(LOGIN_QUERY);
+  const theme = useTheme();
 
-  const login = async (values: LoginFormValues, onSubmitProps: FormikHelpers<LoginFormValues>) => {
-    triggerLogin({ variables: values });
-    onSubmitProps.resetForm();
-  };
-
-  const formSubmitHandler = async (values: LoginFormValues, onSubmitProps: FormikHelpers<LoginFormValues>) => {
-    login(values, onSubmitProps);
-  };
-
-  useEffect(() => {
-    if (called && data) {
-      dispatch(setLogin({ user: data.login.user }));
+  const handleFormSubmit = async (values: LoginFormValues, onSubmitProps: FormikHelpers<LoginFormValues>) => {
+    if (await login(values.email, values.password)) {
+      onSubmitProps.resetForm();
       navigate('/');
     }
-  }, [called, data]);
+  };
 
   return (
-    <Formik onSubmit={formSubmitHandler} initialValues={initialLoginValues} validationSchema={loginSchema}>
+    <Formik onSubmit={handleFormSubmit} initialValues={initialLoginValues} validationSchema={loginSchema}>
       {({ values, errors, touched, handleBlur, handleSubmit, handleChange, setFieldValue, resetForm }) => (
         <form onSubmit={handleSubmit}>
           <Box
@@ -98,7 +81,7 @@ const LoginForm: React.FC<LoginFormProps> = (props): JSX.Element => {
                   }
                 }}
               >
-                <Typography>Login</Typography>
+                {loading ? <CircularProgress /> : 'Login'}
               </Button>
               <Link to={'/register'}>
                 <Typography>Not registered yet? Create an account!</Typography>
