@@ -22,7 +22,7 @@ function App() {
         <CssBaseline />
         <BrowserRouter>
           <Navbar />
-          <Box width={md ? (sm ? '23rem' : '47rem') : '70rem'} p={sm ? 3 : 6} m="2rem auto">
+          <Box width={md ? (sm ? '23rem' : '47rem') : '70rem'} p={sm ? 3 : 4} m="2rem auto">
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/auth/:pageType" element={<AuthPage />} />

@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import type { FormikHelpers } from 'formik';
 import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
-import { Box, Button, CircularProgress, TextField, Typography, useTheme } from '@mui/material';
+import { Box, CircularProgress, Typography, useTheme } from '@mui/material';
 import { useRegister } from 'core';
 import { CButton } from 'components';
 import { FormPasswordInput, FormTextInput } from 'features';
@@ -33,7 +33,6 @@ interface RegisterFormValues {
 }
 
 const RegisterForm: React.FC = (): JSX.Element => {
-  const theme = useTheme();
   const navigate = useNavigate();
   const { register, loading } = useRegister();
 

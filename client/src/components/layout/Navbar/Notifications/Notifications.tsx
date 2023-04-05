@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { IconButton, Badge, Popover, List, ListItemText, ListItemButton, useTheme } from '@mui/material';
+import { IconButton, Badge, Popover, List, ListItemText, ListItemButton, useTheme, ListItem } from '@mui/material';
 import { Notifications as NotificationsIcon } from '@mui/icons-material';
 import { useNotifications } from 'core/hooks/useNotifications';
 
@@ -42,16 +42,16 @@ const Notifications: React.FC<NotificationsProps> = () => {
           <NotificationsIcon sx={{ fontSize: '25px' }} />
         </Badge>
       </IconButton>
-      {notifications.length > 0 && (
-        <Popover
-          open={Boolean(anchorEl)}
-          anchorEl={anchorEl}
-          onClose={handleNotificationsClose}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        >
-          <List disablePadding sx={{ maxHeight: 300 }}>
-            {notifications.map(({ recipe, text, _id, seen }) => (
+      <Popover
+        open={Boolean(anchorEl)}
+        anchorEl={anchorEl}
+        onClose={handleNotificationsClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <List disablePadding sx={{ maxHeight: 300 }}>
+          {notifications.length > 0 ? (
+            notifications.map(({ recipe, text, _id, seen }) => (
               <ListItemButton
                 key={_id}
                 component={Link}
@@ -63,10 +63,14 @@ const Notifications: React.FC<NotificationsProps> = () => {
                   sx={{ color: seen ? theme.palette.text.disabled : theme.palette.text.primary }}
                 />
               </ListItemButton>
-            ))}
-          </List>
-        </Popover>
-      )}
+            ))
+          ) : (
+            <ListItem>
+              <ListItemText primary="Nothing to display" />
+            </ListItem>
+          )}
+        </List>
+      </Popover>
     </>
   );
 };

@@ -1,6 +1,6 @@
 import { AccountCircle, Login } from '@mui/icons-material';
 import { Button, IconButton, Menu, MenuItem, useMediaQuery } from '@mui/material';
-import { LOGOUT_QUERY, useLogout } from 'core';
+import { useLogout } from 'core';
 import type { User } from 'core';
 import * as React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -10,12 +10,12 @@ export interface ProfileActionsProps {
 }
 
 const ProfileActions: React.FC<ProfileActionsProps> = ({ user = null }): JSX.Element => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
   const { logout } = useLogout();
+
   const sm = useMediaQuery('(max-width:740px)');
 
-  const navigate = useNavigate();
-
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -25,6 +25,7 @@ const ProfileActions: React.FC<ProfileActionsProps> = ({ user = null }): JSX.Ele
       setAnchorEl(event.currentTarget);
     }
   };
+
   const handleClose = () => setAnchorEl(null);
 
   const logoutClickHandler = async () => {

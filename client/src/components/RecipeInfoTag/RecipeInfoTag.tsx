@@ -1,6 +1,13 @@
-import { AccessTimeRounded } from '@mui/icons-material';
-import { Paper, Typography } from '@mui/material';
+import { Paper, styled } from '@mui/material';
 import * as React from 'react';
+
+const StyledPaper = styled(Paper)({
+  padding: '0.5rem',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '1rem',
+  maxWidth: 'max-content'
+});
 
 interface RecipeInfoTagProps extends React.PropsWithChildren {
   icon?: React.ReactNode;
@@ -8,18 +15,10 @@ interface RecipeInfoTagProps extends React.PropsWithChildren {
 
 const RecipeInfoTag: React.FC<RecipeInfoTagProps> = ({ children = null, icon = null }): JSX.Element => {
   return (
-    <Paper
-      sx={{
-        p: '0.5rem',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '1rem',
-        maxWidth: 'max-content'
-      }}
-    >
+    <StyledPaper>
       {icon}
       {children}
-    </Paper>
+    </StyledPaper>
   );
 };
 

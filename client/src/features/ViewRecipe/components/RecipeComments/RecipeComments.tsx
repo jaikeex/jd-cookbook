@@ -1,25 +1,23 @@
 import React, { useState } from 'react';
-import { TextField, Button, List, Box, Divider, useTheme, alpha, Typography, useMediaQuery } from '@mui/material';
-import { useMutation, useQuery } from '@apollo/client';
-import { COMMENT_RECIPE_MUTATION } from 'core/graphql/mutations';
+import { TextField, List, Box, useMediaQuery, Typography } from '@mui/material';
+import type { BoxProps } from '@mui/material';
 import type { Comment } from 'core/types';
-import { GET_COMMENTS_QUERY } from 'core/graphql/queries';
-import FlexBetween from 'components/FlexBetween/FlexBetween';
-import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import type { RootState } from 'store';
 import { useComments } from 'core/hooks/useComments';
 import { RecipeComment } from './RecipeComment';
+import { CButton } from 'components';
+import { useRecipeContext } from 'features/ViewRecipe/context';
 
-interface Props {
-  recipeId: string;
-}
+interface RecipeCommentsProps extends BoxProps {}
 
-const CommentSection: React.FC<Props> = ({ recipeId }) => {
-  const [commentText, setCommentText] = useState('');
-  const sm = useMediaQuery('(max-width:740px)');
+const RecipeComments: React.FC<RecipeCommentsProps> = (props) => {
+  const { recipe } = useRecipeContext();
   const user = useSelector((state: RootState) => state.auth.user);
-  const { comments, postComment, loading } = useComments(recipeId);
+  const { comments, postComment, loading } = useComments(recipe._id);
+  const [commentText, setCommentText] = useState('');
+
+  const sm = useMediaQuery('(max-width:740px)');
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -34,7 +32,8 @@ const CommentSection: React.FC<Props> = ({ recipeId }) => {
   };
 
   return (
-    <div>
+    <Box {...props}>
+      <Typography gutterBottom>Comments</Typography>
       {loading && <p>Loading comments...</p>}
       {comments && (
         <List>
@@ -60,13 +59,13 @@ const CommentSection: React.FC<Props> = ({ recipeId }) => {
               }
             }}
           />
-          <Button variant="contained" color="primary" type="submit" disabled={!commentText} sx={{ minWidth: 120 }}>
+          <CButton primary type="submit" disabled={!commentText} sx={{ minWidth: 120 }}>
             Post
-          </Button>
+          </CButton>
         </Box>
       </form>
-    </div>
+    </Box>
   );
 };
 
-export default CommentSection;
+export default RecipeComments;

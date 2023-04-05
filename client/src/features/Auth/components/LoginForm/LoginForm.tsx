@@ -2,7 +2,7 @@ import { Formik } from 'formik';
 import * as React from 'react';
 import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
-import { Box, Button, CircularProgress, TextField, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, CircularProgress, Typography, useTheme } from '@mui/material';
 import type { FormikHelpers } from 'formik';
 import { useLogin } from 'core';
 import { CButton } from 'components';
@@ -26,7 +26,6 @@ interface LoginFormValues {
 const LoginForm: React.FC = (): JSX.Element => {
   const { login, loading } = useLogin();
   const navigate = useNavigate();
-  const theme = useTheme();
 
   const handleFormSubmit = async (values: LoginFormValues, onSubmitProps: FormikHelpers<LoginFormValues>) => {
     if (await login(values.email, values.password)) {

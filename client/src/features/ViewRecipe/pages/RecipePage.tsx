@@ -1,127 +1,66 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { AccessTimeRounded, OutdoorGrillRounded } from '@mui/icons-material';
-import { Box, Divider, List, Typography, useMediaQuery } from '@mui/material';
-import { Link, useParams } from 'react-router-dom';
+import { Grid, useMediaQuery } from '@mui/material';
+import { useParams } from 'react-router-dom';
 import { LIKE_RECIPE_MUTATION, GET_RECIPE_QUERY } from 'core/graphql';
-import type { Ingredient, Recipe } from 'core/types';
-import placeholder from 'assets/placeholder.png';
 import { useSelector } from 'react-redux';
 import type { RootState } from 'store';
-import { FlexBetween } from 'components';
-import { CommentSection, IngredientLabel, LikeButton, RecipeInfoTag } from 'features';
+import { RecipeComments, RecipeHeader, RecipeIngredients, RecipeInstructions } from 'features';
+import { RecipeContextProvider } from 'features/ViewRecipe/context';
+import { RecipeImage } from 'features';
+import { RecipeDescription } from 'features';
 
 export interface RecipePageProps {}
 
-const RecipePage: React.FC<RecipePageProps> = (): JSX.Element => {
+const RecipePage: React.FC<RecipePageProps> = () => {
   const user = useSelector((state: RootState) => state.auth.user);
-  const [recipe, setRecipe] = useState<Recipe>();
   const params = useParams();
 
   const md = useMediaQuery('(max-width:1200px)');
-  const sm = useMediaQuery('(max-width:740px)');
 
   const { data } = useQuery(GET_RECIPE_QUERY, { variables: { id: params._id } });
   const [likeRecipe] = useMutation(LIKE_RECIPE_MUTATION);
 
-  const handleLikeButtonClick = async () => {
+  const handleLikeRecipe = async () => {
     if (recipe) {
-      const { data: updatedRecipe } = await likeRecipe({
+      likeRecipe({
         variables: { id: recipe._id },
         refetchQueries: [{ query: GET_RECIPE_QUERY, variables: { id: params._id } }]
       });
-      setRecipe((prevState) => ({ ...prevState, ...updatedRecipe.likeRecipe }));
     }
   };
 
-  useEffect(() => {
-    if (data && data.getRecipe) {
-      setRecipe(data.getRecipe);
-    }
-  }, [data]);
+  const recipe = data?.getRecipe;
+
+  if (!recipe) {
+    return null;
+  }
 
   return (
-    <React.Fragment>
-      {!!recipe && (
-        <React.Fragment>
-          <Box
-            display={sm ? 'flex' : 'grid'}
-            flexDirection="column"
-            gridTemplateColumns="repeat(4, 1fr)"
-            columnGap="2rem"
-          >
-            <Box sx={{ gridColumn: 'span 1' }}>
-              <img
-                style={{
-                  maxHeight: '20rem',
-                  maxWidth: '20rem',
-                  objectFit: 'contain'
-                }}
-                src={recipe.picturePath || placeholder}
-                alt=""
-              />
-            </Box>
+    <RecipeContextProvider recipe={recipe}>
+      <Grid container spacing={4}>
+        <Grid item sm={3} xs={12}>
+          <RecipeImage />
+        </Grid>
 
-            <Box gridColumn="span 3">
-              <FlexBetween>
-                <Typography variant="h1">{recipe.name}</Typography>
-                <LikeButton
-                  defaultChecked={recipe.likedByUser}
-                  disabled={!user}
-                  onChange={handleLikeButtonClick}
-                  label={recipe.likesCount}
-                  labelPlacement="start"
-                />
-              </FlexBetween>
+        <Grid item sm={9} xs={12}>
+          <RecipeHeader onLikeRecipe={handleLikeRecipe} />
+          <RecipeDescription sx={{ mt: 2 }} />
+        </Grid>
 
-              <Divider />
+        <Grid item sm={3} xs={12}>
+          <RecipeIngredients />
+        </Grid>
 
-              <Box display="flex" gap="1rem" mt="0.375rem">
-                <RecipeInfoTag icon={<AccessTimeRounded />}>
-                  <Typography variant="body2">{recipe.cookingTime} min.</Typography>
-                </RecipeInfoTag>
+        <Grid item sm={9} xs={12}>
+          <RecipeInstructions sx={{ mt: '1rem' }} />
+        </Grid>
 
-                <RecipeInfoTag icon={<OutdoorGrillRounded />}>
-                  <Typography variant="body2" sx={{ textTransform: 'capitalize' }}>
-                    {recipe.difficulty}
-                  </Typography>
-                </RecipeInfoTag>
-
-                <Box ml="auto" display="flex" gap="1.5rem" flexDirection={md ? 'column' : 'row'}>
-                  <Typography component={Link} to="/" variant="caption" color="primary" sx={{ textDecoration: 'none' }}>
-                    Author: {recipe.user.username}
-                  </Typography>
-                  <Typography variant="caption">{new Date(+recipe.createdAt).toLocaleDateString()}</Typography>
-                </Box>
-              </Box>
-
-              <Typography variant="body2" sx={{ mt: '1rem' }}>
-                {recipe.description}
-              </Typography>
-            </Box>
-            <Box mt="1rem">
-              <List>
-                {data &&
-                  recipe.ingredients.map((ing: Ingredient, ix: number) => (
-                    <IngredientLabel ingredient={ing} key={ix} />
-                  ))}
-              </List>
-            </Box>
-
-            <Box gridColumn="span 3">
-              <Typography variant="body2" sx={{ mt: '1rem' }}>
-                {recipe.instructions}
-              </Typography>
-            </Box>
-
-            <Box gridColumn="span 4" mt={6}>
-              <Typography gutterBottom>Comments</Typography>
-              <CommentSection recipeId={recipe._id} />
-            </Box>
-          </Box>
-        </React.Fragment>
-      )}
-    </React.Fragment>
+        <Grid item xs={12} mt={4}>
+          <RecipeComments />
+        </Grid>
+      </Grid>
+    </RecipeContextProvider>
   );
 };
 
