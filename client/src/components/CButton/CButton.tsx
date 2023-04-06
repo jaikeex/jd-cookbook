@@ -2,7 +2,7 @@ import { Button, styled } from '@mui/material';
 import type { ButtonProps } from '@mui/material';
 import * as React from 'react';
 
-const StyledButton = styled(Button)<CButtonProps>((props) => ({
+const StyledButton = styled(Button, { shouldForwardProp: (prop) => prop !== 'primary' })<CButtonProps>((props) => ({
   borderRadius: 2,
   letterSpacing: props.theme.typography.pxToRem(0.45),
 

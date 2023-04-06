@@ -19,7 +19,6 @@ type Recipe {
 
 type RecipeConnection {
   edges: [RecipeEdge!]!
-  totalResults: Int!
   pageInfo: PageInfo!
 }
 
@@ -76,6 +75,7 @@ input IngredientInput {
 
 type Query {
   getRecipes(
+    query: String
     userId: ID
     ingredients: [String]
     matchAll: Boolean

@@ -69,25 +69,6 @@ const RecipeTable: React.FC<RecipeTableProps> = ({ userId }) => {
     }
   };
 
-  const handleDeleteClick = (recipeId: string) => {
-    deleteRecipeMutation({
-      variables: {
-        id: recipeId
-      },
-      update(cache) {
-        cache.modify({
-          fields: {
-            getRecipes(existingRecipeRefs, { readField }) {
-              return existingRecipeRefs.filter(
-                (recipeRef: { __ref: string; }) => readField('_id', recipeRef) !== recipeId
-              );
-            }
-          }
-        });
-      }
-    });
-  };
-
   const handleDeleteDialogOpen = (id: string) => {
     setDeleteRecipeId(id);
     setOpen(true);

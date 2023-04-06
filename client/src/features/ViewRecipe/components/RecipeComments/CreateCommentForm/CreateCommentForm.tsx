@@ -3,7 +3,7 @@ import * as React from 'react';
 import placeholder from 'assets/placeholder.png';
 import { useState } from 'react';
 
-export interface CreateCommentFormProps {
+interface CreateCommentFormProps {
   disabled?: boolean;
   onSubmit: React.FormEventHandler<HTMLFormElement>;
   inputPlaceholder?: string;

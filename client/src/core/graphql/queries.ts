@@ -73,8 +73,22 @@ export const GET_ALL_INGREDIENTS_QUERY = gql`
 `;
 
 export const GET_RECIPES_QUERY = gql`
-  query getRecipes($userId: ID, $ingredients: [String], $matchAll: Boolean, $after: String, $first: Int) {
-    getRecipes(userId: $userId, ingredients: $ingredients, matchAll: $matchAll, after: $after, first: $first) {
+  query getRecipes(
+    $query: String
+    $userId: ID
+    $ingredients: [String]
+    $matchAll: Boolean
+    $after: String
+    $first: Int
+  ) {
+    getRecipes(
+      query: $query
+      userId: $userId
+      ingredients: $ingredients
+      matchAll: $matchAll
+      after: $after
+      first: $first
+    ) {
       edges {
         node {
           _id

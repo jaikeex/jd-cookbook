@@ -21,7 +21,7 @@ function encodeCursor(type, createdAt) {
 const resolvers = {
   Query: {
     getRecipes: async (root, args, req, info) => {
-      const { userId, ingredients, matchAll, first = 12, after } = args
+      const { query, userId, ingredients, matchAll, first = 12, after } = args
 
       const pipeline = [
         { $addFields: { user: { '$toObjectId': '$user' } } },
@@ -55,6 +55,10 @@ const resolvers = {
               : { $in: ingredients }
           }
         })
+      }
+
+      if (query) {
+        pipeline.unshift({ $match: { $text: { $search: query } } })
       }
 
       let sort = { createdAt: -1 }

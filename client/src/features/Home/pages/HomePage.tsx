@@ -1,17 +1,16 @@
 import * as React from 'react';
 import titleImg from 'assets/title.jpg';
-import { useEffect, useState } from 'react';
-import type { Recipe } from 'core/types';
+import { useState } from 'react';
 import RecipeCard from 'features/Home/components/RecipeCard/RecipeCard';
-import { Box, Button, CircularProgress, useMediaQuery } from '@mui/material';
+import { Box, CircularProgress, TextField, useMediaQuery, alpha, useTheme } from '@mui/material';
 import AsyncMultiSelect from 'features/Home/components/AsyncMultiSelect/AsyncMultiSelect';
-import { useQuery, useLazyQuery } from '@apollo/client';
-import { GET_RECIPES_QUERY } from 'core/graphql/queries';
 import { Waypoint } from 'react-waypoint';
 import { Link } from 'react-router-dom';
 import type { RootState } from 'store/index';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { CButton } from 'components';
+import { useRecipePagination } from 'core';
+import { SearchForm } from 'features';
 
 export interface HomePageProps {}
 
@@ -21,29 +20,28 @@ interface OptionType {
 }
 
 const HomePage: React.FC<HomePageProps> = (props): JSX.Element => {
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [selectedOptions, setSelectedOptions] = useState<OptionType[]>([]);
-  const [hasNextPage, setHasNextPage] = useState<boolean>(true);
+  const { recipes, refetchRecipes, fetchMoreRecipes, loading } = useRecipePagination();
   const user = useSelector((state: RootState) => state.auth.user);
+  const [filterText, setFilterText] = useState('');
+  const [selectedOptions, setSelectedOptions] = useState<OptionType[]>([]);
 
   const md = useMediaQuery('(max-width:1200px)');
   const sm = useMediaQuery('(max-width:740px)');
+  const theme = useTheme();
 
-  const { data, refetch, fetchMore, networkStatus } = useQuery(GET_RECIPES_QUERY, {
-    notifyOnNetworkStatusChange: true
-  });
-
-  const filterRecipesHandler = () => {
-    refetch({ ingredients: selectedOptions.map((option) => option.value), matchAll: true });
+  const filterRecipesHandler = (values: any) => {
+    console.log(values);
+    refetchRecipes({
+      ingredients: selectedOptions.map((option) => option.value),
+      matchAll: true,
+      query: values.query,
+      difficulty: values.difficulty === 'all' ? '' : values.difficulty
+    });
   };
 
-  useEffect(() => {
-    if (data) {
-      /* @ts-ignore */
-      setRecipes(data.getRecipes.edges.map(({ node }) => node));
-      setHasNextPage(data.getRecipes.pageInfo.hasNextPage);
-    }
-  }, [data]);
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterText(event.target.value);
+  };
 
   return (
     <React.Fragment>
@@ -73,10 +71,7 @@ const HomePage: React.FC<HomePageProps> = (props): JSX.Element => {
             textAlign: 'center'
           }}
         >
-          <AsyncMultiSelect onChange={(options) => setSelectedOptions(options)} />
-          <CButton onClick={filterRecipesHandler} primary sx={{ mt: '1rem' }}>
-            Filter
-          </CButton>
+          <SearchForm onSubmit={filterRecipesHandler} />
           {user?.username && (
             <Link to="/create">
               <CButton primary color="success" sx={{ mt: '1rem', position: 'absolute', bottom: 10, right: 10 }}>
@@ -96,32 +91,11 @@ const HomePage: React.FC<HomePageProps> = (props): JSX.Element => {
       >
         {recipes.map((recipe, index) => (
           <div key={recipe._id}>
-            {index === recipes.length - 2 && (
-              <Waypoint
-                onEnter={() => {
-                  const { endCursor } = data.getRecipes.pageInfo;
-                  hasNextPage &&
-                    fetchMore({
-                      variables: { after: endCursor },
-                      updateQuery: (prevResult, { fetchMoreResult }) => {
-                        if (!fetchMoreResult) {
-                          return prevResult;
-                        }
-
-                        fetchMoreResult.getRecipes.edges = [
-                          ...prevResult.getRecipes.edges,
-                          ...fetchMoreResult.getRecipes.edges
-                        ];
-                        return fetchMoreResult;
-                      }
-                    });
-                }}
-              />
-            )}
+            {index === recipes.length - 2 && <Waypoint onEnter={() => fetchMoreRecipes()} />}
             <RecipeCard recipe={recipe} />
           </div>
         ))}
-        {networkStatus === 3 && <CircularProgress />}
+        {loading && <CircularProgress />}
       </Box>
     </React.Fragment>
   );
