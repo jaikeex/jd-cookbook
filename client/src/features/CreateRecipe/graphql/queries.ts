@@ -4,13 +4,7 @@ export const GET_RECIPE_QUERY = gql`
   query getRecipe($id: ID!) {
     getRecipe(id: $id) {
       _id
-      createdAt
-      user {
-        username
-      }
       name
-      likedByUser
-      likesCount
       description
       instructions
       picturePath
@@ -20,18 +14,6 @@ export const GET_RECIPE_QUERY = gql`
         name
         amount
       }
-    }
-  }
-`;
-
-export const GET_COMMENTS_QUERY = gql`
-  query getComments($id: ID!) {
-    getComments(id: $id) {
-      user {
-        username
-      }
-      text
-      createdAt
     }
   }
 `;

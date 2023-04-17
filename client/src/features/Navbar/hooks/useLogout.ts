@@ -1,7 +1,7 @@
 import { useLazyQuery } from '@apollo/client';
-import { LOGOUT_QUERY } from 'core/graphql';
 import { useDispatch } from 'react-redux';
 import { setLogout } from 'store/authSlice';
+import { LOGOUT_QUERY } from 'features/Navbar/graphql';
 
 interface IUseLogout {
   logout: () => Promise<boolean>;

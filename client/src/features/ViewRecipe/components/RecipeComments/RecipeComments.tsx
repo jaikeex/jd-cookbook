@@ -4,7 +4,7 @@ import type { BoxProps } from '@mui/material';
 import type { Comment } from 'core/types';
 import { useSelector } from 'react-redux';
 import type { RootState } from 'store';
-import { useComments } from 'core/hooks/useComments';
+import { useComments } from 'features/ViewRecipe/hooks/useComments';
 import { RecipeComment } from './RecipeComment';
 import { CButton } from 'components';
 import { useRecipeContext } from 'features/ViewRecipe/context';

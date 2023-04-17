@@ -19,12 +19,12 @@ interface IUseCreateRecipe {
       | MutationFunctionOptions<CreateRecipeResponse, OperationVariables, DefaultContext, ApolloCache<any>>
       | undefined
   ) => Promise<FetchResult<CreateRecipeResponse>>;
-  createdRecipe?: Recipe | null;
+  data?: CreateRecipeResponse | null;
   loading: boolean;
 }
 
 export const useCreateRecipe = (): IUseCreateRecipe => {
   const [createRecipe, { data, loading }] = useMutation<CreateRecipeResponse>(CREATE_RECIPE_MUTATION);
 
-  return { createRecipe, createdRecipe: data?.createRecipe, loading };
+  return { createRecipe, data, loading };
 };

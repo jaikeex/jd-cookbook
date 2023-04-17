@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IconButton, Badge, Popover, List, ListItemText, ListItemButton, useTheme, ListItem } from '@mui/material';
 import { Notifications as NotificationsIcon } from '@mui/icons-material';
-import { useNotifications } from 'core/hooks/useNotifications';
+import { useNotifications } from 'features/Navbar/hooks';
 
 interface Notification {
   _id: string;

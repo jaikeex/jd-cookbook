@@ -1,6 +1,6 @@
 import { AccountCircle, Login } from '@mui/icons-material';
 import { Button, IconButton, Menu, MenuItem, useMediaQuery } from '@mui/material';
-import { useLogout } from 'core';
+import { useLogout } from 'features/Navbar/hooks/useLogout';
 import type { User } from 'core';
 import * as React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -28,7 +28,7 @@ const ProfileActions: React.FC<ProfileActionsProps> = ({ user = null }): JSX.Ele
 
   const handleClose = () => setAnchorEl(null);
 
-  const logoutClickHandler = async () => {
+  const handleLogoutClick = async () => {
     if (await logout()) {
       handleClose();
       navigate('/');
@@ -56,7 +56,7 @@ const ProfileActions: React.FC<ProfileActionsProps> = ({ user = null }): JSX.Ele
         <Link to={`/profile/${user?._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
           <MenuItem onClick={handleClose}>Profile</MenuItem>
         </Link>
-        <MenuItem onClick={logoutClickHandler}>Logout</MenuItem>
+        <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
       </Menu>
     </div>
   );

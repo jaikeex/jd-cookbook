@@ -6,4 +6,3 @@ export * from './RecipeCard';
 export * from './RecipeInfoTag';
 export * from './SiteHeading';
 export * from './ThemeSwitchButton';
-export * from './layout';

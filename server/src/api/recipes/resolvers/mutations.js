@@ -41,16 +41,13 @@ const resolvers = {
 
     updateRecipe: async (root, args, req, info) => {
       try {
-        const { id, userId, ...rest } = args.input
+        const { id, input } = args
+        await Recipe.findByIdAndUpdate(id, input)
+        const updatedRecipe = await Recipe.findById(id)
 
-        const recipe = Recipe.findById(id)
-
-        const updatedRecipe = { ...recipe, ...rest }
-
-        await updatedRecipe.save()
         return updatedRecipe
       } catch (error) {
-        throw new httpErrors.E500(err.message)
+        throw new httpErrors.E500(error.message)
       }
     },
 

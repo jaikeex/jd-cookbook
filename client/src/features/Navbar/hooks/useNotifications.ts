@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useMutation, useLazyQuery } from '@apollo/client';
-import { GET_NOTIFICATIONS_QUERY, MARK_NOTIFICATION_AS_SEEN_MUTATION } from 'core';
 import { useSelector } from 'react-redux';
 import type { RootState } from 'store';
 import type { Notification } from 'core';
+import { GET_NOTIFICATIONS_QUERY, MARK_NOTIFICATION_AS_SEEN_MUTATION } from 'features/Navbar/graphql';
 
 interface NotificationsData {
   getNotifications: Notification[];

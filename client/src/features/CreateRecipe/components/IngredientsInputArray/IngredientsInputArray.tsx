@@ -30,10 +30,12 @@ export const IngredientsInputArray: React.FC<IngredientsInputArrayProps> = ({
   remove
 }): JSX.Element => {
   return (
-    <Box p="2rem 1rem" border="1px solid green">
-      <Typography variant="h4">Ingredients</Typography>
+    <Box p="2rem 1rem">
+      <Typography color={error ? 'error' : 'default'} variant="h4">
+        Ingredients *
+      </Typography>
       {ingredients.map((ingredient, index) => (
-        <Box key={index} display="flex" alignItems="center" gap="2rem" margin="3rem 0">
+        <Box key={index} display="flex" alignItems="center" gap="2rem" margin="2rem 0">
           <CInput
             name={`ingredients.${index}.amount`}
             label="Amount"
@@ -45,7 +47,7 @@ export const IngredientsInputArray: React.FC<IngredientsInputArrayProps> = ({
           />
           <CInput
             name={`ingredients.${index}.name`}
-            label="Name"
+            label="Name *"
             size="small"
             autoComplete="off"
             fullWidth

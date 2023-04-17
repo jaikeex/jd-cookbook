@@ -4,6 +4,11 @@ import { CInputProps } from './CInput';
 export const Input = styled(MuiInput)<CInputProps>((props) => ({
   input: {
     padding: '0.75rem',
+
+    ...(props.size === 'small' && {
+      padding: '0.5rem'
+    }),
+
     '&::placeholder': {
       fontSize: '0.913rem',
       color: props.theme.palette.text.primary

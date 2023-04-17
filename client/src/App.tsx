@@ -1,20 +1,19 @@
 import React, { useMemo } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { HomePage, CreateRecipePage, ProfilePage, RecipePage, AuthPage } from 'features';
+import { HomePage, CreateRecipePage, ProfilePage, RecipePage, AuthPage, Navbar } from 'features';
 import { ThemeProvider, CssBaseline, createTheme, Box, useMediaQuery } from '@mui/material';
 import { useSelector } from 'react-redux';
 import type { RootState } from './store/index';
-import { Navbar, CSnackbar } from 'components';
+import { CSnackbar } from 'components';
 import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
 import { makeTheme } from 'theme/theme';
+import { EditRecipePage } from 'features/CreateRecipe/pages/EditRecipePage';
+import { Page } from 'components/Page/Page';
 
 function App() {
   const mode = useSelector((state: RootState) => state.auth.mode);
   const currentMessage = useSelector((state: RootState) => state.message.currentMessage);
   const theme = useMemo(() => makeTheme(mode), [mode]);
-
-  const md = useMediaQuery('(max-width:1200px)');
-  const sm = useMediaQuery('(max-width:740px)');
 
   return (
     <div>
@@ -22,16 +21,17 @@ function App() {
         <CssBaseline />
         <BrowserRouter>
           <Navbar />
-          <Box width={md ? (sm ? '23rem' : '47rem') : '70rem'} p={sm ? 3 : 4} m="2rem auto">
+          <Page>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/auth/:pageType" element={<AuthPage />} />
               <Route path="/create" element={<CreateRecipePage />} />
+              <Route path="/edit/:_id" element={<EditRecipePage />} />
               <Route path="/recipe/:_id" element={<RecipePage />} />
               <Route path="/profile/:_id" element={<ProfilePage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
-          </Box>
+          </Page>
           {currentMessage && (
             <CSnackbar
               message={currentMessage.message}

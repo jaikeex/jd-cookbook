@@ -4,11 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import type { RootState } from 'store/index';
 import { setMode } from 'store/authSlice';
-import { ProfileActions } from './ProfileActions';
-import { Notifications } from './Notifications';
+import { ProfileActions, Notifications } from './components';
 import { SiteHeading, ThemeSwitchButton, FlexBetween } from 'components';
 
-const NavBar: React.FC = (): JSX.Element => {
+export const Navbar: React.FC = (): JSX.Element => {
   const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -35,5 +34,3 @@ const NavBar: React.FC = (): JSX.Element => {
     </FlexBetween>
   );
 };
-
-export default NavBar;

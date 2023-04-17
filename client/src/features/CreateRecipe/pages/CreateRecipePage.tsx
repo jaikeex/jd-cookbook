@@ -1,16 +1,32 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { CreateRecipeForm } from 'features/CreateRecipe/components/CreateRecipeForm';
+import { RecipeForm } from 'features/CreateRecipe/components/CreateRecipeForm';
+import { Recipe } from 'core';
+import { useCreateRecipe } from 'features/CreateRecipe/hooks/useCreateRecipe';
+import { useDispatch } from 'react-redux';
+import { addMessage } from 'store/messageSlice';
 
 export interface CreateRecipePageProps {}
 
 const CreateRecipePage: React.FC<CreateRecipePageProps> = (props): JSX.Element => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { createRecipe } = useCreateRecipe();
+
+  const handleFormSubmit = async (values: Partial<Recipe>) => {
+    await createRecipe({
+      variables: values,
+      onCompleted(data) {
+        dispatch(addMessage({ message: `Recipe ${values.name} successfully created!`, severity: 'success' }));
+        navigate(`/recipe/${data?.createRecipe._id}`);
+      }
+    });
+  };
 
   return (
-    <Box width="60rem" p="2rem" m="2rem auto" borderRadius="1.5rem">
-      <CreateRecipeForm onSuccess={(recipe) => navigate(`/recipe/${recipe._id}`)} />
+    <Box>
+      <RecipeForm onSubmit={handleFormSubmit} />
     </Box>
   );
 };
