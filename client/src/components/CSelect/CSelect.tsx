@@ -22,7 +22,9 @@ export const CSelect: React.FC<CSelectProps> = ({
       <Styled.Label error={error} htmlFor={id} variant="outlined" shrink>
         {label}
       </Styled.Label>
-      <Styled.Select {...props}>{children}</Styled.Select>
+      <Styled.Select id={id} {...props}>
+        {children}
+      </Styled.Select>
     </FormControl>
   );
 };

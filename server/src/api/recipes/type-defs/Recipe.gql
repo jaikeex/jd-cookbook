@@ -78,6 +78,7 @@ type Query {
     query: String
     userId: ID
     ingredients: [String]
+    difficulty: String
     matchAll: Boolean
     first: Int
     after: String
