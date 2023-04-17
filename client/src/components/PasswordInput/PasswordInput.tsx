@@ -38,6 +38,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
         placeholder={placeholder}
         id={id}
         type={visible ? 'text' : 'password'}
+        helperText={helperText}
         endAdornment={
           <InputAdornment position="end">
             <IconButton onClick={handleClickIcon} onMouseDown={handleMouseDownIcon} edge="end">
@@ -46,7 +47,6 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
           </InputAdornment>
         }
       />
-      <FormHelperText error={error}>{helperText || ' '}</FormHelperText>
     </FormControl>
   );
 };

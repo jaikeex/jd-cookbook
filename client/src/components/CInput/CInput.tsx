@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormControl } from '@mui/material';
+import { FormControl, FormHelperText } from '@mui/material';
 import type { OutlinedInputProps } from '@mui/material';
 import * as Styled from './styles';
 
@@ -21,7 +21,8 @@ export const CInput: React.FC<CInputProps> = ({
       <Styled.Label error={error} htmlFor={id} variant="outlined" shrink>
         {label}
       </Styled.Label>
-      <Styled.Input {...props} helperText={helperText || ' '} />
+      <Styled.Input {...props} />
+      <Styled.HelperText error={error}>{helperText || ' '}</Styled.HelperText>
     </FormControl>
   );
 };

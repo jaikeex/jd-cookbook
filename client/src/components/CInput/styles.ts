@@ -1,4 +1,4 @@
-import { OutlinedInput as MuiInput, InputLabel as MuiLabel, styled } from '@mui/material';
+import { FormHelperText, OutlinedInput as MuiInput, InputLabel as MuiLabel, styled } from '@mui/material';
 import { CInputProps } from './CInput';
 
 export const Input = styled(MuiInput)<CInputProps>((props) => ({
@@ -18,3 +18,7 @@ export const Label = styled(MuiLabel)((props) => ({
   transform: 'translate(0, -1.5rem) scale(0.875)',
   color: props.theme.palette.text.primary
 }));
+
+export const HelperText = styled(FormHelperText)({
+  marginLeft: 0
+});

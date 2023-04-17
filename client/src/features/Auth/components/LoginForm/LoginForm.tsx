@@ -2,11 +2,12 @@ import { Formik } from 'formik';
 import * as React from 'react';
 import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
-import { Box, CircularProgress, Typography, useTheme } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import type { FormikHelpers } from 'formik';
-import { useLogin } from 'core';
 import { CButton } from 'components';
-import { FormPasswordInput, FormTextInput } from 'features';
+import { useLogin } from 'features/Auth/hooks/useLogin';
+import { CInput } from 'components/CInput';
+import { PasswordInput } from 'components/PasswordInput';
 
 const loginSchema = yup.object().shape({
   email: yup.string().email('invalid email').required('E-mail is required'),
@@ -39,7 +40,7 @@ const LoginForm: React.FC = (): JSX.Element => {
       {({ values, errors, touched, handleBlur, handleSubmit, handleChange }) => (
         <form onSubmit={handleSubmit}>
           <Box display="flex" flexDirection="column" gap="2rem">
-            <FormTextInput
+            <CInput
               label="E-mail"
               type="email"
               onBlur={handleBlur}
@@ -49,7 +50,7 @@ const LoginForm: React.FC = (): JSX.Element => {
               error={Boolean(touched.email) && Boolean(errors.email)}
               helperText={(touched.email && errors.email) || ' '}
             />
-            <FormPasswordInput
+            <PasswordInput
               label="Password"
               onBlur={handleBlur}
               onChange={handleChange}

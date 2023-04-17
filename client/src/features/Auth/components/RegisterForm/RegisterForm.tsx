@@ -3,10 +3,11 @@ import { Formik } from 'formik';
 import type { FormikHelpers } from 'formik';
 import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
-import { Box, CircularProgress, Typography, useTheme } from '@mui/material';
-import { useRegister } from 'core';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { CButton } from 'components';
-import { FormPasswordInput, FormTextInput } from 'features';
+import { useRegister } from 'features/Auth/hooks/useRegister';
+import { CInput } from 'components/CInput';
+import { PasswordInput } from 'components/PasswordInput';
 
 const registerSchema = yup.object().shape({
   username: yup.string().required('Username is required'),
@@ -57,7 +58,7 @@ const RegisterForm: React.FC = (): JSX.Element => {
               }
             }}
           >
-            <FormTextInput
+            <CInput
               label="Username"
               onBlur={handleBlur}
               onChange={handleChange}
@@ -66,7 +67,7 @@ const RegisterForm: React.FC = (): JSX.Element => {
               error={Boolean(touched.username) && Boolean(errors.username)}
               helperText={(touched.username && errors.username) || ' '}
             />
-            <FormTextInput
+            <CInput
               label="E-mail"
               onBlur={handleBlur}
               onChange={handleChange}
@@ -75,7 +76,7 @@ const RegisterForm: React.FC = (): JSX.Element => {
               error={Boolean(touched.email) && Boolean(errors.email)}
               helperText={(touched.email && errors.email) || ' '}
             />
-            <FormPasswordInput
+            <PasswordInput
               label="Password"
               id="register-password"
               onBlur={handleBlur}
@@ -85,7 +86,7 @@ const RegisterForm: React.FC = (): JSX.Element => {
               error={Boolean(touched.password) && Boolean(errors.password)}
               helperText={(touched.password && errors.password) || ' '}
             />
-            <FormPasswordInput
+            <PasswordInput
               label="Confirm password"
               id="register-confirm-password"
               onBlur={handleBlur}

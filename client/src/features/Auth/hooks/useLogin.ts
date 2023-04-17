@@ -1,5 +1,5 @@
 import { useLazyQuery } from '@apollo/client';
-import { LOGIN_QUERY } from 'core/graphql';
+import { LOGIN_QUERY } from 'features/Auth/graphql';
 import { useDispatch } from 'react-redux';
 import { setLogin } from 'store/authSlice';
 
