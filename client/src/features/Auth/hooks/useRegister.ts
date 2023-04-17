@@ -8,9 +8,7 @@ interface IUseRegister {
 }
 
 export const useRegister = (): IUseRegister => {
-  const [registerMutation, { loading }] = useMutation(REGISTER_USER_MUTATION, {
-    fetchPolicy: 'no-cache'
-  });
+  const [registerMutation, { loading }] = useMutation(REGISTER_USER_MUTATION);
 
   const register = async (username: string, email: string, password: string) => {
     const response = await registerMutation({ variables: { username, email, password } });

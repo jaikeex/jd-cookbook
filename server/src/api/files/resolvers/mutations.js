@@ -6,10 +6,6 @@ const resolvers = {
     uploadFile: async (root, args, req, info) => {
       const { createReadStream, filename } = await args.file.file
 
-      console.log(args)
-      console.log(args.file)
-      console.log(filename)
-
       await new Promise(res =>
         createReadStream()
           .pipe(
