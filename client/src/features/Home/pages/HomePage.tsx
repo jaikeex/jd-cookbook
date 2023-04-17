@@ -1,7 +1,7 @@
 import * as React from 'react';
 import titleImg from 'assets/title.jpg';
 import { useState } from 'react';
-import RecipeCard from 'features/Home/components/RecipeCard/RecipeCard';
+import RecipeCard from 'components/RecipeCard/RecipeCard';
 import { Box, CircularProgress, TextField, useMediaQuery, alpha, useTheme } from '@mui/material';
 import AsyncMultiSelect from 'features/Home/components/AsyncMultiSelect/AsyncMultiSelect';
 import { Waypoint } from 'react-waypoint';
@@ -92,7 +92,7 @@ const HomePage: React.FC<HomePageProps> = (props): JSX.Element => {
         {recipes.map((recipe, index) => (
           <div key={recipe._id}>
             {index === recipes.length - 2 && <Waypoint onEnter={() => fetchMoreRecipes()} />}
-            <RecipeCard recipe={recipe} />
+            <RecipeCard recipe={recipe} isLink href={`/recipe/${recipe._id}`} />
           </div>
         ))}
         {loading && <CircularProgress />}

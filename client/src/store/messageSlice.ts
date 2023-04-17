@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { Action, ThunkAction } from '@reduxjs/toolkit';
 import type { SnackMessage } from 'core/types';
-import type { RootState } from 'store';
 
 interface MessagesState {
   messageQueue: SnackMessage[];
@@ -23,7 +21,7 @@ export const messageSlice = createSlice({
   initialState,
   reducers: {
     addMessage: (state, action) => {
-      const { message, severity, origin } = action.payload;
+      const { message, severity, origin } = action.payload as SetMessagePayload;
 
       const newMessage: SnackMessage = {
         message,

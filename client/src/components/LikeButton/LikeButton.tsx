@@ -2,7 +2,7 @@ import { FavoriteBorder, Favorite } from '@mui/icons-material';
 import { FormControlLabel, Checkbox } from '@mui/material';
 import * as React from 'react';
 
-interface LikeButtonProps {
+export interface LikeButtonProps {
   defaultChecked?: boolean;
   disabled?: boolean;
   label?: React.ReactNode;

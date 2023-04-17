@@ -5,13 +5,13 @@ import { ThemeProvider, CssBaseline, createTheme, Box, useMediaQuery } from '@mu
 import { useSelector } from 'react-redux';
 import type { RootState } from './store/index';
 import { Navbar, CSnackbar } from 'components';
-import { themeSettings } from 'theme';
 import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
+import { makeTheme } from 'theme/theme';
 
 function App() {
   const mode = useSelector((state: RootState) => state.auth.mode);
   const currentMessage = useSelector((state: RootState) => state.message.currentMessage);
-  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+  const theme = useMemo(() => makeTheme(mode), [mode]);
 
   const md = useMediaQuery('(max-width:1200px)');
   const sm = useMediaQuery('(max-width:740px)');

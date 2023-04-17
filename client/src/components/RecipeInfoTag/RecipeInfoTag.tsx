@@ -9,7 +9,7 @@ const StyledPaper = styled(Paper)({
   maxWidth: 'max-content'
 });
 
-interface RecipeInfoTagProps extends React.PropsWithChildren {
+export interface RecipeInfoTagProps extends React.PropsWithChildren {
   icon?: React.ReactNode;
 }
 

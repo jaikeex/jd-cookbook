@@ -17,7 +17,7 @@ interface OptionType {
 interface AsyncMultiSelectProps<isMulti extends boolean> extends Omit<OutlinedTextFieldProps, 'onChange'> {
   id?: string;
   multiple?: isMulti;
-  onChange?: (event: React.ChangeEvent, value: isMulti extends true ? OptionType[] : OptionType | null) => void;
+  onChange?: (event: React.ChangeEvent, value: any) => void;
   sx?: SxProps;
 }
 

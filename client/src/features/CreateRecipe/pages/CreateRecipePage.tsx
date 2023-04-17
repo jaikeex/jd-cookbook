@@ -20,6 +20,10 @@ import FlexBetween from 'components/FlexBetween/FlexBetween';
 import { useMutation } from '@apollo/client';
 import { CREATE_RECIPE_MUTATION, UPLOAD_FILE_MUTATION } from 'core/graphql/mutations';
 import { useNavigate } from 'react-router-dom';
+import { CInput } from 'components/CInput';
+import { CButton } from 'components';
+import { CSelect } from 'components/CSelect';
+import { CDropzone } from 'components/CDropzone';
 
 export interface CreateRecipePageProps {}
 
@@ -66,7 +70,6 @@ interface UploadFileData {
 }
 
 const CreateRecipePage: React.FC<CreateRecipePageProps> = (props): JSX.Element => {
-  const theme = useTheme();
   const navigate = useNavigate();
 
   const [triggerCreate, { data: createdRecipe }] = useMutation(CREATE_RECIPE_MUTATION);
@@ -100,14 +103,10 @@ const CreateRecipePage: React.FC<CreateRecipePageProps> = (props): JSX.Element =
               gridTemplateRows="4rem 6rem 1fr"
               gap="2rem"
             >
-              <TextField
+              <CInput
                 name="name"
                 label="Name"
-                variant="standard"
                 autoComplete="off"
-                InputLabelProps={{
-                  shrink: true
-                }}
                 value={values.name}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -116,48 +115,33 @@ const CreateRecipePage: React.FC<CreateRecipePageProps> = (props): JSX.Element =
                 sx={{ gridColumn: 'span 2' }}
               />
 
-              <TextField
+              <CInput
                 name="cookingTime"
                 label="Cooking time"
-                // size="small"
-                InputProps={{
-                  endAdornment: 'min',
-                  inputMode: 'numeric'
-                }}
-                InputLabelProps={{
-                  shrink: true
-                }}
+                endAdornment="min"
+                inputMode="numeric"
                 value={values.cookingTime}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.cookingTime && Boolean(errors.cookingTime)}
                 helperText={(touched.cookingTime && errors.cookingTime) || ' '}
               />
-              <TextField
-                select
+              <CSelect
                 id="difficulty"
                 name="difficulty"
                 label="Difficulty"
+                size="medium"
                 value={values.difficulty}
-                //size="small"
                 onChange={(event) => setFieldValue('difficulty', event.target.value)}
                 error={touched.difficulty && Boolean(errors.difficulty)}
-                sx={{
-                  '.MuiInputLabel-shrink': {
-                    //transform: 'translate(0, -0.25rem) scale(0.75)'
-                  }
-                }}
               >
                 <MenuItem value={'easy'}>Easy</MenuItem>
                 <MenuItem value={'medium'}>Medium</MenuItem>
                 <MenuItem value={'hard'}>Hard</MenuItem>
-              </TextField>
-              <TextField
+              </CSelect>
+              <CInput
                 name="description"
                 label="Description"
-                InputLabelProps={{
-                  shrink: true
-                }}
                 fullWidth
                 multiline
                 rows={2}
@@ -168,78 +152,42 @@ const CreateRecipePage: React.FC<CreateRecipePageProps> = (props): JSX.Element =
                 helperText={(touched.description && errors.description) || ' '}
                 sx={{ gridColumn: 'span 4' }}
               />
-              <Box gridColumn="span 4" border={`1px solid ${theme.palette.primary.main}`} borderRadius="5px" p="1rem">
-                <Dropzone
-                  accept={{
-                    'image/png': ['.png', '.jpg', '.jpeg']
-                  }}
-                  multiple={false}
-                  onDrop={async (acceptedFiles) => {
-                    const [file] = acceptedFiles;
-                    const { data } = await triggerUpload({ variables: { file } });
-                    setFieldValue('picturePath', data?.uploadFile);
-                  }}
-                >
-                  {({ getRootProps, getInputProps }) => (
-                    <Box
-                      {...getRootProps()}
-                      border={`2px dashed ${theme.palette.primary.main}`}
-                      p="1rem"
-                      sx={{ '&:hover': { cursor: 'pointer' } }}
-                    >
-                      <input {...getInputProps()} />
-                      {!(uploadedFile && uploadedFile.uploadFile) ? (
-                        <p>Add Picture Here</p>
-                      ) : (
-                        <img
-                          width="100%"
-                          src={uploadedFile.uploadFile}
-                          alt="recipe picture"
-                          style={{
-                            maxHeight: '20rem',
-                            objectFit: 'contain'
-                          }}
-                        />
-                      )}
-                    </Box>
-                  )}
-                  {/* {values.picturePath && (
-                    <Box>
-                      <img src={values.picturePath} alt="" />
-                    </Box>
-                  )} */}
-                </Dropzone>
-              </Box>
+              <CDropzone
+                sx={{ gridColumn: 'span 4' }}
+                uploadedFileSrc={uploadedFile?.uploadFile || ''}
+                accept={{
+                  'image/png': ['.png', '.jpg', '.jpeg']
+                }}
+                multiple={false}
+                onDrop={async (acceptedFiles) => {
+                  const [file] = acceptedFiles;
+                  const { data } = await triggerUpload({ variables: { file } });
+                  setFieldValue('picturePath', data?.uploadFile);
+                }}
+              />
             </Box>
             <Box marginTop="2rem" display="flex" flexDirection="column" gap="4rem">
               <FieldArray name="ingredients">
                 {({ push, remove }) => {
                   return (
-                    <Box border="1px solid green" p="1rem">
+                    <Box p="2rem 1rem" border="1px solid green">
+                      <Typography variant="h4">Ingredients</Typography>
                       {values.ingredients.map((ingredient, index) => (
-                        <Box key={index} display="flex" alignItems="center" gap="2rem" marginBottom="1rem">
-                          <TextField
+                        <Box key={index} display="flex" alignItems="center" gap="2rem" margin="3rem 0">
+                          <CInput
                             name={`ingredients.${index}.amount`}
                             label="Amount"
                             size="small"
-                            variant="standard"
                             autoComplete="off"
-                            InputLabelProps={{
-                              shrink: true
-                            }}
                             value={ingredient.amount}
                             onChange={handleChange}
                             onBlur={handleBlur}
                           />
-                          <TextField
+                          <CInput
                             name={`ingredients.${index}.name`}
                             label="Name"
                             size="small"
-                            variant="standard"
                             autoComplete="off"
-                            InputLabelProps={{
-                              shrink: true
-                            }}
                             fullWidth
                             value={ingredient.name}
                             onChange={handleChange}
@@ -264,7 +212,7 @@ const CreateRecipePage: React.FC<CreateRecipePageProps> = (props): JSX.Element =
                 }}
               </FieldArray>
 
-              <TextField
+              <CInput
                 name="instructions"
                 label="Instructions"
                 fullWidth
@@ -276,21 +224,9 @@ const CreateRecipePage: React.FC<CreateRecipePageProps> = (props): JSX.Element =
                 error={touched.instructions && Boolean(errors.instructions)}
                 helperText={(touched.instructions && errors.instructions) || ' '}
               />
-              <Button
-                fullWidth
-                type="submit"
-                sx={{
-                  m: '2rem 0',
-                  p: '1rem',
-                  backgroundColor: theme.palette.primary.main,
-                  color: theme.palette.text.primary,
-                  '&:hover': {
-                    backgroundColor: theme.palette.primary.dark
-                  }
-                }}
-              >
-                <Typography>Create</Typography>
-              </Button>
+              <CButton primary fullWidth type="submit">
+                Create
+              </CButton>
             </Box>
           </Form>
         )}

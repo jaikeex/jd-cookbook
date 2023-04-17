@@ -1,3 +1,5 @@
+import { ThemeOptions } from '@mui/material';
+
 export const colorTokens = {
   grey: {
     0: '#FFFFFF',
@@ -29,7 +31,7 @@ export const colorTokens = {
 };
 
 // mui theme settings
-export const themeSettings = (mode: 'dark' | 'light') => {
+export const themeSettings = (mode: 'dark' | 'light'): ThemeOptions => {
   return {
     palette: {
       mode: mode,
@@ -46,7 +48,8 @@ export const themeSettings = (mode: 'dark' | 'light') => {
               dark: '#1e293b'
             },
             text: {
-              primary: '#f3f4f6'
+              primary: '#f3f4f6',
+              secondary: '#f3f4f6'
             },
             background: {
               default: '#0f172a'
@@ -65,8 +68,10 @@ export const themeSettings = (mode: 'dark' | 'light') => {
               dark: '#e5e7eb'
             },
             background: {
-              default: '#f3f4f6',
-              alt: '#94a3b8'
+              default: '#f3f4f6'
+            },
+            text: {
+              secondary: '#202020'
             }
           })
     },
@@ -74,27 +79,21 @@ export const themeSettings = (mode: 'dark' | 'light') => {
       fontFamily: ['Open Sans', 'sans-serif'].join(','),
       fontSize: 16,
       h1: {
-        fontFamily: ['Open Sans', 'sans-serif'].join(','),
         fontSize: 40
       },
       h2: {
-        fontFamily: ['Open Sans', 'sans-serif'].join(','),
         fontSize: 32
       },
       h3: {
-        fontFamily: ['Open Sans', 'sans-serif'].join(','),
         fontSize: 24
       },
       h4: {
-        fontFamily: ['Open Sans', 'sans-serif'].join(','),
         fontSize: 20
       },
       h5: {
-        fontFamily: ['Open Sans', 'sans-serif'].join(','),
         fontSize: 16
       },
       h6: {
-        fontFamily: ['Open Sans', 'sans-serif'].join(','),
         fontSize: 14
       }
     }

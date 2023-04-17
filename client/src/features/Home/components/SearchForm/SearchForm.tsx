@@ -5,6 +5,7 @@ import { Form, Formik } from 'formik';
 import type { FormikHelpers } from 'formik';
 import * as React from 'react';
 import { AsyncMultiSelect } from 'features';
+import { CSelect } from 'components/CSelect';
 
 interface SearchFormValues {
   query: string;
@@ -65,16 +66,12 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSubmit = () => {} }): JSX.Ele
               }
             />
             <FormControl fullWidth>
-              <InputLabel id="difficulty-label" sx={{ fontWeight: 'bold' }}>
-                Difficulty
-              </InputLabel>
-              <Select
+              <CSelect
                 sx={{
                   backgroundColor: alpha(theme.palette.background.default, 0.85),
                   borderRadius: 1,
                   mb: 2
                 }}
-                labelId="difficulty-label"
                 id="difficulty-select"
                 name="difficulty"
                 label="Difficulty"
@@ -86,7 +83,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSubmit = () => {} }): JSX.Ele
                 <MenuItem value="easy">Easy</MenuItem>
                 <MenuItem value="medium">Medium</MenuItem>
                 <MenuItem value="hard">Hard</MenuItem>
-              </Select>
+              </CSelect>
             </FormControl>
           </Box>
           <CButton type="submit" primary sx={{ mt: '1rem' }}>
