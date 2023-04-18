@@ -16,7 +16,7 @@ const errorLink = onError(({ networkError, graphQLErrors }) => {
   }
 });
 
-const uploadLink = createUploadLink({ uri: 'http://localhost:3001/graphql', credentials: 'include' });
+const uploadLink = createUploadLink({ uri: process.env.REACT_APP_GRAPHQL_SERVER_URL, credentials: 'include' });
 
 const link = from([errorLink, uploadLink]);
 
