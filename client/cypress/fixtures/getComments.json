@@ -1,0 +1,20 @@
+{
+  "data": {
+    "getComments": [
+      {
+        "user": {
+          "username": "Kevin"
+        },
+        "text": "This is a test comment",
+        "createdAt": "1680471423777"
+      },
+      {
+        "user": {
+          "username": "Marv"
+        },
+        "text": "Another test comment",
+        "createdAt": "1680630815397"
+      }
+    ]
+  }
+}

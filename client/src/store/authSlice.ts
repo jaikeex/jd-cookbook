@@ -4,11 +4,13 @@ import type { User } from 'core/types';
 interface AuthState {
   mode: 'light' | 'dark';
   user: User | null;
+  isLoggedIn: boolean;
 }
 
 const initialState: AuthState = {
   mode: 'dark',
-  user: null
+  user: null,
+  isLoggedIn: false
 };
 
 export const authSlice = createSlice({
@@ -20,9 +22,11 @@ export const authSlice = createSlice({
     },
     setLogin: (state, action) => {
       state.user = action.payload.user;
+      state.isLoggedIn = true;
     },
     setLogout: (state) => {
       state.user = null;
+      state.isLoggedIn = false;
     }
   }
 });

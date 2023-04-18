@@ -3,45 +3,49 @@ import { User } from '../../../models/index.js'
 import moment from 'moment'
 import jwt from 'jsonwebtoken'
 import httpErrors from '../../errors/index.js'
+import { getGoogleOauthToken, getGoogleUser } from '../utils/google-utils.js'
 
 export const googleLogin = async (req, res) => {
-  const client = new OAuth2Client(
-    '854100885684-3mio5lih0n2gjmir3f2p5i62q4j8p14g.apps.googleusercontent.com'
-  )
+  const code = req.query.code
+  const pathUrl = req.query.state || '/'
 
-  const ticket = await client.verifyIdToken({
-    idToken: req.query.credential,
-    audience:
-      '854100885684-3mio5lih0n2gjmir3f2p5i62q4j8p14g.apps.googleusercontent.com'
+  if (!code) {
+    throw new httpErrors.E401('Authorization code not provided!')
+  }
+
+  const { id_token, access_token } = await getGoogleOauthToken({ code })
+
+  const { name, verified_email, email, picture } = await getGoogleUser({
+    id_token,
+    access_token
   })
-  const payload = ticket.getPayload()
 
-  const existingUserByEmail = await User.findOne({ email: payload.email })
+  if (!verified_email) {
+    throw new httpErrors.E403('Google account not verified')
+  }
 
-  if (!existingUserByEmail) {
+  let userByEmail = await User.findOne({ email })
+
+  if (!userByEmail) {
     const user = new User({
-      username: payload.name,
-      email: payload.email,
-      roles: ['user'],
-      created: moment().toISOString(),
-      updated: moment().toISOString()
+      username: name,
+      email: email,
+      roles: ['user']
     })
 
-    const createdUser = await User.create(user)
-    res.send({ ...createdUser._doc, _id: createdUser._id.toString() })
-    return
+    userByEmail = await User.create(user)
   }
 
   const token = jwt.sign(
     {
-      userId: existingUserByEmail._id.toString(),
-      userRoles: existingUserByEmail.roles
+      userId: userByEmail._id.toString(),
+      userRoles: userByEmail.roles
     },
-    'secret',
-    { expiresIn: '1h' }
+    process.env.JWT_SECRET,
+    { expiresIn: '24h' }
   )
 
-  req.session.user = existingUserByEmail
+  req.session.user = userByEmail
 
-  res.send({ token, userId: existingUserByEmail._id.toString() })
+  res.send({ token, userId: userByEmail._id.toString() })
 }

@@ -1,6 +1,7 @@
 import { Notification, Recipe, Comment, User } from '../../../models/index.js'
 import httpErrors from '../../errors/index.js'
-import { ObjectId } from 'mongodb'
+import { isAuthenticated } from '../../auth/resolvers/index.js'
+import { composeResolvers } from '@graphql-tools/resolvers-composition'
 
 const resolvers = {
   Mutation: {
@@ -42,6 +43,14 @@ const resolvers = {
     updateRecipe: async (root, args, req, info) => {
       try {
         const { id, input } = args
+        const { _id: userId } = req.session.user
+
+        const recipe = await Recipe.findById(id)
+
+        if (userId !== recipe.user) {
+          throw new httpErrors.E401('Only the recipe author can update it')
+        }
+
         await Recipe.findByIdAndUpdate(id, input)
         const updatedRecipe = await Recipe.findById(id)
 
@@ -54,6 +63,14 @@ const resolvers = {
     deleteRecipe: async (root, args, req, info) => {
       try {
         const { id } = args
+        const { _id: userId } = req.session.user
+
+        const recipe = await Recipe.findById(id)
+
+        if (userId !== recipe.user) {
+          throw new httpErrors.E401('Only the recipe author can delete it')
+        }
+
         await Recipe.findByIdAndDelete(id)
         return `Sucessfully deleted recipe with id=${id}`
       } catch (error) {
@@ -118,4 +135,14 @@ const resolvers = {
   }
 }
 
-export default resolvers
+const resolversComposition = {
+  'Mutation.createRecipe': [isAuthenticated()],
+  'Mutation.updateRecipe': [isAuthenticated()],
+  'Mutation.deleteRecipe': [isAuthenticated()],
+  'Mutation.likeRecipe': [isAuthenticated()],
+  'Mutation.commentRecipe': [isAuthenticated()]
+}
+
+const composedResolvers = composeResolvers(resolvers, resolversComposition)
+
+export default composedResolvers

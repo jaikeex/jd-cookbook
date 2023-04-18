@@ -3,7 +3,6 @@ import * as yup from 'yup';
 import type { Ingredient, Recipe } from 'core/types';
 import { useFileUpload } from 'core/hooks/useFileUpload';
 import { Form, FieldArray, Formik, FormikHelpers } from 'formik';
-import { useCreateRecipe } from 'features/CreateRecipe/hooks/useCreateRecipe';
 import { Box, MenuItem, Typography } from '@mui/material';
 import { CButton } from 'components';
 import { CDropzone } from 'components/CDropzone';
@@ -82,6 +81,7 @@ export const RecipeForm: React.FC<CreateRecipeFormProps> = ({ onSubmit, recipe }
             <CInput
               name="name"
               label="Name *"
+              data-testid="create-form-name"
               autoComplete="off"
               value={values.name}
               onChange={handleChange}
@@ -94,6 +94,7 @@ export const RecipeForm: React.FC<CreateRecipeFormProps> = ({ onSubmit, recipe }
             <CInput
               name="cookingTime"
               label="Cooking time *"
+              data-testid="create-form-cooking-time"
               endAdornment="min"
               inputMode="numeric"
               value={values.cookingTime}
@@ -105,6 +106,7 @@ export const RecipeForm: React.FC<CreateRecipeFormProps> = ({ onSubmit, recipe }
             <CSelect
               id="difficulty"
               name="difficulty"
+              data-testid="create-form-difficulty"
               label="Difficulty *"
               size="medium"
               value={values.difficulty}
@@ -118,6 +120,7 @@ export const RecipeForm: React.FC<CreateRecipeFormProps> = ({ onSubmit, recipe }
             <CInput
               name="description"
               label="Description"
+              data-testid="create-form-description"
               fullWidth
               multiline
               rows={2}
@@ -135,6 +138,7 @@ export const RecipeForm: React.FC<CreateRecipeFormProps> = ({ onSubmit, recipe }
                 'image/png': ['.png', '.jpg', '.jpeg']
               }}
               multiple={false}
+              data-testid="create-form-dropzone"
               onDrop={async (acceptedFiles) => {
                 const [file] = acceptedFiles;
                 const { data } = await uploadFile({ variables: { file } });
@@ -161,6 +165,7 @@ export const RecipeForm: React.FC<CreateRecipeFormProps> = ({ onSubmit, recipe }
             <CInput
               name="instructions"
               label="Instructions *"
+              data-testid="create-form-instructions"
               fullWidth
               multiline
               rows={4}
@@ -171,7 +176,7 @@ export const RecipeForm: React.FC<CreateRecipeFormProps> = ({ onSubmit, recipe }
               helperText={(touched.instructions && errors.instructions) || ' '}
             />
           </Box>
-          <CButton primary fullWidth type="submit" sx={{ mt: 2 }}>
+          <CButton primary fullWidth type="submit" sx={{ mt: 2 }} data-testid="create-form-create-button">
             Save
           </CButton>
           <Typography variant="caption"> * required</Typography>

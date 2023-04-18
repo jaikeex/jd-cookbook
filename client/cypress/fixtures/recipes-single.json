@@ -1,0 +1,21 @@
+{
+  "data": {
+    "getRecipes": {
+      "edges": [
+        {
+          "node": {
+            "_id": "123456",
+            "name": "test recipe 1",
+            "picturePath": "https://storage.googleapis.com/jd-cookbook-images/Screenshot%202023-03-11%20212955.png",
+            "description": "test recipe description 1"
+          },
+          "cursor": "UmVjaXBlOjE2ODE3MzM5MTQ0ODg="
+        }
+      ],
+      "pageInfo": {
+        "hasNextPage": true,
+        "endCursor": "UmVjaXBlOjE2ODA1MDQxNTY4NDQ="
+      }
+    }
+  }
+}

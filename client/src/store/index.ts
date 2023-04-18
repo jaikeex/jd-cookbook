@@ -1,13 +1,14 @@
-import authReducer from 'store/authSlice';
 import { configureStore } from '@reduxjs/toolkit';
-import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
+import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import messageRecuder from './messageSlice';
+import messageReducer from './messageSlice';
+import authReducer from './authSlice';
 
 const persistConfig = { key: 'root', storage, version: 1 };
-const persistedReducer = persistReducer(persistConfig, authReducer);
+const persistedAuthReducer = persistReducer(persistConfig, authReducer);
+
 const store = configureStore({
-  reducer: { auth: persistedReducer, message: messageRecuder },
+  reducer: { auth: persistedAuthReducer, message: messageReducer },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

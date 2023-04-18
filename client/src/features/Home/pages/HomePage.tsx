@@ -1,11 +1,10 @@
 import * as React from 'react';
-import RecipeCard from 'components/RecipeCard/RecipeCard';
 import { Box, CircularProgress, useMediaQuery } from '@mui/material';
-import { Waypoint } from 'react-waypoint';
 import type { RootState } from 'store/index';
 import { useSelector } from 'react-redux';
 import { useRecipePagination } from 'features/Home/hooks/useRecipePagination';
 import { HomeActions } from 'features/Home/components/HomeActions';
+import { RecipeList } from 'components/RecipeList';
 
 const HomePage: React.FC = (): JSX.Element => {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -34,12 +33,7 @@ const HomePage: React.FC = (): JSX.Element => {
         gap="3rem"
         mt="3rem"
       >
-        {recipes.map((recipe, index) => (
-          <div key={recipe._id}>
-            {index === recipes.length - 2 && <Waypoint onEnter={() => fetchMoreRecipes()} />}
-            <RecipeCard recipe={recipe} isLink href={`/recipe/${recipe._id}`} />
-          </div>
-        ))}
+        <RecipeList recipes={recipes} onScrollToBottom={() => fetchMoreRecipes()} />
         {loading && <CircularProgress />}
       </Box>
     </React.Fragment>

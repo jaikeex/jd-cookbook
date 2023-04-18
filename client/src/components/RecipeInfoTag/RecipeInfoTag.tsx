@@ -1,4 +1,4 @@
-import { Paper, styled } from '@mui/material';
+import { Paper, PaperProps, styled } from '@mui/material';
 import * as React from 'react';
 
 const StyledPaper = styled(Paper)({
@@ -9,13 +9,13 @@ const StyledPaper = styled(Paper)({
   maxWidth: 'max-content'
 });
 
-export interface RecipeInfoTagProps extends React.PropsWithChildren {
+export interface RecipeInfoTagProps extends React.PropsWithChildren, PaperProps {
   icon?: React.ReactNode;
 }
 
-const RecipeInfoTag: React.FC<RecipeInfoTagProps> = ({ children = null, icon = null }): JSX.Element => {
+const RecipeInfoTag: React.FC<RecipeInfoTagProps> = ({ children = null, icon = null, ...props }): JSX.Element => {
   return (
-    <StyledPaper>
+    <StyledPaper {...props}>
       {icon}
       {children}
     </StyledPaper>

@@ -30,7 +30,7 @@ export const HomeActions: React.FC<HomeActionsProps> = ({ user, onFilterSubmit }
           right: '0px',
           bottom: '0px',
           left: '0px',
-          opacity: 0.5
+          opacity: 0.3
         }
       }}
     >
@@ -48,7 +48,7 @@ export const HomeActions: React.FC<HomeActionsProps> = ({ user, onFilterSubmit }
         <SearchForm onSubmit={onFilterSubmit} />
         {user?.username && (
           <Box position={sm ? 'relative' : 'absolute'} mt="2rem" bottom={sm ? 0 : 10} right={sm ? 0 : 10}>
-            <Link to="/create" style={{ textDecoration: 'none' }}>
+            <Link to="/create" style={{ textDecoration: 'none' }} data-testid="home-create-recipe">
               <CButton primary color="success">
                 Create new recipe
               </CButton>

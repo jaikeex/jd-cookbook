@@ -1,7 +1,7 @@
-import CustomHttpError from './CustomHttpError.js';
+import CustomHttpError from './CustomHttpError.js'
 
 export class E500 extends CustomHttpError {
-  constructor(message = 'Unexpected error occurred!', ...params) {
-    super(message, 500);
+  constructor(message = 'Unexpected error occurred!') {
+    super(message, 500)
   }
 }

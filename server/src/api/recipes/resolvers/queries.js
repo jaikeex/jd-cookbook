@@ -205,10 +205,4 @@ const resolvers = {
   }
 }
 
-const resolversComposition = {
-  'Query.getAllRecipes': [isAuthenticated()]
-}
-
-const composedResolvers = composeResolvers(resolvers, resolversComposition)
-
-export default composedResolvers
+export default resolvers

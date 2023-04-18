@@ -1,7 +1,7 @@
-import { Box, useMediaQuery } from '@mui/material';
+import { Box, BoxProps, useMediaQuery } from '@mui/material';
 import React from 'react';
 
-export interface PageProps extends React.PropsWithChildren {}
+export interface PageProps extends React.PropsWithChildren, BoxProps {}
 
 export const Page: React.FC<PageProps> = ({ children }): JSX.Element => {
   const md = useMediaQuery('(max-width:1200px)');

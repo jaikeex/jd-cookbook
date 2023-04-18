@@ -10,6 +10,7 @@ const RecipeImage: React.FC<RecipeImageProps> = (props): JSX.Element => {
   return (
     <img
       {...props}
+      data-testid={`recipe-image-${recipe._id}`}
       style={{
         width: '100%',
         objectFit: 'contain'

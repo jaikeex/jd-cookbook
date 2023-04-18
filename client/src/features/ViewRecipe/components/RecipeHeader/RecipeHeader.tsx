@@ -27,20 +27,28 @@ const RecipeHeader: React.FC<RecipeHeaderProps> = ({ onLikeRecipe, ...props }): 
           onChange={onLikeRecipe}
           label={recipe.likesCount}
           labelPlacement="start"
+          data-testid="recipe-like-button"
         />
       </FlexBetween>
       <Divider />
       <Box display="flex" gap="1rem" mt="0.375rem">
-        <RecipeInfoTag icon={<AccessTimeRounded />}>
+        <RecipeInfoTag icon={<AccessTimeRounded />} data-testid="recipe-info-cooking-time">
           <Typography variant="body2">{recipe.cookingTime} min.</Typography>
         </RecipeInfoTag>
-        <RecipeInfoTag icon={<OutdoorGrillRounded />}>
+        <RecipeInfoTag icon={<OutdoorGrillRounded />} data-testid="recipe-info-difficulty">
           <Typography variant="body2" sx={{ textTransform: 'capitalize' }}>
             {recipe.difficulty}
           </Typography>
         </RecipeInfoTag>
         <Box ml="auto" display="flex" gap="1.5rem" flexDirection={md ? 'column' : 'row'}>
-          <Typography component={Link} to="/" variant="caption" color="primary" sx={{ textDecoration: 'none' }}>
+          <Typography
+            component={Link}
+            to={`/profile/${recipe.user._id}`}
+            variant="caption"
+            color="primary"
+            sx={{ textDecoration: 'none' }}
+            data-testid="recipe-author-link"
+          >
             Author: {recipe.user.username}
           </Typography>
           <Typography variant="caption">{new Date(+recipe.createdAt).toLocaleDateString()}</Typography>

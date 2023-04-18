@@ -7,6 +7,7 @@ export const GET_RECIPE_QUERY = gql`
       createdAt
       user {
         username
+        _id
       }
       name
       likedByUser
@@ -28,6 +29,7 @@ export const GET_COMMENTS_QUERY = gql`
   query getComments($id: ID!) {
     getComments(id: $id) {
       user {
+        _id
         username
       }
       text

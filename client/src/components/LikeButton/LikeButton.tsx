@@ -1,8 +1,8 @@
 import { FavoriteBorder, Favorite } from '@mui/icons-material';
-import { FormControlLabel, Checkbox } from '@mui/material';
+import { FormControlLabel, Checkbox, CheckboxProps } from '@mui/material';
 import * as React from 'react';
 
-export interface LikeButtonProps {
+export interface LikeButtonProps extends CheckboxProps {
   defaultChecked?: boolean;
   disabled?: boolean;
   label?: React.ReactNode;
@@ -15,12 +15,14 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   disabled = false,
   label = '',
   labelPlacement = 'end',
-  onChange = () => {}
+  onChange = () => {},
+  ...props
 }): JSX.Element => {
   return (
     <FormControlLabel
       control={
         <Checkbox
+          {...props}
           defaultChecked={defaultChecked}
           disabled={disabled}
           onChange={onChange}

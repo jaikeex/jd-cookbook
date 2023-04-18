@@ -2,10 +2,15 @@ import React from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { Grid } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { RecipeComments, RecipeHeader, RecipeIngredients, RecipeInstructions } from 'features';
+import {
+  RecipeComments,
+  RecipeHeader,
+  RecipeIngredients,
+  RecipeInstructions,
+  RecipeImage,
+  RecipeDescription
+} from 'features/ViewRecipe/components';
 import { RecipeContextProvider } from 'features/ViewRecipe/context';
-import { RecipeImage } from 'features';
-import { RecipeDescription } from 'features';
 import { GET_RECIPE_QUERY, LIKE_RECIPE_MUTATION } from 'features/ViewRecipe/graphql';
 
 export interface RecipePageProps {}

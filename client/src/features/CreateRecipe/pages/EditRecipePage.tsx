@@ -1,5 +1,5 @@
 import React from 'react';
-import { RecipeForm } from 'features';
+import { RecipeForm } from 'features/CreateRecipe/components';
 import { Box } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';

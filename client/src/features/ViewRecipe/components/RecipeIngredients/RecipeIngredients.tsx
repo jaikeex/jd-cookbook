@@ -11,7 +11,7 @@ const RecipeIngredients: React.FC<RecipeIngredientsProps> = (props): JSX.Element
   const { recipe } = useRecipeContext();
 
   return (
-    <List {...props}>
+    <List {...props} data-testid="recipe-ingredients">
       {recipe.ingredients.map((ing: Ingredient, ix: number) => (
         <IngredientLabel ingredient={ing} key={ix} />
       ))}

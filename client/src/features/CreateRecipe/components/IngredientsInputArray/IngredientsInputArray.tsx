@@ -39,6 +39,7 @@ export const IngredientsInputArray: React.FC<IngredientsInputArrayProps> = ({
           <CInput
             name={`ingredients.${index}.amount`}
             label="Amount"
+            data-testid={`ingredient-amount-${index}`}
             size="small"
             autoComplete="off"
             value={ingredient.amount}
@@ -48,6 +49,7 @@ export const IngredientsInputArray: React.FC<IngredientsInputArrayProps> = ({
           <CInput
             name={`ingredients.${index}.name`}
             label="Name *"
+            data-testid={`ingredient-name-${index}`}
             size="small"
             autoComplete="off"
             fullWidth
@@ -56,12 +58,17 @@ export const IngredientsInputArray: React.FC<IngredientsInputArrayProps> = ({
             onBlur={handleBlur}
             error={error}
           />
-          <IconButton size="small" onClick={() => remove(index)}>
+          <IconButton size="small" onClick={() => remove(index)} data-testid={`ingredient-delete-${index}`}>
             <Delete fontSize="small" />
           </IconButton>
         </Box>
       ))}
-      <Button fullWidth onClick={() => push({ name: '', amount: '' })} sx={{ alignSelf: 'flex-start' }}>
+      <Button
+        fullWidth
+        onClick={() => push({ name: '', amount: '' })}
+        sx={{ alignSelf: 'flex-start' }}
+        data-testid={`ingredient-add-button`}
+      >
         <AddCircle />
       </Button>
     </Box>

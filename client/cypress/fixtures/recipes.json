@@ -1,0 +1,120 @@
+{
+  "data": {
+    "getRecipes": {
+      "edges": [
+        {
+          "node": {
+            "_id": "123456",
+            "name": "test recipe 1",
+            "picturePath": "https://storage.googleapis.com/jd-cookbook-images/Screenshot%202023-03-11%20212955.png",
+            "description": "test recipe description 1"
+          },
+          "cursor": "UmVjaXBlOjE2ODE3MzM5MTQ0ODg="
+        },
+        {
+          "node": {
+            "_id": "123789",
+            "name": "test recipe 2",
+            "picturePath": "https://storage.googleapis.com/jd-cookbook-images/Screenshot%202023-03-11%20212955.png",
+            "description": "test recipe description 2"
+          },
+          "cursor": "UmVjaXBlOjE2ODE3MzMyNzI5OTA="
+        },
+        {
+          "node": {
+            "_id": "456789",
+            "name": "test recipe 3",
+            "picturePath": "https://storage.googleapis.com/jd-cookbook-images/Screenshot%202023-03-11%20212955.png",
+            "description": "test recipe description 3"
+          },
+          "cursor": "UmVjaXBlOjE2ODE3MTc2MjA0MjU="
+        },
+        {
+          "node": {
+            "_id": "456123",
+            "name": "test recipe 4",
+            "picturePath": "https://storage.googleapis.com/jd-cookbook-images/Screenshot%202023-03-11%20212955.png",
+            "description": "test recipe description 4"
+          },
+          "cursor": "UmVjaXBlOjE2ODA1MDQxNTg4NjY="
+        },
+        {
+          "node": {
+            "_id": "789123",
+            "name": "test recipe 5",
+            "picturePath": "https://storage.googleapis.com/jd-cookbook-images/Screenshot%202023-03-11%20212955.png",
+            "description": "test recipe description 5"
+          },
+          "cursor": "UmVjaXBlOjE2ODA1MDQxNTg2NTA="
+        },
+        {
+          "node": {
+            "_id": "147258",
+            "name": "test recipe 6",
+            "picturePath": "https://storage.googleapis.com/jd-cookbook-images/Screenshot%202023-03-11%20212955.png",
+            "description": "test recipe description 6"
+          },
+          "cursor": "UmVjaXBlOjE2ODA1MDQxNTg0MTM="
+        },
+        {
+          "node": {
+            "_id": "147369",
+            "name": "test recipe 7",
+            "picturePath": "https://storage.googleapis.com/jd-cookbook-images/Screenshot%202023-03-11%20212955.png",
+            "description": "test recipe description 7"
+          },
+          "cursor": "UmVjaXBlOjE2ODA1MDQxNTgxNTk="
+        },
+        {
+          "node": {
+            "_id": "369258",
+            "name": "test recipe 8",
+            "picturePath": "https://storage.googleapis.com/jd-cookbook-images/Screenshot%202023-03-11%20212955.png",
+            "description": "test recipe description 8"
+          },
+          "cursor": "UmVjaXBlOjE2ODA1MDQxNTc4OTU="
+        },
+        {
+          "node": {
+            "_id": "258369",
+            "name": "test recipe 9",
+            "picturePath": "https://storage.googleapis.com/jd-cookbook-images/Screenshot%202023-03-11%20212955.png",
+            "description": "test recipe description 9"
+          },
+          "cursor": "UmVjaXBlOjE2ODA1MDQxNTc2MjM="
+        },
+        {
+          "node": {
+            "_id": "258147",
+            "name": "test recipe 10",
+            "picturePath": "https://storage.googleapis.com/jd-cookbook-images/Screenshot%202023-03-11%20212955.png",
+            "description": "test recipe description 10"
+          },
+          "cursor": "UmVjaXBlOjE2ODA1MDQxNTczNjQ="
+        },
+        {
+          "node": {
+            "_id": "987369",
+            "name": "test recipe 11",
+            "picturePath": "https://storage.googleapis.com/jd-cookbook-images/Screenshot%202023-03-11%20212955.png",
+            "description": "test recipe description 11"
+          },
+          "cursor": "UmVjaXBlOjE2ODA1MDQxNTcxMDM="
+        },
+        {
+          "node": {
+            "_id": "123369",
+            "name": "test recipe 12",
+            "picturePath": "https://storage.googleapis.com/jd-cookbook-images/Screenshot%202023-03-11%20212955.png",
+            "description": "test recipe description 12"
+          },
+          "cursor": "UmVjaXBlOjE2ODA1MDQxNTY4NDQ="
+        }
+      ],
+      "pageInfo": {
+        "hasNextPage": true,
+        "endCursor": "UmVjaXBlOjE2ODA1MDQxNTY4NDQ="
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "data": {
+    "getNotifications": [
+      {
+        "_id": "123456",
+        "recipe": "123456",
+        "seen": false,
+        "text": "test user 1 left a comment on your test recipe 1 recipe!"
+      },
+      {
+        "_id": "456789",
+        "recipe": "456789",
+        "seen": true,
+        "text": "test user 1 left a comment on your test recipe 2 recipe!"
+      },
+      {
+        "_id": "123789",
+        "recipe": "123789",
+        "seen": true,
+        "text": "test user 2 left a comment on your test recipe 3 recipe!"
+      }
+    ]
+  }
+}

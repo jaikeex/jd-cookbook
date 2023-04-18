@@ -1,5 +1,7 @@
 import { User } from '../../../models/index.js'
 import httpErrors from '../../errors/index.js'
+import { composeResolvers } from '@graphql-tools/resolvers-composition'
+import { isAuthenticated, hasRole } from '../../auth/resolvers/index.js'
 
 const resolvers = {
   Mutation: {
@@ -28,4 +30,11 @@ const resolvers = {
   }
 }
 
-export default resolvers
+const resolversComposition = {
+  'Mutation.deleteUser': [isAuthenticated(), hasRole('admin')],
+  'Mutation.updateUser': [isAuthenticated(), hasRole('admin')]
+}
+
+const composedResolvers = composeResolvers(resolvers, resolversComposition)
+
+export default composedResolvers

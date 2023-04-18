@@ -6,7 +6,7 @@ import {
   OperationVariables,
   useMutation
 } from '@apollo/client';
-import { UPLOAD_FILE_MUTATION } from 'core';
+import { UPLOAD_FILE_MUTATION } from 'core/graphql';
 
 interface UploadFileData {
   uploadFile: string;

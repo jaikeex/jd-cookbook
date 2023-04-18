@@ -1,6 +1,5 @@
 import { useMutation } from '@apollo/client';
-import type { ApolloError } from '@apollo/client';
-import { REGISTER_USER_MUTATION } from 'core';
+import { REGISTER_USER_MUTATION } from 'features/Auth/graphql';
 
 interface IUseRegister {
   register: (username: string, email: string, password: string) => Promise<boolean>;

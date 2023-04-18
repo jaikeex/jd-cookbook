@@ -42,7 +42,7 @@ const ProfileActions: React.FC<ProfileActionsProps> = ({ user = null }): JSX.Ele
   );
 
   return (
-    <div>
+    <div data-testid="navbar-profile-actions">
       {rootElement}
       <Menu
         id="basic-menu"

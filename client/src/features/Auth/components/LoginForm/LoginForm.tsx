@@ -10,7 +10,7 @@ import { CInput } from 'components/CInput';
 import { PasswordInput } from 'components/PasswordInput';
 
 const loginSchema = yup.object().shape({
-  email: yup.string().email('invalid email').required('E-mail is required'),
+  email: yup.string().email('Invalid email').required('E-mail is required'),
   password: yup.string().required('Password is required')
 });
 
@@ -43,6 +43,8 @@ const LoginForm: React.FC = (): JSX.Element => {
             <CInput
               label="E-mail"
               type="email"
+              id="login-form-email"
+              data-testid="login-form-email"
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.email}
@@ -52,6 +54,8 @@ const LoginForm: React.FC = (): JSX.Element => {
             />
             <PasswordInput
               label="Password"
+              id="login-form-password"
+              data-testid="login-form-password"
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.password}
@@ -63,6 +67,7 @@ const LoginForm: React.FC = (): JSX.Element => {
               <CButton
                 fullWidth
                 primary
+                data-testid="login-form-button"
                 type="submit"
                 size="large"
                 sx={{
@@ -71,7 +76,7 @@ const LoginForm: React.FC = (): JSX.Element => {
               >
                 {loading ? <CircularProgress /> : 'Login'}
               </CButton>
-              <Link to={'/auth/register'}>
+              <Link to={'/auth/register'} data-testid="login-form-register">
                 <Typography>Not registered yet? Create an account!</Typography>
               </Link>
             </Box>

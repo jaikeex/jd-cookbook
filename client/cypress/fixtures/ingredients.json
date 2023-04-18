@@ -1,0 +1,27 @@
+{
+  "data": {
+    "getAllIngredients": [
+      {
+        "name": "water"
+      },
+      {
+        "name": "milk"
+      },
+      {
+        "name": "rice"
+      },
+      {
+        "name": "chicken"
+      },
+      {
+        "name": "beef"
+      },
+      {
+        "name": "salt"
+      },
+      {
+        "name": "pepper"
+      }
+    ]
+  }
+}

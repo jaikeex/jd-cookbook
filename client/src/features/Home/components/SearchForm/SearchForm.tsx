@@ -44,6 +44,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSubmit = () => {} }): JSX.Ele
         <Form onSubmit={handleSubmit}>
           <Box>
             <TextField
+              data-testid="search-form-name"
               sx={{
                 backgroundColor: alpha(theme.palette.background.default, 0.85),
                 borderRadius: 1,
@@ -59,6 +60,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSubmit = () => {} }): JSX.Ele
           </Box>
           <Box display="flex" flexDirection={sm ? 'column' : 'row'} gap={4} mt={4}>
             <CMultiSelect
+              data-testid="search-form-ingredient-select"
               label="Ingredients"
               options={options}
               loading={loading}
@@ -76,6 +78,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSubmit = () => {} }): JSX.Ele
             />
             <FormControl fullWidth>
               <CSelect
+                data-testid="search-form-difficulty-select"
                 sx={{
                   backgroundColor: alpha(theme.palette.background.default, 0.85),
                   borderRadius: 1,
@@ -95,7 +98,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSubmit = () => {} }): JSX.Ele
               </CSelect>
             </FormControl>
           </Box>
-          <CButton type="submit" primary sx={{ mt: '1rem' }}>
+          <CButton type="submit" primary sx={{ mt: '1rem' }} data-testid="search-form-button">
             Search
           </CButton>
         </Form>

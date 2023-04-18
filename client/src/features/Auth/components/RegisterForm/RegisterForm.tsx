@@ -11,7 +11,7 @@ import { PasswordInput } from 'components/PasswordInput';
 
 const registerSchema = yup.object().shape({
   username: yup.string().required('Username is required'),
-  email: yup.string().email('invalid email').required('Email is required'),
+  email: yup.string().email('Invalid email').required('E-mail is required'),
   password: yup.string().required('Password is required'),
   confirmPassword: yup
     .string()
@@ -40,7 +40,7 @@ const RegisterForm: React.FC = (): JSX.Element => {
   const formSubmitHandler = async (values: RegisterFormValues, onSubmitProps: FormikHelpers<RegisterFormValues>) => {
     if (await register(values.username, values.email, values.password)) {
       onSubmitProps.resetForm();
-      navigate('/login');
+      navigate('/auth/login');
     }
   };
 
@@ -60,6 +60,7 @@ const RegisterForm: React.FC = (): JSX.Element => {
           >
             <CInput
               label="Username"
+              data-testid="register-form-username"
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.username}
@@ -69,6 +70,7 @@ const RegisterForm: React.FC = (): JSX.Element => {
             />
             <CInput
               label="E-mail"
+              data-testid="register-form-email"
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.email}
@@ -78,6 +80,7 @@ const RegisterForm: React.FC = (): JSX.Element => {
             />
             <PasswordInput
               label="Password"
+              data-testid="register-form-password"
               id="register-password"
               onBlur={handleBlur}
               onChange={handleChange}
@@ -88,6 +91,7 @@ const RegisterForm: React.FC = (): JSX.Element => {
             />
             <PasswordInput
               label="Confirm password"
+              data-testid="register-form-confirm-password"
               id="register-confirm-password"
               onBlur={handleBlur}
               onChange={handleChange}
@@ -101,6 +105,7 @@ const RegisterForm: React.FC = (): JSX.Element => {
               <CButton
                 fullWidth
                 primary
+                data-testid="register-form-button"
                 type="submit"
                 size="large"
                 sx={{
@@ -109,7 +114,7 @@ const RegisterForm: React.FC = (): JSX.Element => {
               >
                 {loading ? <CircularProgress /> : 'Register'}
               </CButton>
-              <Link to={'/auth/login'}>
+              <Link to={'/auth/login'} data-testid="register-form-link">
                 <Typography>Already have an account? Log in!</Typography>
               </Link>
             </Box>

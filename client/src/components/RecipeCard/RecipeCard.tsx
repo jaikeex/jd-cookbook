@@ -26,7 +26,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ isLink = false, href = '', reci
     : {};
 
   return (
-    <Styled.Card>
+    <Styled.Card data-testid={`recipe-card-${recipe._id}`}>
       <CardActionArea {...innerProps} disableRipple>
         {recipe.picturePath ? (
           <CardMedia

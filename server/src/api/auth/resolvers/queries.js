@@ -29,7 +29,6 @@ const resolvers = {
         )
 
         req.session.user = user
-        console.log(user)
 
         return { token, user }
       } catch (error) {

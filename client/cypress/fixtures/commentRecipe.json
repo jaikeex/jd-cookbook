@@ -1,0 +1,41 @@
+{
+  "data": {
+    "commentRecipe": [
+      {
+        "user": {
+          "username": "Kevin"
+        },
+        "text": "This is a test comment",
+        "createdAt": "1680471423777"
+      },
+      {
+        "user": {
+          "username": "jaikeex"
+        },
+        "text": "Another test comment",
+        "createdAt": "1680630815397"
+      },
+      {
+        "user": {
+          "username": "jaikeex"
+        },
+        "text": "Dobrý den",
+        "createdAt": "1681719026023"
+      },
+      {
+        "user": {
+          "username": "jaikeex"
+        },
+        "text": "Hello world!",
+        "createdAt": "1681773452707"
+      },
+      {
+        "user": {
+          "username": "jaikeex"
+        },
+        "text": "Hello Wordl!",
+        "createdAt": "1681773499476"
+      }
+    ]
+  }
+}

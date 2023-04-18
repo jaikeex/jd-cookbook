@@ -2,14 +2,7 @@ import { User } from '../../../models/index.js'
 import bcrypt from 'bcryptjs'
 import validator from 'validator'
 import httpErrors from '../../errors/index.js'
-import { Storage } from '@google-cloud/storage'
-import { join, dirname } from 'path'
-import { fileURLToPath } from 'url'
-import { createWriteStream } from 'fs'
-import { gcBucket } from '../../../server/gc-storage.js'
 import GraphQLUpload from 'express-graphql'
-
-const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const resolvers = {
   Upload: GraphQLUpload,

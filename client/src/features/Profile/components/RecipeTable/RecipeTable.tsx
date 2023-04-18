@@ -25,6 +25,7 @@ import { Edit as EditIcon, Delete as DeleteIcon, Sort as SortIcon } from '@mui/i
 import type { Recipe } from 'core/types';
 import { GET_RECIPES_QUERY, SEARCH_RECIPES_QUERY } from 'core/graphql/queries';
 import { DELETE_RECIPE } from 'core/graphql/mutations';
+import { CInput } from 'components/CInput';
 
 interface RecipeTableProps {
   userId: string;
@@ -161,8 +162,15 @@ const RecipeTable: React.FC<RecipeTableProps> = ({ userId }) => {
   ));
 
   return (
-    <Box width={md ? (sm ? '23rem' : '47rem') : '70rem'} p="2rem" m="2rem auto">
-      <TextField label="Filter by name" value={filterText} onChange={handleFilterChange} fullWidth />
+    <Box width={md ? (sm ? '23rem' : '47rem') : '70rem'}>
+      <CInput
+        label="Filter by name"
+        value={filterText}
+        onChange={handleFilterChange}
+        fullWidth
+        size="small"
+        sx={{ mb: 2 }}
+      />
       <TableContainer>
         <Table stickyHeader size="small">
           <TableHead>

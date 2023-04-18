@@ -1,12 +1,12 @@
-import { Box, TextField, Button, useMediaQuery } from '@mui/material';
+import { Box, TextField, useMediaQuery } from '@mui/material';
+import { CButton } from 'components';
 import * as React from 'react';
-import placeholder from 'assets/placeholder.png';
 import { useState } from 'react';
 
 interface CreateCommentFormProps {
-  disabled?: boolean;
-  onSubmit: React.FormEventHandler<HTMLFormElement>;
+  onSubmit: (value: string) => void;
   inputPlaceholder?: string;
+  disabled?: boolean;
 }
 
 const CreateCommentForm: React.FC<CreateCommentFormProps> = ({
@@ -18,12 +18,20 @@ const CreateCommentForm: React.FC<CreateCommentFormProps> = ({
 
   const sm = useMediaQuery('(max-width:740px)');
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (commentText) {
+      onSubmit(commentText);
+      setCommentText('');
+    }
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCommentText(e.target.value);
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit}>
       <Box display="flex" flexDirection={sm ? 'column' : 'row'} gap={2} mt={4}>
         <TextField
           disabled={disabled}
@@ -34,15 +42,22 @@ const CreateCommentForm: React.FC<CreateCommentFormProps> = ({
           onChange={handleChange}
           multiline
           rows={4}
+          data-testid="recipe-comment-input"
           InputProps={{
             sx: {
               fontSize: '1rem'
             }
           }}
         />
-        <Button variant="contained" color="primary" type="submit" disabled={!commentText} sx={{ minWidth: 120 }}>
+        <CButton
+          primary
+          type="submit"
+          disabled={!commentText}
+          sx={{ minWidth: 120 }}
+          data-testid="recipe-comment-submit"
+        >
           Post
-        </Button>
+        </CButton>
       </Box>
     </form>
   );

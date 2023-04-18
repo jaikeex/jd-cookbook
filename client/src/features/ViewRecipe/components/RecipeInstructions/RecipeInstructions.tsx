@@ -9,7 +9,7 @@ const RecipeInstructions: React.FC<RecipeInstructionsProps> = (props): JSX.Eleme
   const { recipe } = useRecipeContext();
 
   return (
-    <Typography {...props} variant="body2">
+    <Typography {...props} variant="body2" data-testid="recipe-instructions">
       {recipe.instructions}
     </Typography>
   );
