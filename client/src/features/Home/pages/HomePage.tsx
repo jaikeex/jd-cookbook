@@ -12,9 +12,6 @@ const HomePage: React.FC = (): JSX.Element => {
   const user = useSelector((state: RootState) => state.auth.user);
   const { recipes, refetchRecipes, fetchMoreRecipes, loading } = useRecipePagination(GET_RECIPES_QUERY);
 
-  const md = useMediaQuery('(max-width:1366px)');
-  const sm = useMediaQuery('(max-width:768px)');
-
   const handleFilterRecipes = useCallback(
     (values: any) => {
       refetchRecipes({

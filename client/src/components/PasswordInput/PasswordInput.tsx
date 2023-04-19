@@ -23,7 +23,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
 
   const handleClickIcon = useCallback(() => {
     setVisible(!visible);
-  }, [setVisible]);
+  }, [setVisible, visible]);
 
   const handleMouseDownIcon = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();

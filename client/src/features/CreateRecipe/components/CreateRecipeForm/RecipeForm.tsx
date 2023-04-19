@@ -29,8 +29,12 @@ const validationSchema = yup.object().shape({
     .string()
     .required('Difficulty is required')
     .oneOf(['easy', 'medium', 'hard'], 'Invalid difficulty level'),
-  cookingTime: yup.number().required('Cooking time is required').typeError('Must be a number'),
-  picturePath: yup.string().notRequired()
+  cookingTime: yup
+    .number()
+    .required('Cooking time is required')
+    .typeError('Must be a number')
+    .moreThan(0, 'Cooking time cannot be zero'),
+  picturePath: yup.string().required('Recipe picture is required.')
 });
 
 interface CreateRecipeFormValues {
@@ -147,8 +151,11 @@ export const RecipeForm: React.FC<CreateRecipeFormProps> = ({ onSubmit, recipe }
                 'image/png': ['.png', '.jpg', '.jpeg']
               }}
               multiple={false}
+              prompt="Add picture here *"
               data-testid="create-form-dropzone"
               onDrop={handleImageUpload(setFieldValue)}
+              error={touched.picturePath && Boolean(errors.picturePath)}
+              helperText={(touched.picturePath && errors.picturePath) || undefined}
             />
           </Box>
           <Box marginTop="2rem" display="flex" flexDirection="column" gap="4rem">

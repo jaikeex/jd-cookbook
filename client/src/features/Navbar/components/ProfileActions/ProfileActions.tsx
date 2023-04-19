@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { AccountCircle, Login } from '@mui/icons-material';
-import { Button, IconButton, Menu, MenuItem, useMediaQuery } from '@mui/material';
+import { Button, IconButton, Menu, MenuItem, useMediaQuery, useTheme } from '@mui/material';
 import { useLogout } from '@navbar/hooks';
 import type { User } from 'types';
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,9 +12,10 @@ export interface ProfileActionsProps {
 const ProfileActions: React.FC<ProfileActionsProps> = ({ user = null }): JSX.Element => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
+  const theme = useTheme();
   const { logout } = useLogout();
 
-  const sm = useMediaQuery('(max-width:740px)');
+  const sm = useMediaQuery(`(max-width:${theme.breakpoints.values.sm}px)`);
 
   const open = Boolean(anchorEl);
 

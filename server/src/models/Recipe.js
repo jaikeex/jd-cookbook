@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const RecipeSchema = new mongoose.Schema(
   {
@@ -31,13 +31,13 @@ const RecipeSchema = new mongoose.Schema(
     likes: [String]
   },
   { timestamps: true }
-)
+);
 
 RecipeSchema.index({
   name: 'text',
   'ingredients.name': 'text'
-})
+});
 
-const Recipe = mongoose.model('Recipe', RecipeSchema)
+const Recipe = mongoose.model('Recipe', RecipeSchema);
 
-export default Recipe
+export default Recipe;

@@ -1,5 +1,5 @@
-import Mutation from './mutations.js'
+import Mutation from './mutations.js';
 
-const resolvers = { ...Mutation }
+const resolvers = { ...Mutation };
 
-export default resolvers
+export default resolvers;

@@ -1,6 +1,5 @@
 import { Box, styled } from '@mui/material';
 import titleImg from 'assets/title.jpg';
-import { device } from 'theme';
 
 export const Root = styled(Box)({
   position: 'relative',
@@ -20,24 +19,24 @@ export const Root = styled(Box)({
   }
 });
 
-export const FormWrapper = styled(Box)({
+export const FormWrapper = styled(Box)((props) => ({
   maxWidth: '47rem',
   margin: '0 auto',
   padding: '2rem 0',
   textAlign: 'center',
 
-  [device.sm]: {
+  [props.theme.breakpoints.up('sm')]: {
     padding: '2rem 4rem'
   }
-});
+}));
 
-export const CreateRecipeButton = styled(Box)({
+export const CreateRecipeButton = styled(Box)((props) => ({
   position: 'relative',
   marginTop: '2rem',
 
-  [device.sm]: {
+  [props.theme.breakpoints.up('sm')]: {
     position: 'absolute',
     bottom: 10,
     right: 10
   }
-});
+}));

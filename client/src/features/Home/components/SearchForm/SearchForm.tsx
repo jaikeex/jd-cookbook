@@ -30,7 +30,7 @@ export interface SearchFormProps {
 
 const SearchForm: React.FC<SearchFormProps> = ({ onSubmit = () => {} }): JSX.Element => {
   const theme = useTheme();
-  const sm = useMediaQuery('(max-width:768px)');
+  const sm = useMediaQuery(`(max-width:${theme.breakpoints.values.sm}px)`);
   const { loading, data } = useQuery<{ getAllIngredients: Ingredient[]; }>(GET_ALL_INGREDIENTS_QUERY);
 
   const options: OptionType[] = data?.getAllIngredients.map(({ name }) => ({ label: name, value: name })) || [];

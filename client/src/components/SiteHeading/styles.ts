@@ -1,6 +1,5 @@
 import { Box, styled, Typography } from '@mui/material';
 import type { SiteHeadingProps } from './SiteHeading';
-import { device } from 'theme';
 
 export const Root = styled(Box)((props) => ({
   display: 'flex',
@@ -8,15 +7,15 @@ export const Root = styled(Box)((props) => ({
   gap: '1rem'
 }));
 
-export const Image = styled('img')({
+export const Image = styled('img')((props) => ({
   width: '100px',
   transform: 'translateY(20%)',
   display: 'none',
 
-  [device.sm]: {
+  [props.theme.breakpoints.up('sm')]: {
     display: 'block'
   }
-});
+}));
 
 export const Title = styled(Typography)<SiteHeadingProps>((props) => ({
   fontWeight: 'bold',

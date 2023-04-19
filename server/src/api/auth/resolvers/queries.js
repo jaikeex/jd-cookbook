@@ -1,22 +1,25 @@
-import { User } from '../../../models/index.js'
-import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
-import httpErrors from '../../errors/index.js'
+import { User } from '../../../models/index.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 const resolvers = {
   Query: {
     login: async (root, args, req, info) => {
       try {
-        const { email, password } = args
-        const user = await User.findOne({ email })
+        const { email, password } = args;
+        const user = await User.findOne({ email });
 
         if (!user) {
-          throw new httpErrors.E401('User not found.')
+          throw new Error('User not found.');
         }
 
-        const passwordsMatch = await bcrypt.compare(password, user.password)
+        if (!user.confirmed) {
+          throw new Error('Email is not yet verified.');
+        }
+
+        const passwordsMatch = await bcrypt.compare(password, user.password);
         if (!passwordsMatch) {
-          throw new httpErrors.E401('Password is incorrect')
+          throw new Error('Password is incorrect');
         }
 
         const token = jwt.sign(
@@ -26,22 +29,22 @@ const resolvers = {
           },
           process.env.JWT_SECRET,
           { expiresIn: '24h' }
-        )
+        );
 
-        req.session.user = user
+        req.session.user = user;
 
-        return { token, user }
+        return { token, user };
       } catch (error) {
-        throw new httpErrors.E500(error.message)
+        throw new Error(error.message);
       }
     },
 
     logout: (root, args, req, info) => {
-      req.session.destroy()
+      req.session.destroy();
 
-      return 'You have been logged out.'
+      return 'You have been logged out.';
     }
   }
-}
+};
 
-export default resolvers
+export default resolvers;

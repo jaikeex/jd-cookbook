@@ -1,6 +1,6 @@
 import React from 'react';
 import { AccessTimeRounded, OutdoorGrillRounded } from '@mui/icons-material';
-import { Typography, Divider, Box, useMediaQuery } from '@mui/material';
+import { Typography, Divider, Box, useMediaQuery, useTheme } from '@mui/material';
 import type { BoxProps } from '@mui/material';
 import { FlexBetween, LikeButton, RecipeInfoTag } from 'components';
 import { useRecipeContext } from '@viewRecipe/context';
@@ -14,8 +14,9 @@ export interface RecipeHeaderProps extends BoxProps {
 
 const RecipeHeader: React.FC<RecipeHeaderProps> = ({ onLikeRecipe, ...props }): JSX.Element => {
   const { recipe } = useRecipeContext();
+  const theme = useTheme();
   const user = useSelector((state: RootState) => state.auth.user);
-  const md = useMediaQuery('(max-width:1200px)');
+  const md = useMediaQuery(`(max-width:${theme.breakpoints.values.sm}px)`);
 
   return (
     <Box {...props}>

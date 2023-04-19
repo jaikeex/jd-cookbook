@@ -3,7 +3,7 @@ import * as serverErrors from './classes/5xx.js';
 
 const httpErrors = {
   ...clientErrors,
-  ...serverErrors,
+  ...serverErrors
 };
 
 export default httpErrors;

@@ -9,12 +9,12 @@ import resolvers from './resolvers/index.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const schema = await loadSchema(join(__dirname, './type-defs/User.gql'), {
-  loaders: [new GraphQLFileLoader()],
+  loaders: [new GraphQLFileLoader()]
 });
 
 const schemaWithResolvers = addResolversToSchema({
   schema,
-  resolvers,
+  resolvers
 });
 
 export default schemaWithResolvers;

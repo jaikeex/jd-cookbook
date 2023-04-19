@@ -16,7 +16,12 @@ export const useRegister = (): IUseRegister => {
     const response = await registerMutation({ variables: { username, email, password } });
 
     if (response && response.data) {
-      dispatch(addMessage({ message: 'Registration successful! You can now log in.', severity: 'success' }));
+      dispatch(
+        addMessage({
+          message: 'Account successfully created. Please check your email for verification.',
+          severity: 'success'
+        })
+      );
       return true;
     }
 

@@ -3,7 +3,7 @@ import { User } from '../../../models/index.js'
 import MongoDBStore from 'connect-mongodb-session'
 import session from 'express-session'
 
-const setFailed = (req, next) => {
+const setFailed = (req, res, next) => {
   req.isAuthenticated = false
   return next()
 }
@@ -27,7 +27,7 @@ export const auth = (req, res, next) => {
 
     return next()
   } catch (err) {
-    return setFailed(req, next)
+    return setFailed(req, res, next)
   }
 }
 
