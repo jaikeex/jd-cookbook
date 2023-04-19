@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { User } from 'core/types';
+import type { User } from 'types';
 
 interface AuthState {
   mode: 'light' | 'dark';

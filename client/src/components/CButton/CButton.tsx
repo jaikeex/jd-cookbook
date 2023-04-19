@@ -7,12 +7,15 @@ export interface CButtonProps extends ButtonProps, React.PropsWithChildren {
   size?: 'medium' | 'large';
 }
 
-const CButton: React.FC<CButtonProps> = ({ children, primary = false, size = 'medium', ...props }): JSX.Element => {
+export const CButton: React.FC<CButtonProps> = ({
+  children,
+  primary = false,
+  size = 'medium',
+  ...props
+}): JSX.Element => {
   return (
     <Styled.Button {...props} primary variant={primary ? 'contained' : 'text'} size={size}>
       {children}
     </Styled.Button>
   );
 };
-
-export default CButton;

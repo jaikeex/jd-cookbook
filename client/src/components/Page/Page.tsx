@@ -1,15 +1,19 @@
-import { Box, BoxProps, useMediaQuery } from '@mui/material';
 import React from 'react';
+import { styled } from '@mui/material';
+import { Box } from '@mui/material';
+import { device } from 'theme';
 
-export interface PageProps extends React.PropsWithChildren, BoxProps {}
+export const Page = styled(Box)({
+  margin: '2rem auto',
+  padding: '1.5rem',
+  width: '23rem',
 
-export const Page: React.FC<PageProps> = ({ children }): JSX.Element => {
-  const md = useMediaQuery('(max-width:1200px)');
-  const sm = useMediaQuery('(max-width:740px)');
+  [device.sm]: {
+    padding: '2rem',
+    width: '47rem'
+  },
 
-  return (
-    <Box width={md ? (sm ? '23rem' : '47rem') : '70rem'} p={sm ? 3 : 4} m="2rem auto">
-      {children}
-    </Box>
-  );
-};
+  [device.md]: {
+    width: '70rem'
+  }
+});

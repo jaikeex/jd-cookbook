@@ -1,11 +1,11 @@
-import { useRecipePagination } from 'core';
-import { GET_RECIPES_QUERY, GET_USER_QUERY } from 'features/Profile/graphql';
-import RecipeTable from 'features/Profile/components/RecipeTable/RecipeTable';
-import * as React from 'react';
+import React from 'react';
+import { useRecipePagination } from 'hooks';
+import { GET_RECIPES_QUERY, GET_USER_QUERY } from '@profile/graphql';
+import { RecipeTable } from '@profile/components';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import type { RootState } from 'store';
-import { RecipeList } from 'components/RecipeList';
+import { RecipeList } from 'components';
 import { Box, CircularProgress, Typography, useMediaQuery } from '@mui/material';
 import { useQuery } from '@apollo/client';
 

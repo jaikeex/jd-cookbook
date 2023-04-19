@@ -3,9 +3,7 @@ import { Page } from 'components/Page/Page';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-export interface NotFoundPageProps {}
-
-const NotFoundPage: React.FC<NotFoundPageProps> = (props): JSX.Element => {
+const NotFoundPage: React.FC = (): JSX.Element => {
   return (
     <Page>
       <Typography variant="h2" mb={3} textAlign="center">

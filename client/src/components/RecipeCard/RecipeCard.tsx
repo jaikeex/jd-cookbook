@@ -1,7 +1,7 @@
 import { CardMedia, CardContent, Typography, CardActionArea } from '@mui/material';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import type { Recipe } from 'core/types';
+import type { Recipe } from 'types';
 import * as Styled from './styles';
 
 export type RecipeCardProps = (

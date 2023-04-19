@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { SnackMessage } from 'core/types';
+import type { SnackMessage } from 'types';
 
 interface MessagesState {
   messageQueue: SnackMessage[];
@@ -10,23 +10,27 @@ const initialState: MessagesState = {
   messageQueue: []
 };
 
-interface SetMessagePayload {
+interface AddMessagePayload {
   message: string;
   severity: 'success' | 'error' | 'warning' | 'info';
-  origin: string;
+  origin?: string;
+}
+
+interface AddMessageAction {
+  payload: AddMessagePayload;
 }
 
 export const messageSlice = createSlice({
   name: 'message',
   initialState,
   reducers: {
-    addMessage: (state, action) => {
-      const { message, severity, origin } = action.payload as SetMessagePayload;
+    addMessage: (state, action: AddMessageAction) => {
+      const { message, severity, origin } = action.payload;
 
       const newMessage: SnackMessage = {
         message,
         severity,
-        origin,
+        origin: origin || '',
         timestamp: Date.now()
       };
 

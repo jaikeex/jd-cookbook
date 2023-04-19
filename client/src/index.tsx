@@ -6,7 +6,7 @@ import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import store from 'store';
 import { ApolloProvider } from '@apollo/client';
-import { client } from 'core/graphql/client';
+import { client } from 'graphql/client';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

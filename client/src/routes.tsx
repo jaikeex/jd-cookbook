@@ -1,10 +1,9 @@
-import { HomePage, AuthPage, CreateRecipePage, RecipePage, ProfilePage } from 'features';
-import { EditRecipePage } from 'features/CreateRecipe/pages/EditRecipePage';
-import { NotFoundPage } from 'pages';
 import React from 'react';
+import { HomePage, AuthPage, CreateRecipePage, EditRecipePage, RecipePage, ProfilePage } from 'features';
+import { NotFoundPage } from 'pages';
 import { useSelector } from 'react-redux';
-import { Route, Navigate, PathRouteProps, Outlet, Routes } from 'react-router-dom';
-import { RootState } from 'store';
+import { Route, Navigate, Outlet, Routes } from 'react-router-dom';
+import type { RootState } from 'store';
 
 const ProtectedRoute = () => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);

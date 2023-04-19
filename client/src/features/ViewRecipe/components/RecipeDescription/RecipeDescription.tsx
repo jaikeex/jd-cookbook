@@ -1,7 +1,7 @@
+import React from 'react';
 import { Typography } from '@mui/material';
 import type { TypographyProps } from '@mui/material';
-import * as React from 'react';
-import { useRecipeContext } from 'features/ViewRecipe/context';
+import { useRecipeContext } from '@viewRecipe/context';
 
 export interface RecipeDescriptionProps extends TypographyProps {}
 

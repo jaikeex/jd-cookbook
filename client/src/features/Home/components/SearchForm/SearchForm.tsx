@@ -1,13 +1,11 @@
+import React, { useCallback } from 'react';
 import { Box, TextField, alpha, FormControl, MenuItem, useTheme, useMediaQuery } from '@mui/material';
-import { CButton } from 'components';
-import type { Ingredient } from 'core';
+import { CButton, CMultiSelect, CSelect } from 'components';
+import type { Ingredient } from 'types';
 import { Form, Formik } from 'formik';
 import type { FormikHelpers } from 'formik';
-import * as React from 'react';
-import { CSelect } from 'components/CSelect';
-import { CMultiSelect } from 'components/CMultiSelect';
 import { useQuery } from '@apollo/client';
-import { GET_ALL_INGREDIENTS_QUERY } from 'features/Home/graphql';
+import { GET_ALL_INGREDIENTS_QUERY } from '@home/graphql';
 
 interface SearchFormValues {
   query: string;
@@ -32,11 +30,27 @@ export interface SearchFormProps {
 
 const SearchForm: React.FC<SearchFormProps> = ({ onSubmit = () => {} }): JSX.Element => {
   const theme = useTheme();
+  const sm = useMediaQuery('(max-width:768px)');
   const { loading, data } = useQuery<{ getAllIngredients: Ingredient[]; }>(GET_ALL_INGREDIENTS_QUERY);
 
   const options: OptionType[] = data?.getAllIngredients.map(({ name }) => ({ label: name, value: name })) || [];
 
-  const sm = useMediaQuery('(max-width:740px)');
+  const handleIngredientsSelect = (
+    callback: (field: string, value: any, shouldValidate?: boolean | undefined) => void
+  ) =>
+    useCallback(
+      (value: OptionType[] | null) => {
+        if (value) {
+          callback(
+            'ingredients',
+            value.map((val) => val.value)
+          );
+        }
+      },
+      [callback]
+    );
+
+  console.log(loading);
 
   return (
     <Formik onSubmit={onSubmit} initialValues={initialFormValues}>
@@ -67,14 +81,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSubmit = () => {} }): JSX.Ele
               size="small"
               id="ingredients-select"
               sx={{ minWidth: '70%' }}
-              onChange={(value: OptionType[] | null) => {
-                if (value) {
-                  setFieldValue(
-                    'ingredients',
-                    value.map((val) => val.value)
-                  );
-                }
-              }}
+              onChange={handleIngredientsSelect(setFieldValue)}
             />
             <FormControl fullWidth>
               <CSelect

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { FormControl, Autocomplete, CircularProgress, AutocompleteProps } from '@mui/material';
+import React, { useCallback, useState } from 'react';
+import type { AutocompleteProps, AutocompleteRenderGetTagProps, AutocompleteRenderInputParams } from '@mui/material';
+import { FormControl, Autocomplete, CircularProgress } from '@mui/material';
 import * as Styled from './styles';
 
 interface OptionType {
@@ -28,10 +29,43 @@ export const CMultiSelect: React.FC<CMultiSelectProps> = ({
 }): JSX.Element => {
   const [selectedOptions, setSelectedOptions] = useState<OptionType[] | null>([]);
 
-  const handleChange = (_: React.ChangeEvent<any>, value: OptionType[] | null) => {
-    setSelectedOptions(value);
-    onChange(value);
-  };
+  const handleChange = useCallback(
+    (_: React.ChangeEvent<any>, value: OptionType[] | null) => {
+      setSelectedOptions(value);
+      onChange(value);
+    },
+    [setSelectedOptions, onChange]
+  );
+
+  const renderTags = useCallback(
+    (value: readonly OptionType[], getTagProps: AutocompleteRenderGetTagProps) =>
+      value.map((value: OptionType, index: number) => (
+        <Styled.Chip {...getTagProps({ index })} key={index} variant="filled" label={value.label} size="small" />
+      )),
+    []
+  );
+
+  const renderInput = useCallback(
+    (params: AutocompleteRenderInputParams) => (
+      <Styled.TextField
+        {...params}
+        InputProps={{
+          ...params.InputProps,
+          endAdornment: (
+            <React.Fragment>
+              {loading ? <CircularProgress color="inherit" size={20} /> : null}
+              {params.InputProps.endAdornment}
+            </React.Fragment>
+          )
+        }}
+      />
+    ),
+    [loading]
+  );
+
+  const getOptionLabel = useCallback((option: OptionType) => option.label, []);
+
+  const isOptionEqualToValue = useCallback((option: OptionType, value: OptionType) => option.value === value.value, []);
 
   return (
     <FormControl variant="outlined" sx={sx}>
@@ -44,29 +78,12 @@ export const CMultiSelect: React.FC<CMultiSelectProps> = ({
         multiple
         options={options}
         value={selectedOptions || []}
-        getOptionLabel={(option: OptionType) => option.label}
+        getOptionLabel={getOptionLabel}
         filterSelectedOptions
-        isOptionEqualToValue={(option, value) => option.value === value.value}
+        isOptionEqualToValue={isOptionEqualToValue}
         onChange={handleChange}
-        renderTags={(value: readonly OptionType[], getTagProps) =>
-          value.map((value: OptionType, index: number) => (
-            <Styled.Chip {...getTagProps({ index })} key={index} variant="filled" label={value.label} size="small" />
-          ))
-        }
-        renderInput={(params) => (
-          <Styled.TextField
-            {...params}
-            InputProps={{
-              ...params.InputProps,
-              endAdornment: (
-                <React.Fragment>
-                  {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                  {params.InputProps.endAdornment}
-                </React.Fragment>
-              )
-            }}
-          />
-        )}
+        renderTags={renderTags}
+        renderInput={renderInput}
       />
     </FormControl>
   );

@@ -1,12 +1,12 @@
-import {
+import type {
   ApolloCache,
   DefaultContext,
   FetchResult,
   MutationFunctionOptions,
-  OperationVariables,
-  useMutation
+  OperationVariables
 } from '@apollo/client';
-import { UPLOAD_FILE_MUTATION } from 'core/graphql';
+import { useMutation } from '@apollo/client';
+import { UPLOAD_FILE_MUTATION } from 'graphql/mutations';
 
 interface UploadFileData {
   uploadFile: string;

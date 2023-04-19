@@ -1,41 +1,44 @@
-import * as React from 'react';
+import React, { useCallback } from 'react';
 import { Box, CircularProgress, useMediaQuery } from '@mui/material';
 import type { RootState } from 'store/index';
 import { useSelector } from 'react-redux';
-import { useRecipePagination } from 'features/Home/hooks/useRecipePagination';
-import { HomeActions } from 'features/Home/components/HomeActions';
-import { RecipeList } from 'components/RecipeList';
+import { HomeActions } from '@home/components';
+import { RecipeList } from 'components';
+import { GET_RECIPES_QUERY } from '@home/graphql';
+import { useRecipePagination } from 'hooks';
+import * as Styled from './styles';
 
 const HomePage: React.FC = (): JSX.Element => {
   const user = useSelector((state: RootState) => state.auth.user);
-  const { recipes, refetchRecipes, fetchMoreRecipes, loading } = useRecipePagination();
+  const { recipes, refetchRecipes, fetchMoreRecipes, loading } = useRecipePagination(GET_RECIPES_QUERY);
 
-  const md = useMediaQuery('(max-width:1200px)');
-  const sm = useMediaQuery('(max-width:740px)');
+  const md = useMediaQuery('(max-width:1366px)');
+  const sm = useMediaQuery('(max-width:768px)');
 
-  const filterRecipesHandler = (values: any) => {
-    refetchRecipes({
-      ingredients: values.ingredients,
-      matchAll: true,
-      query: values.query,
-      difficulty: values.difficulty === 'all' ? '' : values.difficulty
-    });
-  };
+  const handleFilterRecipes = useCallback(
+    (values: any) => {
+      refetchRecipes({
+        ingredients: values.ingredients,
+        matchAll: true,
+        query: values.query,
+        difficulty: values.difficulty === 'all' ? '' : values.difficulty
+      });
+    },
+    [refetchRecipes]
+  );
+
+  const handleScrollToBottom = useCallback(() => {
+    fetchMoreRecipes();
+  }, [fetchMoreRecipes]);
 
   return (
     <React.Fragment>
-      <HomeActions user={user} onFilterSubmit={filterRecipesHandler} />
+      <HomeActions user={user} onFilterSubmit={handleFilterRecipes} />
 
-      <Box
-        borderRadius="1.5rem"
-        display="grid"
-        gridTemplateColumns={`repeat(${md ? (sm ? '1' : '2') : '3'}, 1fr)`}
-        gap="3rem"
-        mt="3rem"
-      >
-        <RecipeList recipes={recipes} onScrollToBottom={() => fetchMoreRecipes()} />
+      <Styled.Recipes>
+        <RecipeList recipes={recipes} onScrollToBottom={handleScrollToBottom} />
         {loading && <CircularProgress />}
-      </Box>
+      </Styled.Recipes>
     </React.Fragment>
   );
 };

@@ -48,12 +48,12 @@
         "assertionStyle": "as"
       }
     ],
-    // "@typescript-eslint/consistent-type-imports": [
-    //   "error",
-    //   {
-    //     "prefer": "type-imports"
-    //   }
-    // ],
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports"
+      }
+    ],
 
     //* React specific rules
     "react/display-name": "off",

@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import { List } from '@mui/material';
 import type { ListProps } from '@mui/material';
-import type { Ingredient } from 'core';
+import type { Ingredient } from 'types';
 import { IngredientLabel } from './IngredientLabel';
-import { useRecipeContext } from 'features/ViewRecipe/context';
+import { useRecipeContext } from '@viewRecipe/context';
 
 export interface RecipeIngredientsProps extends ListProps {}
 

@@ -1,9 +1,9 @@
+import React from 'react';
 import { AccessTimeRounded, OutdoorGrillRounded } from '@mui/icons-material';
 import { Typography, Divider, Box, useMediaQuery } from '@mui/material';
 import type { BoxProps } from '@mui/material';
 import { FlexBetween, LikeButton, RecipeInfoTag } from 'components';
-import { useRecipeContext } from 'features/ViewRecipe/context';
-import * as React from 'react';
+import { useRecipeContext } from '@viewRecipe/context';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import type { RootState } from 'store';

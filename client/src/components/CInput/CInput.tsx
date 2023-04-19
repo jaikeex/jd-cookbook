@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormControl, FormHelperText } from '@mui/material';
+import { FormControl } from '@mui/material';
 import type { OutlinedInputProps } from '@mui/material';
 import * as Styled from './styles';
 

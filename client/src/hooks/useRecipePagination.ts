@@ -1,8 +1,7 @@
 import { useQuery } from '@apollo/client';
-import type { ApolloQueryResult, OperationVariables } from '@apollo/client';
+import type { ApolloQueryResult, OperationVariables, DocumentNode } from '@apollo/client';
 import { useEffect, useState } from 'react';
-import type { Recipe } from 'core';
-import { GET_RECIPES_QUERY } from 'features/Home/graphql';
+import type { Recipe } from 'types';
 
 interface GetRecipesQueryData {
   getRecipes: {
@@ -27,11 +26,14 @@ interface IUseRecipePagination {
   hasNextPage: boolean;
 }
 
-export const useRecipePagination = (): IUseRecipePagination => {
+export const useRecipePagination = (query: DocumentNode, variables: OperationVariables = {}): IUseRecipePagination => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
 
-  const { data, refetch, fetchMore, loading } = useQuery(GET_RECIPES_QUERY, { refetchWritePolicy: 'overwrite' });
+  const { data, refetch, fetchMore, loading } = useQuery(query, {
+    variables: variables,
+    refetchWritePolicy: 'overwrite'
+  });
 
   const fetchMoreRecipes = (variables?: Partial<OperationVariables>) => {
     const { endCursor } = data.getRecipes.pageInfo;

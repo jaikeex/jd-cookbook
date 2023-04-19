@@ -1,13 +1,11 @@
-import { Formik } from 'formik';
-import * as React from 'react';
+import React, { useCallback } from 'react';
 import * as yup from 'yup';
+import { Formik } from 'formik';
+import type { FormikHelpers } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, CircularProgress, Typography } from '@mui/material';
-import type { FormikHelpers } from 'formik';
-import { CButton } from 'components';
-import { useLogin } from 'features/Auth/hooks/useLogin';
-import { CInput } from 'components/CInput';
-import { PasswordInput } from 'components/PasswordInput';
+import { CButton, CInput, PasswordInput } from 'components';
+import { useLogin } from '@auth/hooks/useLogin';
 
 const loginSchema = yup.object().shape({
   email: yup.string().email('Invalid email').required('E-mail is required'),
@@ -28,12 +26,15 @@ const LoginForm: React.FC = (): JSX.Element => {
   const { login, loading } = useLogin();
   const navigate = useNavigate();
 
-  const handleFormSubmit = async (values: LoginFormValues, onSubmitProps: FormikHelpers<LoginFormValues>) => {
-    if (await login(values.email, values.password)) {
-      onSubmitProps.resetForm();
-      navigate('/');
-    }
-  };
+  const handleFormSubmit = useCallback(
+    async (values: LoginFormValues, onSubmitProps: FormikHelpers<LoginFormValues>) => {
+      if (await login(values.email, values.password)) {
+        onSubmitProps.resetForm();
+        navigate('/');
+      }
+    },
+    [login, navigate]
+  );
 
   return (
     <Formik onSubmit={handleFormSubmit} initialValues={initialLoginValues} validationSchema={loginSchema}>

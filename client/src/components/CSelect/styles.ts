@@ -1,5 +1,5 @@
 import { Select as MuiSelect, InputLabel as MuiLabel, styled } from '@mui/material';
-import { CSelectProps } from './CSelect';
+import type { CSelectProps } from './CSelect';
 
 export const Select = styled(MuiSelect)<CSelectProps>((props) => ({
   ...(props.size === 'medium' && {

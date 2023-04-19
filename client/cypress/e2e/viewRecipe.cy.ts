@@ -37,6 +37,27 @@ describe('ViewRecipe', () => {
     cy.getByTestId('recipe-like-button').find('input').should('be.disabled');
   });
 
+  it('should enable the like button if user is logged in', () => {
+    cy.login();
+    cy.visit('http://localhost:3000/recipe/64298c8b332327727ddaddf1');
+    cy.getByTestId('recipe-like-button').find('input').should('not.be.disabled');
+  });
+
+  it('should display comment section as disabled if user is not logged in', () => {
+    cy.visit('http://localhost:3000/recipe/64298c8b332327727ddaddf1');
+    cy.getByTestId('recipe-comment-submit').should('be.disabled');
+    cy.getByTestId('recipe-comment-input').find('textarea').should('be.disabled');
+  });
+
+  it('should allow user to post comments if logged in', () => {
+    cy.login();
+    cy.visit('http://localhost:3000/recipe/64298c8b332327727ddaddf1');
+    cy.getByTestId('recipe-comment-submit').should('be.disabled');
+    cy.getByTestId('recipe-comment-input').find('textarea').should('not.be.disabled');
+    cy.getByTestId('recipe-comment-input').find('[name="comment-input"]').type('This is a test comment');
+    cy.getByTestId('recipe-comment-submit').should('not.be.disabled');
+  });
+
   it('should navigate to author profile if author name is clicked', () => {
     cy.visit('http://localhost:3000/recipe/64298c8b332327727ddaddf1');
     cy.getByTestId('recipe-author-link').click();

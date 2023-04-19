@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { useRecipeContext } from 'features/ViewRecipe/context';
+import React from 'react';
+import { useRecipeContext } from '@viewRecipe/context';
 import placeholder from 'assets/placeholder.png';
 
 export interface RecipeImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {}

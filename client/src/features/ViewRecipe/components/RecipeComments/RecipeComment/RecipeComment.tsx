@@ -1,7 +1,8 @@
-import { Box, alpha, Typography, Divider, useTheme, BoxProps } from '@mui/material';
+import React from 'react';
+import type { BoxProps } from '@mui/material';
+import { Box, alpha, Typography, Divider, useTheme } from '@mui/material';
 import { FlexBetween } from 'components';
-import type { Comment } from 'core';
-import * as React from 'react';
+import type { Comment } from 'types';
 import { Link } from 'react-router-dom';
 
 export interface CommentProps extends BoxProps {

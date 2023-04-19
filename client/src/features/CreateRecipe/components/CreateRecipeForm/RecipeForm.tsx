@@ -1,14 +1,11 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import * as yup from 'yup';
-import type { Ingredient, Recipe } from 'core/types';
-import { useFileUpload } from 'core/hooks/useFileUpload';
-import { Form, FieldArray, Formik, FormikHelpers } from 'formik';
+import type { Ingredient, Recipe } from 'types';
+import { useFileUpload } from 'hooks';
+import { Form, FieldArray, Formik } from 'formik';
 import { Box, MenuItem, Typography } from '@mui/material';
-import { CButton } from 'components';
-import { CDropzone } from 'components/CDropzone';
-import { CInput } from 'components/CInput';
-import { CSelect } from 'components/CSelect';
-import { IngredientsInputArray } from 'features/CreateRecipe/components/IngredientsInputArray';
+import { CButton, CDropzone, CInput, CSelect } from 'components';
+import { IngredientsInputArray } from '@createRecipe/components/IngredientsInputArray';
 
 export interface CreateRecipeFormProps {
   onSubmit: (values: CreateRecipeFormValues) => void;
@@ -59,10 +56,23 @@ const initialValues: CreateRecipeFormValues = {
 export const RecipeForm: React.FC<CreateRecipeFormProps> = ({ onSubmit, recipe }): JSX.Element => {
   const { uploadFile, uploadedFile } = useFileUpload();
 
-  const handleFormSubmit = async (values: CreateRecipeFormValues) => {
-    values.cookingTime = +values.cookingTime;
-    onSubmit(values);
-  };
+  const handleImageUpload = useCallback(
+    (setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void) =>
+      async <T extends File>(acceptedFiles: T[]) => {
+        const [file] = acceptedFiles;
+        const { data } = await uploadFile({ variables: { file } });
+        setFieldValue('picturePath', data?.uploadFile);
+      },
+    [uploadFile]
+  );
+
+  const handleFormSubmit = useCallback(
+    async (values: CreateRecipeFormValues) => {
+      values.cookingTime = +values.cookingTime;
+      onSubmit(values);
+    },
+    [onSubmit]
+  );
 
   return (
     <Formik initialValues={recipe || initialValues} validationSchema={validationSchema} onSubmit={handleFormSubmit}>
@@ -90,7 +100,6 @@ export const RecipeForm: React.FC<CreateRecipeFormProps> = ({ onSubmit, recipe }
               helperText={(touched.name && errors.name) || ' '}
               sx={{ gridColumn: 'span 2' }}
             />
-
             <CInput
               name="cookingTime"
               label="Cooking time *"
@@ -110,7 +119,7 @@ export const RecipeForm: React.FC<CreateRecipeFormProps> = ({ onSubmit, recipe }
               label="Difficulty *"
               size="medium"
               value={values.difficulty}
-              onChange={(event) => setFieldValue('difficulty', event.target.value)}
+              onChange={handleChange}
               error={touched.difficulty && Boolean(errors.difficulty)}
             >
               <MenuItem value={'easy'}>Easy</MenuItem>
@@ -139,11 +148,7 @@ export const RecipeForm: React.FC<CreateRecipeFormProps> = ({ onSubmit, recipe }
               }}
               multiple={false}
               data-testid="create-form-dropzone"
-              onDrop={async (acceptedFiles) => {
-                const [file] = acceptedFiles;
-                const { data } = await uploadFile({ variables: { file } });
-                setFieldValue('picturePath', data?.uploadFile);
-              }}
+              onDrop={handleImageUpload(setFieldValue)}
             />
           </Box>
           <Box marginTop="2rem" display="flex" flexDirection="column" gap="4rem">

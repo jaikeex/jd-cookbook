@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { COMMENT_RECIPE_MUTATION, GET_COMMENTS_QUERY } from 'features/ViewRecipe/graphql';
-import type { Comment } from 'core';
+import { COMMENT_RECIPE_MUTATION, GET_COMMENTS_QUERY } from '@viewRecipe/graphql';
+import type { Comment } from 'types';
 
 interface IUseComments {
   comments: Comment[];

@@ -1,39 +1,32 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IconButton, Badge, Popover, List, ListItemText, ListItemButton, useTheme, ListItem } from '@mui/material';
 import { Notifications as NotificationsIcon } from '@mui/icons-material';
-import { useNotifications } from 'features/Navbar/hooks';
+import { useNotifications } from '@navbar/hooks';
 
-interface Notification {
-  _id: string;
-  recipe: string;
-  seen: boolean;
-  text: string;
-}
-
-interface NotificationsProps {}
-
-interface NotificationsData {
-  getNotifications: Notification[];
-}
-
-const Notifications: React.FC<NotificationsProps> = () => {
+const Notifications: React.FC = () => {
   const theme = useTheme();
   const { notifications, markAsSeen, unseenCount } = useNotifications();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
-  const handleNotificationsOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const handleNotificationsOpen = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget);
+    },
+    [setAnchorEl]
+  );
 
-  const handleNotificationsClose = () => {
+  const handleNotificationsClose = useCallback(() => {
     setAnchorEl(null);
-  };
+  }, [setAnchorEl]);
 
-  const notificationClickHandler = (id: string) => () => {
-    markAsSeen(id);
-    handleNotificationsClose();
-  };
+  const handleClickNotifications = useCallback(
+    (id: string) => () => {
+      markAsSeen(id);
+      handleNotificationsClose();
+    },
+    [markAsSeen, handleNotificationsClose]
+  );
 
   return (
     <>
@@ -56,7 +49,7 @@ const Notifications: React.FC<NotificationsProps> = () => {
                 key={_id}
                 component={Link}
                 to={`/recipe/${recipe}`}
-                onClick={notificationClickHandler(_id)}
+                onClick={handleClickNotifications(_id)}
               >
                 <ListItemText
                   primary={text}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { Grid } from '@mui/material';
 import { useParams } from 'react-router-dom';
@@ -9,9 +9,9 @@ import {
   RecipeInstructions,
   RecipeImage,
   RecipeDescription
-} from 'features/ViewRecipe/components';
-import { RecipeContextProvider } from 'features/ViewRecipe/context';
-import { GET_RECIPE_QUERY, LIKE_RECIPE_MUTATION } from 'features/ViewRecipe/graphql';
+} from '@viewRecipe/components';
+import { RecipeContextProvider } from '@viewRecipe/context';
+import { GET_RECIPE_QUERY, LIKE_RECIPE_MUTATION } from '@viewRecipe/graphql';
 
 export interface RecipePageProps {}
 
@@ -21,16 +21,16 @@ const RecipePage: React.FC<RecipePageProps> = () => {
   const { data } = useQuery(GET_RECIPE_QUERY, { variables: { id: params._id } });
   const [likeRecipe] = useMutation(LIKE_RECIPE_MUTATION);
 
-  const handleLikeRecipe = async () => {
+  const recipe = data?.getRecipe;
+
+  const handleLikeRecipe = useCallback(async () => {
     if (recipe) {
       likeRecipe({
         variables: { id: recipe._id },
         refetchQueries: [{ query: GET_RECIPE_QUERY, variables: { id: params._id } }]
       });
     }
-  };
-
-  const recipe = data?.getRecipe;
+  }, [likeRecipe, GET_RECIPE_QUERY, params, recipe]);
 
   if (!recipe) {
     return null;

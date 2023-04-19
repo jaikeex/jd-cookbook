@@ -1,8 +1,8 @@
+import React, { useCallback } from 'react';
 import { AccountCircle, Login } from '@mui/icons-material';
 import { Button, IconButton, Menu, MenuItem, useMediaQuery } from '@mui/material';
-import { useLogout } from 'features/Navbar/hooks/useLogout';
-import type { User } from 'core';
-import * as React from 'react';
+import { useLogout } from '@navbar/hooks';
+import type { User } from 'types';
 import { Link, useNavigate } from 'react-router-dom';
 
 export interface ProfileActionsProps {
@@ -18,22 +18,25 @@ const ProfileActions: React.FC<ProfileActionsProps> = ({ user = null }): JSX.Ele
 
   const open = Boolean(anchorEl);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (!user) {
-      navigate('/auth/login');
-    } else {
-      setAnchorEl(event.currentTarget);
-    }
-  };
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      if (!user) {
+        navigate('/auth/login');
+      } else {
+        setAnchorEl(event.currentTarget);
+      }
+    },
+    [navigate, setAnchorEl, user]
+  );
 
-  const handleClose = () => setAnchorEl(null);
+  const handleClose = useCallback(() => setAnchorEl(null), [setAnchorEl]);
 
-  const handleLogoutClick = async () => {
+  const handleLogoutClick = useCallback(async () => {
     if (await logout()) {
       handleClose();
       navigate('/');
     }
-  };
+  }, [handleClose, navigate, logout]);
 
   const rootElement = sm ? (
     <IconButton onClick={handleClick}>{user ? <AccountCircle /> : <Login />}</IconButton>

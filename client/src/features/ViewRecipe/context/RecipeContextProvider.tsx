@@ -1,5 +1,5 @@
-import * as React from 'react';
-import type { Recipe } from 'core';
+import React from 'react';
+import type { Recipe } from 'types';
 import { createContext, useContext } from 'react';
 
 interface RecipeContextValue {

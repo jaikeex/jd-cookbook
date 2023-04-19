@@ -1,6 +1,7 @@
 import React from 'react';
-import { StoryFn, Meta } from '@storybook/react';
-import { CInput, CInputProps } from './CInput';
+import type { StoryFn, Meta } from '@storybook/react';
+import type { CInputProps } from './CInput';
+import { CInput } from './CInput';
 
 export default {
   title: 'CInput',

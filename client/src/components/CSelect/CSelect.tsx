@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormControl, Select } from '@mui/material';
+import { FormControl } from '@mui/material';
 import type { SelectProps } from '@mui/material';
 import * as Styled from './styles';
 
@@ -9,7 +9,6 @@ export interface CSelectProps extends SelectProps {
 
 export const CSelect: React.FC<CSelectProps> = ({
   children = null,
-  helperText = '',
   label = '',
   error = false,
   fullWidth = false,

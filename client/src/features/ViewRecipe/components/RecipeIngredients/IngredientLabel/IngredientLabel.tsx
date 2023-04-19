@@ -1,7 +1,7 @@
+import React from 'react';
 import { CheckRounded } from '@mui/icons-material';
 import { ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import * as React from 'react';
-import type { Ingredient } from 'core/types';
+import type { Ingredient } from 'types';
 
 export interface IngredientLabelProps {
   ingredient: Ingredient;

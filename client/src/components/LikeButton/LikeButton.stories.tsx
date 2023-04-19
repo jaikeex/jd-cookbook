@@ -1,6 +1,7 @@
 import React from 'react';
-import { StoryFn, Meta } from '@storybook/react';
-import LikeButton, { LikeButtonProps } from './LikeButton';
+import type { StoryFn, Meta } from '@storybook/react';
+import type { LikeButtonProps } from './LikeButton';
+import LikeButton from './LikeButton';
 
 export default {
   title: 'LikeButton',

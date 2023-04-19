@@ -1,5 +1,6 @@
 import { FavoriteBorder, Favorite } from '@mui/icons-material';
-import { FormControlLabel, Checkbox, CheckboxProps } from '@mui/material';
+import type { CheckboxProps } from '@mui/material';
+import { FormControlLabel, Checkbox } from '@mui/material';
 import * as React from 'react';
 
 export interface LikeButtonProps extends CheckboxProps {

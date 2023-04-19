@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryFn } from '@storybook/react';
-import CButton from './CButton';
+import { CButton } from './CButton';
 import type { CButtonProps } from './CButton';
 
 export default {

@@ -8,7 +8,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
   IconButton,
   Tooltip,
   Box,
@@ -22,10 +21,10 @@ import {
   useTheme
 } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon, Sort as SortIcon } from '@mui/icons-material';
-import type { Recipe } from 'core/types';
-import { GET_RECIPES_QUERY, SEARCH_RECIPES_QUERY } from 'core/graphql/queries';
-import { DELETE_RECIPE } from 'core/graphql/mutations';
-import { CInput } from 'components/CInput';
+import type { Recipe } from 'types';
+import { GET_RECIPES_QUERY, SEARCH_RECIPES_QUERY } from 'graphql/queries';
+import { DELETE_RECIPE } from 'graphql/mutations';
+import { CInput } from 'components';
 
 interface RecipeTableProps {
   userId: string;
@@ -46,12 +45,11 @@ const RecipeTable: React.FC<RecipeTableProps> = ({ userId }) => {
   const { data, loading, error, fetchMore, refetch } = useQuery(GET_RECIPES_QUERY, {
     variables: {
       userId,
-      first: 10
+      first: 20
     }
   });
 
   const [searchRecipes, { data: searchRecipesData }] = useLazyQuery(SEARCH_RECIPES_QUERY);
-
   const [deleteRecipeMutation] = useMutation(DELETE_RECIPE);
 
   const handleSortChange = (column: 'name' | 'createdAt' | 'commentsCount' | 'likesCount') => {

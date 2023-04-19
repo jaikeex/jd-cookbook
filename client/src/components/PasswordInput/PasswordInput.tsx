@@ -1,5 +1,5 @@
-import React from 'react';
-import { FormControl, FormHelperText, IconButton, InputAdornment } from '@mui/material';
+import React, { useCallback } from 'react';
+import { FormControl, IconButton, InputAdornment } from '@mui/material';
 import type { OutlinedInputProps } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useState } from 'react';
@@ -21,13 +21,13 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
 }): JSX.Element => {
   const [visible, setVisible] = useState<boolean>(false);
 
-  const handleClickIcon = () => {
+  const handleClickIcon = useCallback(() => {
     setVisible(!visible);
-  };
+  }, [setVisible]);
 
-  const handleMouseDownIcon = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseDownIcon = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-  };
+  }, []);
 
   return (
     <FormControl variant="outlined" sx={sx}>
@@ -36,6 +36,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
         error={error}
         label={label}
         placeholder={placeholder}
+        disabled={disabled}
         id={id}
         type={visible ? 'text' : 'password'}
         helperText={helperText}

@@ -1,6 +1,7 @@
 import React from 'react';
-import { StoryFn, Meta } from '@storybook/react';
-import RecipeInfoTag, { RecipeInfoTagProps } from './RecipeInfoTag';
+import type { StoryFn, Meta } from '@storybook/react';
+import type { RecipeInfoTagProps } from './RecipeInfoTag';
+import RecipeInfoTag from './RecipeInfoTag';
 import { GirlOutlined } from '@mui/icons-material';
 
 export default {

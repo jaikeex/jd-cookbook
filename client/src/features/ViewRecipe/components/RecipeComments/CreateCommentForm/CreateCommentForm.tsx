@@ -1,7 +1,6 @@
+import React, { useCallback, useState } from 'react';
 import { Box, TextField, useMediaQuery } from '@mui/material';
 import { CButton } from 'components';
-import * as React from 'react';
-import { useState } from 'react';
 
 interface CreateCommentFormProps {
   onSubmit: (value: string) => void;
@@ -18,17 +17,23 @@ const CreateCommentForm: React.FC<CreateCommentFormProps> = ({
 
   const sm = useMediaQuery('(max-width:740px)');
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (commentText) {
-      onSubmit(commentText);
-      setCommentText('');
-    }
-  };
+  const handleSubmit = useCallback(
+    (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      if (commentText) {
+        onSubmit(commentText);
+        setCommentText('');
+      }
+    },
+    [onSubmit, setCommentText, commentText]
+  );
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCommentText(e.target.value);
-  };
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCommentText(e.target.value);
+    },
+    [setCommentText]
+  );
 
   return (
     <form onSubmit={handleSubmit}>
@@ -42,6 +47,7 @@ const CreateCommentForm: React.FC<CreateCommentFormProps> = ({
           onChange={handleChange}
           multiline
           rows={4}
+          name="comment-input"
           data-testid="recipe-comment-input"
           InputProps={{
             sx: {

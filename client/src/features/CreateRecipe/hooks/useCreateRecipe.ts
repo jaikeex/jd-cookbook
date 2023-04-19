@@ -1,13 +1,13 @@
-import {
+import type {
   ApolloCache,
   DefaultContext,
   FetchResult,
   MutationFunctionOptions,
-  OperationVariables,
-  useMutation
+  OperationVariables
 } from '@apollo/client';
-import { Recipe } from 'core';
-import { CREATE_RECIPE_MUTATION } from 'features/CreateRecipe/graphql';
+import { useMutation } from '@apollo/client';
+import type { Recipe } from 'types';
+import { CREATE_RECIPE_MUTATION } from '@createRecipe/graphql';
 
 interface CreateRecipeResponse {
   createRecipe: Recipe;

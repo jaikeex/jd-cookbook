@@ -1,6 +1,6 @@
-import { RecipeCard } from 'components/RecipeCard';
-import { Recipe } from 'core';
 import React from 'react';
+import { RecipeCard } from 'components/RecipeCard';
+import type { Recipe } from 'types';
 import { Waypoint } from 'react-waypoint';
 
 export interface RecipeListProps {

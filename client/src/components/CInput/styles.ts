@@ -1,5 +1,5 @@
 import { FormHelperText, OutlinedInput as MuiInput, InputLabel as MuiLabel, styled } from '@mui/material';
-import { CInputProps } from './CInput';
+import type { CInputProps } from './CInput';
 
 export const Input = styled(MuiInput)<CInputProps>((props) => ({
   input: {
@@ -13,6 +13,7 @@ export const Input = styled(MuiInput)<CInputProps>((props) => ({
       fontSize: '0.913rem',
       color: props.theme.palette.text.primary
     },
+
     '&:-webkit-autofill': {
       WebkitBoxShadow: `0 0 0 100px ${props.theme.palette.background.default} inset`
     }

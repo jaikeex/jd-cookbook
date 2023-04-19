@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Alert, Snackbar, Slide, type SlideProps } from '@mui/material';
 import type { Color } from '@material-ui/lab';
 import { useDispatch } from 'react-redux';
@@ -24,14 +24,17 @@ const CSnackbar: React.FC<CSnackbarProps> = ({
   const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(true);
 
-  const handleClose = (_: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+  const handleClose = useCallback(
+    (_: React.SyntheticEvent | Event, reason?: string) => {
+      if (reason === 'clickaway') {
+        return;
+      }
 
-    setIsVisible(false);
-    dispatch(popMessage());
-  };
+      setIsVisible(false);
+      dispatch(popMessage());
+    },
+    [setIsVisible, dispatch, popMessage]
+  );
 
   return (
     <Snackbar

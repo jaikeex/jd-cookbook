@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { List, Box, Typography } from '@mui/material';
 import type { BoxProps } from '@mui/material';
-import type { Comment } from 'core/types';
+import type { Comment } from 'types';
 import { useSelector } from 'react-redux';
 import type { RootState } from 'store';
-import { useComments } from 'features/ViewRecipe/hooks/useComments';
-import { RecipeComment } from './RecipeComment';
-import { useRecipeContext } from 'features/ViewRecipe/context';
+import { useComments } from '@viewRecipe/hooks';
+import { useRecipeContext } from '@viewRecipe/context';
 import { CreateCommentForm } from './CreateCommentForm';
+import { RecipeComment } from './RecipeComment';
 
 interface RecipeCommentsProps extends BoxProps {}
 
@@ -16,9 +16,12 @@ const RecipeComments: React.FC<RecipeCommentsProps> = (props) => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const { comments, postComment, loading } = useComments(recipe._id);
 
-  const handleSubmit = async (value: string) => {
-    postComment(value);
-  };
+  const handleSubmit = useCallback(
+    async (value: string) => {
+      postComment(value);
+    },
+    [postComment]
+  );
 
   return (
     <Box {...props}>

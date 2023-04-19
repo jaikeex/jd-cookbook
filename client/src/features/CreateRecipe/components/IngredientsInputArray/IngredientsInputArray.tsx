@@ -1,8 +1,8 @@
+import React, { useCallback } from 'react';
 import { AddCircle, Delete } from '@mui/icons-material';
 import { Box, Typography, IconButton, Button } from '@mui/material';
-import { CInput } from 'components/CInput';
-import React from 'react';
-import type { Ingredient } from 'core/types';
+import { CInput } from 'components';
+import type { Ingredient } from 'types';
 
 export interface IngredientsInputArrayProps {
   error?: boolean;
@@ -29,8 +29,12 @@ export const IngredientsInputArray: React.FC<IngredientsInputArrayProps> = ({
   push,
   remove
 }): JSX.Element => {
+  const handleDeleteRowClick = useCallback((index: number) => () => remove(index), [remove]);
+
+  const handleAddRow = useCallback(() => push({ name: '', amount: '' }), [push]);
+
   return (
-    <Box p="2rem 1rem">
+    <Box p="2rem 0">
       <Typography color={error ? 'error' : 'default'} variant="h4">
         Ingredients *
       </Typography>
@@ -58,17 +62,12 @@ export const IngredientsInputArray: React.FC<IngredientsInputArrayProps> = ({
             onBlur={handleBlur}
             error={error}
           />
-          <IconButton size="small" onClick={() => remove(index)} data-testid={`ingredient-delete-${index}`}>
+          <IconButton size="small" onClick={handleDeleteRowClick(index)} data-testid={`ingredient-delete-${index}`}>
             <Delete fontSize="small" />
           </IconButton>
         </Box>
       ))}
-      <Button
-        fullWidth
-        onClick={() => push({ name: '', amount: '' })}
-        sx={{ alignSelf: 'flex-start' }}
-        data-testid={`ingredient-add-button`}
-      >
+      <Button fullWidth onClick={handleAddRow} sx={{ alignSelf: 'flex-start' }} data-testid={`ingredient-add-button`}>
         <AddCircle />
       </Button>
     </Box>

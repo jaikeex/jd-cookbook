@@ -1,4 +1,5 @@
-import { Paper, PaperProps, styled } from '@mui/material';
+import type { PaperProps } from '@mui/material';
+import { Paper, styled } from '@mui/material';
 import * as React from 'react';
 
 const StyledPaper = styled(Paper)({

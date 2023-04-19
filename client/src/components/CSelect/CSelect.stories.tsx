@@ -1,6 +1,7 @@
 import React from 'react';
-import { StoryFn, Meta } from '@storybook/react';
-import { CSelect, CSelectProps } from './CSelect';
+import type { StoryFn, Meta } from '@storybook/react';
+import type { CSelectProps } from './CSelect';
+import { CSelect } from './CSelect';
 import { MenuItem } from '@mui/material';
 
 export default {

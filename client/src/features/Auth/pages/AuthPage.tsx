@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Box, Typography } from '@mui/material';
-import { LoginForm, RegisterForm } from 'features/Auth/components';
+import { LoginForm, RegisterForm } from '@auth/components';
 import { useParams } from 'react-router-dom';
 
 const AuthPage: React.FC = (): JSX.Element => {

@@ -1,13 +1,11 @@
-import * as React from 'react';
-import { Formik } from 'formik';
-import type { FormikHelpers } from 'formik';
+import React, { useCallback } from 'react';
 import * as yup from 'yup';
+import type { FormikHelpers } from 'formik';
+import { Formik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, CircularProgress, Typography } from '@mui/material';
-import { CButton } from 'components';
-import { useRegister } from 'features/Auth/hooks/useRegister';
-import { CInput } from 'components/CInput';
-import { PasswordInput } from 'components/PasswordInput';
+import { CButton, CInput, PasswordInput } from 'components';
+import { useRegister } from '@auth/hooks/useRegister';
 
 const registerSchema = yup.object().shape({
   username: yup.string().required('Username is required'),
@@ -37,12 +35,15 @@ const RegisterForm: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const { register, loading } = useRegister();
 
-  const formSubmitHandler = async (values: RegisterFormValues, onSubmitProps: FormikHelpers<RegisterFormValues>) => {
-    if (await register(values.username, values.email, values.password)) {
-      onSubmitProps.resetForm();
-      navigate('/auth/login');
-    }
-  };
+  const formSubmitHandler = useCallback(
+    async (values: RegisterFormValues, onSubmitProps: FormikHelpers<RegisterFormValues>) => {
+      if (await register(values.username, values.email, values.password)) {
+        onSubmitProps.resetForm();
+        navigate('/auth/login');
+      }
+    },
+    [register, navigate]
+  );
 
   return (
     <Formik onSubmit={formSubmitHandler} initialValues={initialRegisterValues} validationSchema={registerSchema}>
@@ -51,7 +52,7 @@ const RegisterForm: React.FC = (): JSX.Element => {
           <Box
             display="flex"
             flexDirection="column"
-            gap="1rem"
+            gap="2rem"
             sx={{
               '& > div': {
                 gridColumn: undefined
