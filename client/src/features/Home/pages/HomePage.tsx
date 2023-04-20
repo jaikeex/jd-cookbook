@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Box, CircularProgress, useMediaQuery } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import type { RootState } from 'store/index';
 import { useSelector } from 'react-redux';
 import { HomeActions } from '@home/components';
@@ -28,13 +28,20 @@ const HomePage: React.FC = (): JSX.Element => {
     fetchMoreRecipes();
   }, [fetchMoreRecipes]);
 
+  if (loading) {
+    return (
+      <Box textAlign="center">
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <React.Fragment>
       <HomeActions user={user} onFilterSubmit={handleFilterRecipes} />
 
-      <Styled.Recipes>
+      <Styled.Recipes component={'section'}>
         <RecipeList recipes={recipes} onScrollToBottom={handleScrollToBottom} />
-        {loading && <CircularProgress />}
       </Styled.Recipes>
     </React.Fragment>
   );

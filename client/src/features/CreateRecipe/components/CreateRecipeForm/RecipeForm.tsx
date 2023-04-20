@@ -6,6 +6,7 @@ import { Form, FieldArray, Formik } from 'formik';
 import { Box, MenuItem, Typography } from '@mui/material';
 import { CButton, CDropzone, CInput, CSelect } from 'components';
 import { IngredientsInputArray } from '@createRecipe/components/IngredientsInputArray';
+import * as Styled from './styles';
 
 export interface CreateRecipeFormProps {
   onSubmit: (values: CreateRecipeFormValues) => void;
@@ -85,13 +86,7 @@ export const RecipeForm: React.FC<CreateRecipeFormProps> = ({ onSubmit, recipe }
           <Typography variant="h2" sx={{ mb: 8 }}>
             {recipe ? 'Edit recipe' : 'Create new recipe'}
           </Typography>
-          <Box
-            display="grid"
-            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-            gridTemplateRows="4rem 6rem 1fr"
-            rowGap="3rem"
-            columnGap="2rem"
-          >
+          <Styled.Root>
             <CInput
               name="name"
               label="Name *"
@@ -157,7 +152,7 @@ export const RecipeForm: React.FC<CreateRecipeFormProps> = ({ onSubmit, recipe }
               error={touched.picturePath && Boolean(errors.picturePath)}
               helperText={(touched.picturePath && errors.picturePath) || undefined}
             />
-          </Box>
+          </Styled.Root>
           <Box marginTop="2rem" display="flex" flexDirection="column" gap="4rem">
             <FieldArray name="ingredients">
               {({ push, remove }) => {

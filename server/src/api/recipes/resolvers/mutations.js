@@ -39,7 +39,7 @@ const resolvers = {
 
         const recipe = await Recipe.findById(id);
 
-        if (userId !== recipe.user) {
+        if (userId.toString() !== recipe.user) {
           throw new httpErrors.E401('Only the recipe author can update it');
         }
 
@@ -59,7 +59,7 @@ const resolvers = {
 
         const recipe = await Recipe.findById(id);
 
-        if (userId !== recipe.user) {
+        if (userId.toString() !== recipe.user) {
           throw new httpErrors.E401('Only the recipe author can delete it');
         }
 

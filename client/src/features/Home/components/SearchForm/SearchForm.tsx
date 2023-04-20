@@ -50,8 +50,6 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSubmit = () => {} }): JSX.Ele
       [callback]
     );
 
-  console.log(loading);
-
   return (
     <Formik onSubmit={onSubmit} initialValues={initialFormValues}>
       {({ values, handleSubmit, handleChange, setFieldValue }) => (

@@ -26,14 +26,14 @@ const RecipeComments: React.FC<RecipeCommentsProps> = (props) => {
   return (
     <Box {...props}>
       <Typography gutterBottom>Comments</Typography>
-      {loading && <p>Loading comments...</p>}
-      {comments && (
+      {loading ? <p>Loading comments...</p> : null}
+      {comments ? (
         <List>
           {comments.map((comment: Comment, index) => (
             <RecipeComment key={comment.createdAt} comment={comment} data-testid={`recipe-comment-${index}`} />
           ))}
         </List>
-      )}
+      ) : null}
       <CreateCommentForm
         disabled={!isLoggedIn}
         onSubmit={handleSubmit}

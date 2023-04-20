@@ -11,7 +11,7 @@ const ThemeSwitchButton: React.FC<ThemeSwitchButtonProps> = ({ onClick }): JSX.E
 
   return (
     <IconButton onClick={onClick}>
-      {theme.palette.mode === 'dark' ? (
+      {theme.palette.mode === 'light' ? (
         <DarkModeIcon sx={{ fontSize: '25px' }} />
       ) : (
         <LightModeIcon sx={{ fontSize: '25px' }} />

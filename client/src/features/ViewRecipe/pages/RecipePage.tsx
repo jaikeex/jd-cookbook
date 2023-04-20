@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { Grid } from '@mui/material';
+import { Box, CircularProgress, Grid } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import {
   RecipeComments,
@@ -13,12 +13,10 @@ import {
 import { RecipeContextProvider } from '@viewRecipe/context';
 import { GET_RECIPE_QUERY, LIKE_RECIPE_MUTATION } from '@viewRecipe/graphql';
 
-export interface RecipePageProps {}
-
-const RecipePage: React.FC<RecipePageProps> = () => {
+const RecipePage: React.FC = () => {
   const params = useParams();
 
-  const { data } = useQuery(GET_RECIPE_QUERY, { variables: { id: params._id } });
+  const { data, loading } = useQuery(GET_RECIPE_QUERY, { variables: { id: params._id } });
   const [likeRecipe] = useMutation(LIKE_RECIPE_MUTATION);
 
   const recipe = data?.getRecipe;
@@ -31,6 +29,14 @@ const RecipePage: React.FC<RecipePageProps> = () => {
       });
     }
   }, [likeRecipe, GET_RECIPE_QUERY, params, recipe]);
+
+  if (loading) {
+    return (
+      <Box textAlign="center">
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   if (!recipe) {
     return null;
@@ -56,7 +62,7 @@ const RecipePage: React.FC<RecipePageProps> = () => {
           <RecipeInstructions sx={{ mt: '1rem' }} />
         </Grid>
 
-        <Grid item xs={12} mt={4}>
+        <Grid item xs={12} mt={4} component={'section'}>
           <RecipeComments />
         </Grid>
       </Grid>

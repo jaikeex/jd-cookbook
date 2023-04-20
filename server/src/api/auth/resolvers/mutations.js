@@ -61,7 +61,7 @@ const resolvers = {
               from: 'CookBook',
               to: emailLC,
               subject: 'Verify e-mail',
-              html: `Please click the following link to verify your email:\n\n ${confirmationUrl}`
+              text: `Welcome to COOKBOOK!\nPlease click the following link to verify your email:\n\n${confirmationUrl}`
             });
           }
         );

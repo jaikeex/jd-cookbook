@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 dotenv.config({
-  path: join(__dirname, `../env/.env`)
+  path: join(__dirname, `../.env`)
 });
 
 mongoose.connect(

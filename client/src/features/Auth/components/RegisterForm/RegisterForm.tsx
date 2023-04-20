@@ -115,9 +115,9 @@ const RegisterForm: React.FC = (): JSX.Element => {
               >
                 {loading ? <CircularProgress /> : 'Register'}
               </CButton>
-              <Link to={'/auth/login'} data-testid="register-form-link">
-                <Typography>Already have an account? Log in!</Typography>
-              </Link>
+              <Typography component={Link} to="/auth/login" data-testid="register-form-link">
+                Already have an account? Log in!
+              </Typography>
             </Box>
           </Box>
         </form>

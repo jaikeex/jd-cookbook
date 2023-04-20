@@ -2,7 +2,7 @@ import React from 'react';
 import type { DropzoneProps, DropzoneRef } from 'react-dropzone';
 import Dropzone from 'react-dropzone';
 import * as Styled from './styles';
-import { FormControl, FormHelperText } from '@mui/material';
+import { FormHelperText } from '@mui/material';
 import type { SxProps } from '@mui/material';
 
 export interface CDropzoneProps extends DropzoneProps, React.RefAttributes<DropzoneRef> {

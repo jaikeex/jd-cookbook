@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useRecipePagination } from 'hooks';
 import { GET_RECIPES_QUERY, GET_USER_QUERY } from '@profile/graphql';
 import { RecipeTable } from '@profile/components';
@@ -9,12 +9,10 @@ import { RecipeList } from 'components';
 import { Box, CircularProgress, Typography, useMediaQuery } from '@mui/material';
 import { useQuery } from '@apollo/client';
 
-export interface ProfilePageProps {}
-
-const ProfilePage: React.FC<ProfilePageProps> = (props): JSX.Element => {
+const ProfilePage: React.FC = (): JSX.Element => {
   const params = useParams();
   const user = useSelector((state: RootState) => state.auth.user);
-  const { recipes, refetchRecipes, fetchMoreRecipes, loading } = useRecipePagination(GET_RECIPES_QUERY, {
+  const { recipes, fetchMoreRecipes, loading } = useRecipePagination(GET_RECIPES_QUERY, {
     userId: params._id
   });
 
@@ -25,29 +23,29 @@ const ProfilePage: React.FC<ProfilePageProps> = (props): JSX.Element => {
   const md = useMediaQuery('(max-width:1200px)');
   const sm = useMediaQuery('(max-width:740px)');
 
-  const getAccountAge = (date: Date) => {
+  const getAccountAge = useCallback((date: Date) => {
     const currentDate = new Date();
     const timeDiff = currentDate.getTime() - date.getTime();
     return Math.floor(timeDiff / (24 * 60 * 60 * 1000));
-  };
+  }, []);
 
   return (
     <React.Fragment>
       <Box>
-        {loadingUser && <CircularProgress />}
-        {data && (
+        {loadingUser ? <CircularProgress /> : null}
+        {data ? (
           <Box>
             <Typography variant="h2" mb={2}>{`${isOwnProfile ? 'User Profile:' : 'Recipes by'} ${
               data.getUserById.username
             }`}</Typography>
-            {isOwnProfile && (
+            {isOwnProfile ? (
               <Box>
                 <Typography mb={1}>{`E-mail: ${data.getUserById.email}`}</Typography>
                 <Typography>{`Account age: ${getAccountAge(new Date(+data.getUserById.createdAt))} days`}</Typography>
               </Box>
-            )}
+            ) : null}
           </Box>
-        )}
+        ) : null}
       </Box>
       <Box display="grid" gridTemplateColumns={`repeat(${md ? (sm ? '1' : '2') : '3'}, 1fr)`} gap="3rem" mt="3rem">
         {isOwnProfile ? (

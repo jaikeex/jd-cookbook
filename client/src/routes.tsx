@@ -15,7 +15,7 @@ const ProtectedRoute = () => {
   return <Outlet />;
 };
 
-export const routes = (
+const routes = (
   <Routes>
     <Route path="/" element={<HomePage />} />
     <Route path="/auth/:pageType" element={<AuthPage />} />
@@ -30,3 +30,5 @@ export const routes = (
     <Route path="*" element={<NotFoundPage />} />
   </Routes>
 );
+
+export default routes;

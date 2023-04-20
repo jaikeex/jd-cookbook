@@ -15,7 +15,7 @@ export const EditRecipePage: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
   const { updateRecipe } = useUpdateRecipe();
 
-  const { data: recipe } = useQuery(GET_RECIPE_QUERY, { variables: { id: params._id } });
+  const { data: recipe } = useQuery(GET_RECIPE_QUERY, { variables: { id: params._id }, fetchPolicy: 'no-cache' });
 
   const handleFormSubmit = useCallback(
     async (values: Partial<Recipe>) => {

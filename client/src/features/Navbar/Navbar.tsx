@@ -1,11 +1,10 @@
 import React, { useCallback } from 'react';
-import { useTheme, useMediaQuery } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import type { RootState } from 'store/index';
 import { setMode } from 'store/authSlice';
 import { ProfileActions, Notifications } from './components';
-import { SiteHeading, ThemeSwitchButton, FlexBetween } from 'components';
+import { SiteHeading, ThemeSwitchButton } from 'components';
 import * as Styled from './styles';
 
 export const Navbar: React.FC = (): JSX.Element => {
@@ -17,12 +16,12 @@ export const Navbar: React.FC = (): JSX.Element => {
   }, [dispatch, setMode]);
 
   return (
-    <Styled.Root>
+    <Styled.Root component={'nav'}>
       <Link to="/" style={{ textDecoration: 'none' }}>
         <SiteHeading isLink>Cookbook</SiteHeading>
       </Link>
       <Styled.Actions>
-        {user && <Notifications />}
+        {user ? <Notifications /> : null}
         <ThemeSwitchButton onClick={handleSwitchThemes} />
         <ProfileActions user={user} />
       </Styled.Actions>

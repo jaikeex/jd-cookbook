@@ -13,7 +13,7 @@ export const RecipeList: React.FC<RecipeListProps> = ({ recipes, onScrollToBotto
     <React.Fragment>
       {recipes.map((recipe, index) => (
         <div key={recipe._id}>
-          {index === recipes.length - 2 && <Waypoint onEnter={onScrollToBottom} />}
+          {index === recipes.length - 2 ? <Waypoint onEnter={onScrollToBottom} /> : null}
           <RecipeCard recipe={recipe} isLink href={`/recipe/${recipe._id}`} />
         </div>
       ))}

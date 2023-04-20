@@ -1,6 +1,5 @@
 import React from 'react';
-import { Box, Typography, useMediaQuery } from '@mui/material';
-import titleImg from 'assets/title.jpg';
+import { Typography } from '@mui/material';
 import { SearchForm } from 'features/Home/components/SearchForm';
 import type { User } from 'types';
 import { CButton } from 'components';
@@ -13,16 +12,14 @@ export interface HomeActionsProps {
 }
 
 export const HomeActions: React.FC<HomeActionsProps> = ({ user, onFilterSubmit }): JSX.Element => {
-  const sm = useMediaQuery('(max-width:740px)');
-
   return (
-    <Styled.Root>
+    <Styled.Root component={'section'}>
       <Typography textAlign="center" variant="h2">
         Welcome!
       </Typography>
       <Styled.FormWrapper>
         <SearchForm onSubmit={onFilterSubmit} />
-        {user?.username && (
+        {user?.username ? (
           <Styled.CreateRecipeButton>
             <Link to="/create" style={{ textDecoration: 'none' }} data-testid="home-create-recipe">
               <CButton primary color="success">
@@ -30,7 +27,7 @@ export const HomeActions: React.FC<HomeActionsProps> = ({ user, onFilterSubmit }
               </CButton>
             </Link>
           </Styled.CreateRecipeButton>
-        )}
+        ) : null}
       </Styled.FormWrapper>
     </Styled.Root>
   );

@@ -8,7 +8,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const OAuth2 = google.auth.OAuth2;
 
 dotenv.config({
-  path: join(__dirname, `../../env/.env`)
+  path: join(__dirname, `../../.env`)
 });
 
 const oauth2Client = new OAuth2(

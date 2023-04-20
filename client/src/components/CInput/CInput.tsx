@@ -22,7 +22,7 @@ export const CInput: React.FC<CInputProps> = ({
         {label}
       </Styled.Label>
       <Styled.Input {...props} />
-      {helperText && <Styled.HelperText error={error}>{helperText}</Styled.HelperText>}
+      {helperText ? <Styled.HelperText error={error}>{helperText}</Styled.HelperText> : null}
     </FormControl>
   );
 };

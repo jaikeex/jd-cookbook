@@ -18,7 +18,8 @@ export const useRegister = (): IUseRegister => {
     if (response && response.data) {
       dispatch(
         addMessage({
-          message: 'Account successfully created. Please check your email for verification.',
+          message:
+            'Account successfully created. Please check your email for verification (it may take a few minutes).',
           severity: 'success'
         })
       );
