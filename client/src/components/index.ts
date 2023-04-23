@@ -6,6 +6,7 @@ export * from './CSelect';
 export * from './CSnackbar';
 export * from './FlexBetween';
 export * from './LikeButton';
+export * from './TextLink';
 export * from './Page';
 export * from './PasswordInput';
 export * from './RecipeCard';

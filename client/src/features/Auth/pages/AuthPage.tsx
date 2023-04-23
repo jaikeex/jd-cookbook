@@ -20,7 +20,7 @@ const AuthPage: React.FC = (): JSX.Element => {
     <Box>
       <Box width="23rem" m="0 auto">
         <Typography variant="h2" sx={{ mb: 6 }}>
-          Welcome!
+          {pageType === 'register' ? 'Welcome!' : 'Welcome back!'}
         </Typography>
         {pageType === 'register' ? <RegisterForm /> : <LoginForm />}
       </Box>

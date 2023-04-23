@@ -9,10 +9,12 @@ const resolvers = {
       try {
         const { _id: userId } = req.session.user;
 
-        return await Notification.find({ user: userId }).sort({
-          seen: 1,
-          createdAt: -1
-        });
+        return await Notification.find({ user: userId })
+          .sort({
+            seen: 1,
+            createdAt: -1
+          })
+          .limit(5);
       } catch (error) {
         throw new httpErrors.E500(error.message);
       }

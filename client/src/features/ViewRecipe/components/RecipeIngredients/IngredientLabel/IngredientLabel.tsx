@@ -9,11 +9,11 @@ export interface IngredientLabelProps {
 
 const IngredientLabel: React.FC<IngredientLabelProps> = ({ ingredient }): JSX.Element => {
   return (
-    <ListItem dense>
+    <ListItem dense disableGutters>
       <ListItemIcon sx={{ minWidth: '2.5rem' }}>
         <CheckRounded color="success" />
       </ListItemIcon>
-      <ListItemText primary={`${ingredient.amount || ''} ${ingredient.name}`} />
+      <ListItemText primary={`${ingredient.amount || ''} ${ingredient.unit || ''} ${ingredient.name}`} />
     </ListItem>
   );
 };

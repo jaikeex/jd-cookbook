@@ -18,7 +18,7 @@ export const Navbar: React.FC = (): JSX.Element => {
   return (
     <Styled.Root component={'nav'}>
       <Link to="/" style={{ textDecoration: 'none' }}>
-        <SiteHeading isLink>Cookbook</SiteHeading>
+        <SiteHeading isLink>CookHound</SiteHeading>
       </Link>
       <Styled.Actions>
         {user ? <Notifications /> : null}

@@ -2,9 +2,9 @@ import React, { useCallback } from 'react';
 import * as yup from 'yup';
 import type { FormikHelpers } from 'formik';
 import { Formik } from 'formik';
-import { Link, useNavigate } from 'react-router-dom';
-import { Box, CircularProgress, Typography } from '@mui/material';
-import { CButton, CInput, PasswordInput } from 'components';
+import { useNavigate } from 'react-router-dom';
+import { Box, CircularProgress } from '@mui/material';
+import { CButton, CInput, TextLink, PasswordInput } from 'components';
 import { useRegister } from '@auth/hooks/useRegister';
 
 const registerSchema = yup.object().shape({
@@ -115,9 +115,9 @@ const RegisterForm: React.FC = (): JSX.Element => {
               >
                 {loading ? <CircularProgress /> : 'Register'}
               </CButton>
-              <Typography component={Link} to="/auth/login" data-testid="register-form-link">
+              <TextLink to="/auth/login" data-testid="register-form-link">
                 Already have an account? Log in!
-              </Typography>
+              </TextLink>
             </Box>
           </Box>
         </form>

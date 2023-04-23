@@ -2,10 +2,9 @@ import React from 'react';
 import { AccessTimeRounded, OutdoorGrillRounded } from '@mui/icons-material';
 import { Typography, Divider, Box, useMediaQuery, useTheme } from '@mui/material';
 import type { BoxProps } from '@mui/material';
-import { FlexBetween, LikeButton, RecipeInfoTag } from 'components';
+import { FlexBetween, LikeButton, RecipeInfoTag, TextLink } from 'components';
 import { useRecipeContext } from '@viewRecipe/context';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import type { RootState } from 'store';
 
 export interface RecipeHeaderProps extends BoxProps {
@@ -42,16 +41,9 @@ const RecipeHeader: React.FC<RecipeHeaderProps> = ({ onLikeRecipe, ...props }): 
           </Typography>
         </RecipeInfoTag>
         <Box ml="auto" display="flex" gap="1.5rem" flexDirection={md ? 'column' : 'row'}>
-          <Typography
-            component={Link}
-            to={`/profile/${recipe.user._id}`}
-            variant="caption"
-            color="primary"
-            sx={{ textDecoration: 'none' }}
-            data-testid="recipe-author-link"
-          >
+          <TextLink to={`/profile/${recipe.user._id}`} variant="caption" data-testid="recipe-author-link">
             Author: {recipe.user.username}
-          </Typography>
+          </TextLink>
           <Typography variant="caption">{new Date(+recipe.createdAt).toLocaleDateString()}</Typography>
         </Box>
       </Box>

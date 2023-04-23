@@ -83,7 +83,10 @@ const resolvers = {
         });
         await comment.save();
 
-        if (commentedRecipe.user !== userId) {
+        if (commentedRecipe.user !== userId.toString()) {
+          console.log(commentedRecipe.user);
+          console.log(userId);
+
           const notification = new Notification({
             recipe: id,
             user: commentedRecipe.user,

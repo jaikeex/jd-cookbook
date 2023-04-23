@@ -19,7 +19,8 @@ const RecipeSchema = new mongoose.Schema(
           required: [true, 'Name is required'],
           max: 50
         },
-        amount: String
+        amount: String,
+        unit: String
       }
     ],
     cookingTime: Number,

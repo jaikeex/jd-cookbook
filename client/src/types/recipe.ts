@@ -19,7 +19,8 @@ export interface Recipe {
 
 export interface Ingredient {
   name: string;
-  amount: string;
+  amount?: string;
+  unit?: string;
 }
 
 export interface Comment {

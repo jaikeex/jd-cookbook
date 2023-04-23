@@ -58,10 +58,10 @@ const resolvers = {
           (_, emailToken) => {
             const confirmationUrl = `${process.env.PROJECT_BASE_URL}/auth/verify-email/${emailToken}`;
             transporter.sendMail({
-              from: 'CookBook',
+              from: 'CookHound',
               to: emailLC,
               subject: 'Verify e-mail',
-              text: `Welcome to COOKBOOK!\nPlease click the following link to verify your email:\n\n${confirmationUrl}`
+              text: `Welcome to CookHound!\nPlease click the following link to verify your email:\n\n${confirmationUrl}`
             });
           }
         );

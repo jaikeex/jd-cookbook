@@ -51,6 +51,16 @@ export const IngredientsInputArray: React.FC<IngredientsInputArrayProps> = ({
             onBlur={handleBlur}
           />
           <CInput
+            name={`ingredients.${index}.unit`}
+            label="Unit"
+            data-testid={`ingredient-unit-${index}`}
+            size="small"
+            autoComplete="off"
+            value={ingredient.unit}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          <CInput
             name={`ingredients.${index}.name`}
             label="Name *"
             data-testid={`ingredient-name-${index}`}
