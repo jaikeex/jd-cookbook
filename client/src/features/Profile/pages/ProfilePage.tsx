@@ -23,6 +23,10 @@ const ProfilePage: React.FC = (): JSX.Element => {
   const md = useMediaQuery('(max-width:1200px)');
   const sm = useMediaQuery('(max-width:740px)');
 
+  const handleScrollToBottom = useCallback(() => {
+    fetchMoreRecipes();
+  }, [fetchMoreRecipes]);
+
   const getAccountAge = useCallback((date: Date) => {
     const currentDate = new Date();
     const timeDiff = currentDate.getTime() - date.getTime();
@@ -57,7 +61,7 @@ const ProfilePage: React.FC = (): JSX.Element => {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <RecipeList recipes={recipes} onScrollToBottom={() => fetchMoreRecipes()} />
+            <RecipeList recipes={recipes} onScrollToBottom={handleScrollToBottom} />
             {loading && <CircularProgress />}
           </React.Fragment>
         )}
