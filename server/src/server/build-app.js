@@ -19,7 +19,7 @@ export const initServer = () => {
   app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
   app.use(
     cors({
-      origin: process.env.CORS_ORIGIN,
+      origin: [process.env.CORS_ORIGIN, process.env.CORS_ORIGIN_2],
       allowedHeaders: ['Content-Type', 'Authorization'],
       exposedHeaders: ['set-cookie'],
       credentials: true
