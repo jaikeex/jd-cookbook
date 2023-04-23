@@ -3,7 +3,7 @@ import type { SnackMessage } from 'types';
 
 interface MessagesState {
   messageQueue: SnackMessage[];
-  currentMessage?: SnackMessage;
+  currentMessage?: SnackMessage | null;
 }
 
 const initialState: MessagesState = {
@@ -45,7 +45,7 @@ export const messageSlice = createSlice({
       if (state.messageQueue.length > 0) {
         state.currentMessage = state.messageQueue.splice(0, 1).at(0);
       } else {
-        state.currentMessage = undefined;
+        state.currentMessage = null;
       }
     }
   }

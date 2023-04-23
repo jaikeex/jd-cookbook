@@ -1,5 +1,6 @@
 import { FormHelperText, OutlinedInput as MuiInput, InputLabel as MuiLabel, styled } from '@mui/material';
 import type { CInputProps } from './CInput';
+import { borderRadius } from '@mui/system';
 
 export const Input = styled(MuiInput)<CInputProps>((props) => ({
   input: {
@@ -15,7 +16,8 @@ export const Input = styled(MuiInput)<CInputProps>((props) => ({
     },
 
     '&:-webkit-autofill': {
-      WebkitBoxShadow: `0 0 0 100px ${props.theme.palette.background.default} inset`
+      WebkitBoxShadow: `0 0 0 100px ${props.theme.palette.background.default} inset`,
+      borderRadius: 0
     }
   }
 }));

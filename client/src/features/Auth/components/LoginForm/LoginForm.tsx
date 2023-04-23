@@ -75,7 +75,7 @@ const LoginForm: React.FC = (): JSX.Element => {
                   mb: 1
                 }}
               >
-                {loading ? <CircularProgress /> : 'Login'}
+                {loading ? <CircularProgress size={30} /> : 'Login'}
               </CButton>
               <TextLink to={'/auth/register'} data-testid="login-form-register">
                 Not registered yet? Create an account!
