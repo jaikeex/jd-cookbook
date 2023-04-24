@@ -13,6 +13,7 @@ export const GET_RECIPE_QUERY = gql`
       ingredients {
         name
         amount
+        unit
       }
     }
   }
