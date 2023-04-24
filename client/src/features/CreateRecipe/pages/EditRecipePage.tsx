@@ -13,16 +13,20 @@ export const EditRecipePage: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
-  const { updateRecipe } = useUpdateRecipe();
+  const { updateRecipe, client } = useUpdateRecipe();
 
-  const { data: recipe } = useQuery(GET_RECIPE_QUERY, { variables: { id: params._id }, fetchPolicy: 'no-cache' });
+  const { data: recipe } = useQuery(GET_RECIPE_QUERY, {
+    variables: { id: params._id },
+    fetchPolicy: 'no-cache'
+  });
 
   const handleFormSubmit = useCallback(
     async (values: Partial<Recipe>) => {
       await updateRecipe({
         variables: { id: params._id, ...values },
-        onCompleted(data) {
+        async onCompleted(data) {
           dispatch(addMessage({ message: 'Update successful!', severity: 'success' }));
+          await client.clearStore();
           navigate(`/recipe/${data?.updateRecipe._id}`);
         }
       });

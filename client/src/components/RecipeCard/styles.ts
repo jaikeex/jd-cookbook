@@ -10,8 +10,9 @@ export const Card = styled(MuiCard)({
 });
 
 export const CardContent = styled(MuiCardContent)({
-  padding: '0.5rem 0',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center'
+  padding: '0.5rem 1rem',
+  textAlign: 'center',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap'
 });

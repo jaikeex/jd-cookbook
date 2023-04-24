@@ -1,5 +1,6 @@
 import type {
   ApolloCache,
+  ApolloClient,
   DefaultContext,
   FetchResult,
   MutationFunctionOptions,
@@ -21,10 +22,11 @@ interface IUseCreateRecipe {
   ) => Promise<FetchResult<CreateRecipeResponse>>;
   data?: CreateRecipeResponse | null;
   loading: boolean;
+  client: ApolloClient<any>;
 }
 
 export const useCreateRecipe = (): IUseCreateRecipe => {
-  const [createRecipe, { data, loading }] = useMutation<CreateRecipeResponse>(CREATE_RECIPE_MUTATION);
+  const [createRecipe, { data, loading, client }] = useMutation<CreateRecipeResponse>(CREATE_RECIPE_MUTATION);
 
-  return { createRecipe, data, loading };
+  return { createRecipe, data, loading, client };
 };

@@ -7,7 +7,8 @@ interface MessagesState {
 }
 
 const initialState: MessagesState = {
-  messageQueue: []
+  messageQueue: [],
+  currentMessage: null
 };
 
 interface AddMessagePayload {
@@ -42,8 +43,13 @@ export const messageSlice = createSlice({
     },
 
     popMessage: (state) => {
+      console.log(state.currentMessage);
+      console.log(state.messageQueue);
       if (state.messageQueue.length > 0) {
+        console.log('LOL');
         state.currentMessage = state.messageQueue.splice(0, 1).at(0);
+        console.log(state.currentMessage);
+        console.log(state.messageQueue);
       } else {
         state.currentMessage = null;
       }

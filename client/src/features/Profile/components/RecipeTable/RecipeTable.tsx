@@ -23,7 +23,7 @@ const RecipeTable: React.FC<RecipeTableProps> = ({ userId }) => {
   const { sortedRecipes, sortColumn, handleSortChange, resetSorting } = useSortedRecipes(recipes);
 
   const [searchRecipes, { data: searchRecipesData }] = useLazyQuery(SEARCH_RECIPES_QUERY);
-  const [deleteRecipeMutation] = useMutation(DELETE_RECIPE);
+  const [deleteRecipeMutation, { client }] = useMutation(DELETE_RECIPE);
   const { data, loading, error, fetchMore, refetch } = useQuery(GET_RECIPES_QUERY, {
     variables: { userId, first: 20 }
   });
@@ -42,14 +42,15 @@ const RecipeTable: React.FC<RecipeTableProps> = ({ userId }) => {
 
   const handleDeleteDialogClose = useCallback(() => setDeleteRecipeId(null), [setDeleteRecipeId]);
 
-  const handleDeleteRecipe = useCallback(() => {
+  const handleDeleteRecipe = useCallback(async () => {
     deleteRecipeMutation({
       variables: { id: deleteRecipeId }
     });
     handleDeleteDialogClose();
+    await client.resetStore();
     refetch({
       userId,
-      first: 10
+      first: 20
     });
   }, [deleteRecipeMutation, handleDeleteDialogClose, deleteRecipeId, refetch, userId]);
 
@@ -77,7 +78,7 @@ const RecipeTable: React.FC<RecipeTableProps> = ({ userId }) => {
       setRecipes(data.getRecipes.edges.map(({ node }: { node: Recipe; }) => node));
       setHasNextPage(data.getRecipes.pageInfo.hasNextPage);
     }
-  }, [data, searchRecipesData, filterText]);
+  }, [data, searchRecipesData, setRecipes, hasNextPage, filterText]);
 
   if (loading) {
     return <div>Loading...</div>;

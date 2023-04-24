@@ -10,14 +10,15 @@ import { addMessage } from 'store/messageSlice';
 export const CreateRecipePage: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { createRecipe } = useCreateRecipe();
+  const { createRecipe, client } = useCreateRecipe();
 
   const handleFormSubmit = useCallback(
     async (values: Partial<Recipe>) => {
       await createRecipe({
         variables: values,
-        onCompleted(data) {
+        async onCompleted(data) {
           dispatch(addMessage({ message: `Recipe ${values.name} successfully created!`, severity: 'success' }));
+          await client.clearStore();
           navigate(`/recipe/${data?.createRecipe._id}`);
         }
       });
