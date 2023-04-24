@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 export const Page = styled(Box)((props) => ({
   margin: '2rem auto',
   padding: '1.5rem',
-  width: '23rem',
+  width: '100%',
 
   [props.theme.breakpoints.up('sm')]: {
     padding: '2rem',

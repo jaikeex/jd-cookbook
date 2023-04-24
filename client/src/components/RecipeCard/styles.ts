@@ -1,7 +1,7 @@
 import { Card as MuiCard, CardContent as MuiCardContent, styled } from '@mui/material';
 
 export const Card = styled(MuiCard)({
-  width: '20rem',
+  maxWidth: '20rem',
   display: 'flex',
   flexDirection: 'column',
   '& .MuiCardHeader-subheader': {

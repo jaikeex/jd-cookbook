@@ -18,7 +18,7 @@ const AuthPage: React.FC = (): JSX.Element => {
 
   return (
     <Box>
-      <Box width="23rem" m="0 auto">
+      <Box maxWidth="23rem" m="0 auto">
         <Typography variant="h2" sx={{ mb: 6 }}>
           {pageType === 'register' ? 'Welcome!' : 'Welcome back!'}
         </Typography>
